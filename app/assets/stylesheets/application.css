@@ -13,14 +13,6 @@
  *= require_tree .
  *= require_self
  */
-.mark
-{
-  display: none;
-  position: absolute;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
-}
 .col-container {
   width: 100%;
 }
@@ -34,10 +26,10 @@
     width:80% /* value of your choice which suits your alignment */
 }
 .remove_button{
-	display: none;
+  display: none;
 }
 body{
-	font-size: 25px;
+  font-size: 25px;
 }
 
 .digg_pagination {

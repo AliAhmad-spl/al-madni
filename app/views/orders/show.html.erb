@@ -14,9 +14,9 @@
 <% @products = Product.where(id: @order.product_ids)%>
 <table class="table table-bordered">
 	<tr>
-		<td>product name</td>
-		<td>Quntity</td>
-		<td>unit price</td>
+		<td>Name</td>
+		<td>Qty</td>
+		<td>Price</td>
 		<td>total</td>
 	</tr>
 	<% x = 1 %>
@@ -24,7 +24,7 @@
 
 	<%@products&.order(:created_at).each_with_index do |product, i|%>
 	<tr>
-		<td style="font-size: 10px;"><%= product.name %>		</td>
+		<td style="font-size: 30px;"><%= product.name %>		</td>
 		<td><input type="number" name="quantity" min="1" max="100" id="box1_<%= y %>" value="<%= @order.index[i]%>" oninput="calculate();"></td>
 		<td id="box2_<%= y %>" oninput=""><%= product.price %></td>
 		<td id="result_<%= x %>"><%= product.price %></td>

@@ -8,8 +8,14 @@
 <div class="hotel">
 
 <p>
-  Customer name:
+  Name:
   <%= @order.customer_name %>
+</p>
+<p>
+#:<%= @order.id %>
+</p>
+<p>
+Date:<%= @order.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>
 </p>
 <% @products = Product.where(id: @order.product_ids)%>
 <table class="table table-bordered">
@@ -22,9 +28,9 @@
 	<% x = 1 %>
 	<% y = 1 %>
 
-	<%@products.sort_by{|r| r}.each_with_index do |product, i|%>
+	<%@products.order(:created_at).each_with_index do |product, i|%>
 	<tr>
-		<td style="font-size: 30px;"><%= product.name %>		</td>
+		<td style="font-size: 17px;"><%= product.name %>		</td>
 		<td><input type="number" name="quantity" min="1" max="100" id="box1_<%= y %>" value="<%= @order.index[i]%>" oninput="calculate();"></td>
 		<td id="box2_<%= y %>" oninput=""><%= product.price %></td>
 		<td id="result_<%= x %>"><%= product.price %></td>

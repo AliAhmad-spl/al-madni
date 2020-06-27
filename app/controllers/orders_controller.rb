@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
   def index
     @date             = Date.parse(params[:date]) rescue Date.today
     @orders           = Order.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
-    @today_sale       = @orders.pluck(:total).sum
+    @today_sale       = @orders.pluck(:total).reject(&:blank?).sum
     @total_orders   = Order.count
     @current_orders = @orders.size
   end

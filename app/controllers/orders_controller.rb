@@ -42,14 +42,20 @@ class OrdersController < ApplicationController
           @order.update(status: 'delivered')
         end
         @order.update(index: quntities)
-        @prices=Product.where(id: @order.product_ids).pluck(:price)
+        products.update_all(order_id: @order.id)
+        @prices=products.pluck(:price)
+
         @quntities = @order.quntities.compact
+        products.order(:created_at).each_with_index do |p, i|
+          p.update(quntity: @quntities[i], total: p.price * @quntities[i])
+        end        
         @zip = @prices.zip(@quntities)
+
         if @order.discount > 0
-          discounted = @zip.map{|x, y| x*y}.sum - (@zip.map{|x, y| x*y}.sum * @order.discount/100)
+          discounted = (@zip.map{|x, y| x*y}.sum + @order.other_charges) - ((@zip.map{|x, y| x*y}.sum + @order.other_charges) * @order.discount/100)
           @order.update(total: discounted)
         else
-          @order.update(total: @zip.map{|x, y| x*y}.sum)
+          @order.update(total: (@zip.map{|x, y| x*y}.sum + @order.other_charges))
         end
 
         format.html { redirect_to @order }
@@ -59,6 +65,10 @@ class OrdersController < ApplicationController
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def products
+    @products ||= Product.where(id: @order.product_ids)
   end
 
   def status
@@ -107,6 +117,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:customer_name, :user_id, :special_notes, :address, :contact_number, :discount, :customer, :quntities => [], :product_ids => [])
+      params.require(:order).permit(:customer_name, :user_id, :special_notes, :address, :contact_number, :discount, :customer, :other_charges, :quntities => [], :product_ids => [])
     end
 end

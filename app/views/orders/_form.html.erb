@@ -32,6 +32,10 @@
     <%= form.hidden_field :user_id, value: current_user.id %>
     <%= form.number_field :discount, class: 'form-control', style: "width: 30%;", min:"0" %>
   </div>
+  <div class="field">
+    <%= form.label :other_charges %>
+    <%= form.number_field :other_charges, class: 'form-control', style: "width: 30%;", min:"0" %>
+  </div>
 <%end%>
 <% if !current_user.sale? && !current_user.admin? %>
      <div class="field">
@@ -57,7 +61,7 @@
         <%if current_user.admin? %>
           <%= link_to 'Destroy', one_menu, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm", style: "color: white" %>
          <%end%></center>
-          <% one_menu.products.each_with_index do |product, index| %>
+          <% one_menu.products.order(:created_at).each_with_index do |product, index| %>
             <ul>
             <li>
               <span style="float: left;">

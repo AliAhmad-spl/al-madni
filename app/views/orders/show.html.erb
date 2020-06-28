@@ -17,6 +17,11 @@
 <p>
 Date:<%= @order.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>
 </p>
+<%if @order.other_charges > 0 %> 
+<p>
+Other charges Rs:<%= @order.other_charges%>
+</p>
+<%end%>
 <% @products = Product.where(id: @order.product_ids)%>
 <table class="table table-bordered">
 	<tr>
@@ -28,12 +33,12 @@ Date:<%= @order.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>
 	<% x = 1 %>
 	<% y = 1 %>
 
-	<%@products.order(:created_at).each_with_index do |product, i|%>
+	<%@products.order(:total).reverse.each do |product|%>
 	<tr>
 		<td style="font-size: 17px;"><%= product.name %>		</td>
-		<td><input type="number" name="quantity" min=".01" step=".01" max="100" id="box1_<%= y %>" value="<%= @order.index[i]%>" oninput="calculate();"></td>
-		<td id="box2_<%= y %>" oninput=""><%= product.price %></td>
-		<td id="result_<%= x %>"><%= product.price %></td>
+		<td><%= product.quntity%></td>
+		<td><%= product.price %></td>
+		<td><%= product.total %></td>
 	</tr>
 	<% x = x + 1 %>
 	<% y = y + 1 %>
@@ -46,7 +51,7 @@ Date:<%= @order.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>
 		<div class="col-md-4">
 	<% if @order.discount > 0%>
 
-	<span style="font-size: 15px;" >Total amount:</span> <span id="grand_total" class="pull-right" style="font-size: 15px;"><%= @order.total%></span>
+	<span style="font-size: 15px;" >Total amount:</span> <span id="grand_total" class="pull-right" style="font-size: 15px;"><%= @order.products.pluck(:total).sum + @order.other_charges %> </span>
 	<p><span style="font-size: 15px;" > Discounted total:</span> <span class="pull-right"  style="font-size: 15px;"> <%= @order.total%></span></p>
 	<%else%>
 	<span style="font-size: 15px;" >Total amount:</span> <span id="grand_total" class="pull-right" style="font-size: 15px;"><%= @order.total%></span>

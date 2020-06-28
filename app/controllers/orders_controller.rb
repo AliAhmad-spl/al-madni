@@ -38,11 +38,16 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     respond_to do |format|
       if @order.save
+        products.each do |p|
+          p = p.clone
+          p.one_menu_id = nil
+          p.order_id = @order.id
+          p.save
+        end
         if current_user.sale? || current_user.admin?
           @order.update(status: 'delivered')
         end
         @order.update(index: quntities)
-        products.update_all(order_id: @order.id)
         @prices=products.pluck(:price)
 
         @quntities = @order.quntities.compact

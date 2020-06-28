@@ -22,7 +22,6 @@ Date:<%= @order.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>
 Other charges Rs:<%= @order.other_charges%>
 </p>
 <%end%>
-<% @products = Product.where(id: @order.product_ids)%>
 <table class="table table-bordered">
 	<tr>
 		<td>Name</td>
@@ -33,7 +32,7 @@ Other charges Rs:<%= @order.other_charges%>
 	<% x = 1 %>
 	<% y = 1 %>
 
-	<%@products.order(:total).reverse.each do |product|%>
+	<%@order.products.order(:total).reverse.each do |product|%>
 	<tr>
 		<td style="font-size: 17px;"><%= product.name %>		</td>
 		<td><%= product.quntity%></td>

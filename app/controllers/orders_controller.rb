@@ -51,6 +51,7 @@ class OrdersController < ApplicationController
         @prices=products.pluck(:price)
 
         @quntities = @order.quntities.compact
+        @quntities = @quntities.reverse
         products.order(:created_at).each_with_index do |p, i|
           p.update(quntity: @quntities[i], total: p.price * @quntities[i])
         end        

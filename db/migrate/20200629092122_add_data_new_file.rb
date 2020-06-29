@@ -1,6 +1,5 @@
 class AddDataNewFile < ActiveRecord::Migration[5.2]
   def change
-  	remove_column :one_menus, :index, :integer
   	OneMenu.create(name:"Mutton")
   	OneMenu.create(name:"Chicken")
   	OneMenu.create(name:"Beef")

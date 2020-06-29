@@ -33,27 +33,20 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    quntities = []
-    quntities = order_params[:quntities].reject(&:blank?)
     @order = Order.new(order_params)
     respond_to do |format|
       if @order.save
-        products.each do |p|
-          p = p.clone
-          p.one_menu_id = nil
-          p.order_id = @order.id
-          p.save
+        products.order(:created_at).each_with_index do |p, i|          
+          @quntities = @order.quntities.reject(&:blank?)  
+          p.update(order_id: nil)        
+          Product.create!(name: p.name, price: p.price, quntity: @quntities[i], total: p.price * @quntities[i], order_id: @order.id )          
         end
+
         if current_user.sale? || current_user.admin?
           @order.update(status: 'delivered')
         end
-        @order.update(index: quntities)
+        @order.update(index: @quntities)
         @prices=products.pluck(:price)
-
-        @quntities = @order.quntities.compact
-        products.order(:created_at).each_with_index do |p, i|
-          p.update(quntity: @quntities[i], total: p.price * @quntities[i])
-        end        
         @zip = @prices.zip(@quntities)
 
         if @order.discount > 0

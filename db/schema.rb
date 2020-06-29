@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_28_112559) do
+ActiveRecord::Schema.define(version: 2020_06_29_102853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,6 @@ ActiveRecord::Schema.define(version: 2020_06_28_112559) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "index", default: 1
   end
 
   create_table "orders", force: :cascade do |t|
@@ -73,18 +72,17 @@ ActiveRecord::Schema.define(version: 2020_06_28_112559) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
-    t.float "quntity", default: 1.0
+    t.integer "quntity"
     t.integer "price"
     t.integer "one_menu_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "order_id"
-    t.integer "total", default: 0
-    t.index ["order_id"], name: "index_products_on_order_id"
+    t.integer "order_id"
+    t.integer "total"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email", default: ""
+    t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -103,5 +101,4 @@ ActiveRecord::Schema.define(version: 2020_06_28_112559) do
   add_foreign_key "histories", "items"
   add_foreign_key "histories", "users"
   add_foreign_key "items", "users"
-  add_foreign_key "products", "orders"
 end

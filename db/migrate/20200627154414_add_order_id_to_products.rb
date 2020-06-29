@@ -1,5 +1,9 @@
 class AddOrderIdToProducts < ActiveRecord::Migration[5.2]
   def change
-    add_reference :products, :order, foreign_key: true
+    add_column :products, :order_id, :integer
+  end
+
+  def down
+  	
   end
 end

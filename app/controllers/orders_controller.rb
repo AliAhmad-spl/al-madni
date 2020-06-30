@@ -37,7 +37,6 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
 
     respond_to do |format|
-      byebug
       if @order.save
         products.order(:created_at).each_with_index do |p, i|          
           @quntities = @order.quntities.reject(&:blank?)          

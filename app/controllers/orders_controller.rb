@@ -35,12 +35,13 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     @order = Order.new(order_params)
+
     respond_to do |format|
+      byebug
       if @order.save
         products.order(:created_at).each_with_index do |p, i|          
-          @quntities = @order.quntities.reject(&:blank?)  
-          p.update(order_id: nil)        
-          Product.create!(name: p.name, price: p.price, quntity: @quntities[i], total: p.price * @quntities[i], order_id: @order.id )          
+          @quntities = @order.quntities.reject(&:blank?)          
+          OrderProduct.create!(name: p.name, price: p.price, quntity: @quntities[i], total: p.price * @quntities[i], order_id: @order.id )          
         end
 
         if current_user.sale? || current_user.admin?

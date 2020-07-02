@@ -51,7 +51,7 @@ Other charges Rs:<%= @order.other_charges%>
 		<div class="col-md-4">
 	<% if @order.discount > 0%>
 
-	<span style="font-size: 15px;" >Total amount:</span> <span id="grand_total" class="pull-right" style="font-size: 15px;"><%= @order.products.pluck(:total).sum + @order.other_charges %> </span>
+	<span style="font-size: 15px;" >Total amount:</span> <span id="grand_total" class="pull-right" style="font-size: 15px;"><%= @order.order_products.pluck(:total).sum + @order.other_charges %> </span>
 	<p><span style="font-size: 15px;" > Discounted total:</span> <span class="pull-right"  style="font-size: 15px;"> <%= @order.total%></span></p>
 	<%else%>
 	<span style="font-size: 15px;" >Total amount:</span> <span id="grand_total" class="pull-right" style="font-size: 15px;"><%= @order.total%></span>

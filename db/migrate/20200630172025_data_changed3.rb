@@ -1,6 +1,6 @@
-class DataChanged2 < ActiveRecord::Migration[5.2]
+class DataChanged3 < ActiveRecord::Migration[5.2]
   def change
-  	  	  	OneMenu.create(name:"Mutton")
+  	OneMenu.create(name:"Mutton")
   	OneMenu.create(name:"Chicken")
   	OneMenu.create(name:"Beef")
   	OneMenu.create(name:"Bar B-Q")
@@ -11,10 +11,8 @@ class DataChanged2 < ActiveRecord::Migration[5.2]
 
   	Product.create(name:"کلومٹن کڑاہی دیسی گھی والی", price: 1900, one_menu_id: 1)
   	Product.create(name:"مٹن کراہی", price: 1700, one_menu_id: 1)
-  	Product.create(name:"پاؤمٹن کڑاہی دیسی گھی والی", price: 475, one_menu_id: 1)
-  	Product.create(name:"پاؤ مٹن کڑاہی", price: 425, one_menu_id: 1)
   	Product.create(name:"پاؤ مٹن اچاری ", price: 450, one_menu_id: 1)
-	Product.create(name:"مٹن قورمہ فل", price: 400, one_menu_id: 1)
+	  Product.create(name:"مٹن قورمہ فل", price: 400, one_menu_id: 1)
   	Product.create(name:"مٹن قورمہ ہاف ", price: 200, one_menu_id: 1)
   	Product.create(name:"پلیٹ مٹن قیمہ", price: 300, one_menu_id: 1)
 
@@ -25,6 +23,7 @@ class DataChanged2 < ActiveRecord::Migration[5.2]
   	Product.create(name:"کلو چکن اچاری", price: 900, one_menu_id: 2)
   	Product.create(name:"چکن قورمہ ہاف", price: 125, one_menu_id: 2)
   	Product.create(name:"دیسی مرغی دیسی گھی", price: 1900, one_menu_id: 2)
+    Product.create(name:"کلو چکن کڑاہی", price: 1900, one_menu_id: 2)
 
 
   	Product.create(name:"کلو بیف کڑاہی", price: 1100, one_menu_id: 3)
@@ -52,7 +51,7 @@ class DataChanged2 < ActiveRecord::Migration[5.2]
 
   	Product.create(name:"رائتہ", price: 40, one_menu_id: 6)
   	Product.create(name:"سلاد", price: 40, one_menu_id: 6)
-  	Product.create(name:"رہیڈ روٹی", price: 20, one_menu_id: 6)
+  	Product.create(name:"پرہیڈ روٹی", price: 20, one_menu_id: 6)
   	Product.create(name:"کلو رشین سلاد", price: 600, one_menu_id: 6)
   	Product.create(name:"پاؤ رشین سلاد", price: 150, one_menu_id: 6)
   	Product.create(name:"اچار", price: 10, one_menu_id: 6)
@@ -62,7 +61,12 @@ class DataChanged2 < ActiveRecord::Migration[5.2]
   	Product.create(name:"بن", price: 25, one_menu_id: 6)
   	Product.create(name:"ڈسپوزیبل پلیٹ", price: 5, one_menu_id: 6)
   	Product.create(name:"ڈسپوزیبل پلیٹ بڑی", price: 10, one_menu_id: 6)
-  	Product.create(name:"روٹی پارسل", price: 7, one_menu_id: 6)
+    Product.create(name:"روٹی پارسل", price: 7, one_menu_id: 6)
+
+    Product.create(name:"کلو دیسی گھی", price: 1400, one_menu_id: 6)
+    Product.create(name:"پھکی", price: 50, one_menu_id: 6)
+    Product.create(name:"سونف", price: 60, one_menu_id: 6)
+    
 
 
   	Product.create(name:"ڈیڑھ لٹربوتل", price: 100, one_menu_id: 7)
@@ -72,6 +76,8 @@ class DataChanged2 < ActiveRecord::Migration[5.2]
   	Product.create(name:"منرل واٹربڑی", price: 60, one_menu_id: 7)
   	Product.create(name:"منرل واٹر چھوٹی", price: 30, one_menu_id: 7)
   	Product.create(name:"ریگولر بوتل", price: 30, one_menu_id: 7)
+    Product.create(name:"300 ML سٹنگ", price: 40, one_menu_id: 7)
+    Product.create(name:"345 ML بوتل", price: 35, one_menu_id: 7)
 
 
 
@@ -83,6 +89,5 @@ class DataChanged2 < ActiveRecord::Migration[5.2]
   	Product.create(name:"پلیٹ دال ماش دیسی گھی والی", price: 150, one_menu_id: 8)
   	Product.create(name:"پلیٹ ملائی", price: 200, one_menu_id: 8)
   	Product.create(name:"کلودودھ", price: 110, one_menu_id: 8)
-  	Product.create(name:"پاؤ دودھ", price: 28, one_menu_id: 8)
   end
 end

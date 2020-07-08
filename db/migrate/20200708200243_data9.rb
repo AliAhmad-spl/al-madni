@@ -1,4 +1,4 @@
-class Data8 < ActiveRecord::Migration[5.2]
+class Data9 < ActiveRecord::Migration[5.2]
   def change
   	OneMenu.create(name:"Mutton")
   	OneMenu.create(name:"Chicken")

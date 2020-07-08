@@ -52,6 +52,7 @@ class OrdersController < ApplicationController
 
         if @order.discount > 0
           discounted = (@zip.map{|x, y| x*y}.sum + @order.other_charges) - ((@zip.map{|x, y| x*y}.sum + @order.other_charges) * @order.discount/100)
+          @disc = (@zip.map{|x, y| x*y}.sum + @order.other_charges) * @order.discount/100
           @order.update(total: discounted)
         else
           @order.update(total: (@zip.map{|x, y| x*y}.sum + @order.other_charges))

@@ -53,7 +53,7 @@ class OrdersController < ApplicationController
         if @order.discount > 0
           discounted = (@zip.map{|x, y| x*y}.sum + @order.other_charges) - ((@zip.map{|x, y| x*y}.sum + @order.other_charges) * @order.discount/100)
           @disc = (@zip.map{|x, y| x*y}.sum + @order.other_charges) * @order.discount/100
-          @order.update(total: discounted)
+          @order.update(total: discounted, disc: @disc)
         else
           @order.update(total: (@zip.map{|x, y| x*y}.sum + @order.other_charges))
         end
@@ -117,6 +117,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:customer_name, :user_id, :special_notes, :address, :contact_number, :discount, :customer, :other_charges, :quntities => [], :product_ids => [])
+      params.require(:order).permit(:customer_name, :user_id, :special_notes, :address, :contact_number, :discount, :customer, :disc, :other_charges, :quntities => [], :product_ids => [])
     end
 end

@@ -25,7 +25,7 @@
   <body >
     <br>
     <% if @show_image.blank? %>
-      <center><%= image_tag('photo.png', :style => "width:180px; height:130px;") %></center>
+      <center><%= image_tag('photo.png', :style => "width:180px; height:130px; padding: 0px;") %></center>
    <% end %>
     <% if notice %>
   <p class="alert alert-success"><%= notice %></p>

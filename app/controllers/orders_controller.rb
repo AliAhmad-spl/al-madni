@@ -71,6 +71,14 @@ class OrdersController < ApplicationController
     @products ||= Product.where(id: @order.product_ids)
   end
 
+  def sold_products
+    @date = Date.parse(params[:date]) rescue Date.today
+    @orders = Order.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
+    @products = OrderProduct.where(order_id: @orders.ids)
+    @total_qty = @products.pluck(:quntity).sum rescue 0
+    @amount = @products.pluck(:total).sum rescue 0
+  end
+
   def status
    @orders = current_user.orders.paginate(page: params[:page])    
   end

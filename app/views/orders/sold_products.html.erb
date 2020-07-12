@@ -1,0 +1,47 @@
+<p class="pull-right">
+<% if user_signed_in? %>
+  Logged in as <strong><%= current_user.email %></strong>.
+  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link btn btn-success btn-sm',style:'color: white' %> |
+  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link btn btn-danger btn-sm', style:'color: white'  %>
+<% else %>
+  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link', class: 'btn btn-success btn-sm'  %> |
+  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+<% end %> |
+<%= link_to 'back to home', root_path, class: "btn btn-warning", style: "color: white;" %>
+</p>
+<p id="notice"><%= notice %></p>
+<br>
+<br>
+<br>
+<h2 style="float: right;"> Sale: Rs. <%= @amount  %></h2> 
+<h2 style="float: right;"> Qty: <%= @total_qty %>=/=</h2>
+
+<h1>Today's Sold Products</h1>
+<br>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Order #</th>
+      <th>Name</th>
+      <th>QTY</th>
+      <th>Price</th>
+      <th>Total</th>
+      <th>Order Details</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.order_id %></td>
+        <td><%= product.name %></td>
+        <td><%= product.quntity%></td>
+        <td><%= product.price %></td>
+        <td><%= product.total%></td>
+        <td><%= link_to 'view complete order', order_path(id: product.order_id), class: "btn btn-warning", style: "color: white;" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

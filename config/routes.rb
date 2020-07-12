@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   		get :inbox
       get :all_users
       get :small
+      get :sold_products
   	end
   end
   resources :one_menus

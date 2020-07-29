@@ -26,14 +26,14 @@ class Eleven < ActiveRecord::Migration[5.2]
   	Product.create(name:"دیسی مرغی دیسی گھی", price: 1900, one_menu_id: 2)
     Product.create(name:"کلو چکن کڑاہی", price: 800, one_menu_id: 2)
     Product.create(name:"چکن کورما", price: 250, one_menu_id: 2)
-    Product.create(name:"کلو بیف کڑاہی دیسی گھی والی", price: 1300, one_menu_id: 2)
+    
 
   	Product.create(name:"کلو بیف کڑاہی", price: 1100, one_menu_id: 3)
   	Product.create(name:"پاؤ بیف کڑاہی", price: 280, one_menu_id: 3)
   	Product.create(name:"کلو بیف اچاری", price: 1200, one_menu_id: 3)
   	Product.create(name:"پاؤ بیف اچاری", price: 300, one_menu_id: 3)
   	Product.create(name:"پاؤ بیف کڑاہی دیسی گھی والی", price: 325, one_menu_id: 3)
-
+    Product.create(name:"کلو بیف کڑاہی دیسی گھی والی", price: 1300, one_menu_id: 3)
 
   	Product.create(name:"لیگ پیس", price: 140, one_menu_id: 4)
   	Product.create(name:"بیف کباب", price: 70, one_menu_id: 4)

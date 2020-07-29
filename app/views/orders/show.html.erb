@@ -19,10 +19,12 @@
 <p>
 Date:<%= @order.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>
 </p>
+<%if @order.other_charges.present? %>
 <%if @order.other_charges > 0 %> 
 <p>
 Other charges Rs:<%= @order.other_charges%>
 </p>
+<%end%>
 <%end%>
 <table class="table table-bordered">
 	<tr>

@@ -42,7 +42,7 @@ class OrdersController < ApplicationController
           @quntities = @order.quntities.reject(&:blank?)          
           OrderProduct.create!(name: p.name, price: p.price, quntity: @quntities[i], total: p.price * @quntities[i], order_id: @order.id )          
         end
-
+        @other = @order.other_charges rescue 0
         if current_user.sale? || current_user.admin?
           @order.update(status: 'delivered')
         end
@@ -51,11 +51,11 @@ class OrdersController < ApplicationController
         @zip = @prices.zip(@quntities)
 
         if @order.discount > 0
-          discounted = (@zip.map{|x, y| x*y}.sum + @order.other_charges) - ((@zip.map{|x, y| x*y}.sum + @order.other_charges) * @order.discount/100)
-          @disc = (@zip.map{|x, y| x*y}.sum + @order.other_charges) * @order.discount/100
+          discounted = (@zip.map{|x, y| x*y}.sum + @other) - ((@zip.map{|x, y| x*y}.sum + @other) * @order.discount/100)
+          @disc = (@zip.map{|x, y| x*y}.sum + @other) * @order.discount/100
           @order.update(total: discounted, disc: @disc)
         else
-          @order.update(total: (@zip.map{|x, y| x*y}.sum + @order.other_charges))
+          @order.update(total: (@zip.map{|x, y| x*y}.sum + @other))
         end
 
         format.html { redirect_to @order }

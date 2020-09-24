@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     @order = Order.new(order_params)
-
+    @order[:product_ids] = @order[:product_ids].sort_by(&:length)
     respond_to do |format|
       if @order.save
         products.order(:created_at).each_with_index do |p, i|          

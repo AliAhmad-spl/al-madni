@@ -30,7 +30,7 @@
    <div class="field">
     <%= form.label :Discount_in_percentage %>
     <%= form.hidden_field :user_id, value: current_user.id %>
-    <%= form.number_field :discount, class: 'form-control', style: "width: 30%;", min:"0" %>
+    <%= form.number_field :discount, class: 'form-control', style: "width: 30%;", min:"0", max: 100 %>
   </div>
   <div class="field">
     <%= form.label :other_charges %>
@@ -55,13 +55,13 @@
     <% @one_menus.order(:created_at).each_with_index do |one_menu, plus| %>
       <% plus + 1 %>
 
-   <div class="col-md-4 col" style="min-height: 600px;">
+   <div class="col-md-4 col" style="min-height: 500px;">
 
        <center><b> <%= one_menu.name %> </b>
         <%if current_user.admin? %>
           <%= link_to 'Destroy', one_menu, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm", style: "color: white" %>
          <%end%></center>
-          <% one_menu.products.order(:created_at).each_with_index do |product, index| %>
+          <% one_menu.products.sort_by {|e| e.price}.reverse.each_with_index do |product, index| %>
             <ul>
             <li>
            <span style="float: left;">

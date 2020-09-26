@@ -35,27 +35,23 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     @order = Order.new(order_params)
-    @order[:product_ids] = @order[:product_ids].sort_by(&:to_i)
     respond_to do |format|
       if @order.save
-        products.order(:created_at).each_with_index do |p, i|          
-          @quntities = @order.quntities.reject(&:blank?)          
-          OrderProduct.create!(name: p.name, price: p.price, quntity: @quntities[i], total: p.price * @quntities[i], order_id: @order.id )          
+         qty=params[:order][:quntities].first.permit!.to_h.first.last
+        products.each do |p|                    
+          OrderProduct.create!(name: p.name, price: p.price, quntity: qty[:"#{p.id}"].to_f, total: p.price * qty[:"#{p.id}"].to_f, order_id: @order.id)          
         end
         @other = @order.other_charges rescue 0
         if current_user.sale? || current_user.admin?
           @order.update(status: 'delivered')
         end
-        @order.update(index: @quntities)
-        @prices=products.pluck(:price)
-        @zip = @prices.zip(@quntities)
 
         if @order.discount > 0
-          discounted = (@zip.map{|x, y| x*y}.sum + @other) - ((@zip.map{|x, y| x*y}.sum + @other) * @order.discount/100)
-          @disc = (@zip.map{|x, y| x*y}.sum + @other) * @order.discount/100
+          discounted = (OrderProduct.where(order_id: @order.id).pluck(:total).sum + @other) - ((OrderProduct.where(order_id: @order.id).pluck(:total).sum + @other) * @order.discount/100)
+          @disc = (OrderProduct.where(order_id: @order.id).pluck(:total).sum + @other) * @order.discount/100
           @order.update(total: discounted, disc: @disc)
         else
-          @order.update(total: (@zip.map{|x, y| x*y}.sum + @other))
+          @order.update(total: (OrderProduct.where(order_id: @order.id).pluck(:total).sum + @other))
         end
 
         format.html { redirect_to @order }

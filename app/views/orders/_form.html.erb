@@ -66,7 +66,7 @@
             <li>
            <span style="float: left;">
                 <%= form.check_box("product_ids", {:multiple => true, id: "myCheck1#{plus}#{index}", onclick: "myFunction(1#{plus}#{index})"}, "#{product.id}", nil) %><%= product.name%>
-        <input type="number" name="order[quntities][]" step=".01"
+        <input type="number" name="order[quntities][][product][<%= product.id %>]" step=".01"
         id="text1<%= plus %><%= index %>" min=".01" style="display:none; width:4em;" placeholder="Qty"></span> <span style="float: right;"><%= product.price %></span> 
                   </li>
             </ul>

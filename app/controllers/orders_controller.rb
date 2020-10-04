@@ -18,7 +18,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-     @one_menus = OneMenu.order(:position)
+     @one_menus = OneMenu.order(:position).reverse
      @order = Order.new
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_30_172025) do
+ActiveRecord::Schema.define(version: 2020_10_04_094242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 2020_06_30_172025) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "index", default: 1
+    t.integer "position"
   end
 
   create_table "order_products", force: :cascade do |t|
@@ -66,8 +68,6 @@ ActiveRecord::Schema.define(version: 2020_06_30_172025) do
     t.string "customer_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "product_ids", default: [], array: true
-    t.float "quntities", default: [], array: true
     t.integer "user_id"
     t.integer "status", default: 0
     t.string "contact_number"
@@ -78,15 +78,21 @@ ActiveRecord::Schema.define(version: 2020_06_30_172025) do
     t.integer "discount", default: 0
     t.integer "total"
     t.integer "other_charges", default: 0
+    t.integer "disc", default: 0
+    t.string "product_ids", default: [], array: true
+    t.string "quntities", default: [], array: true
   end
 
   create_table "products", force: :cascade do |t|
     t.string "name"
-    t.integer "quntity"
+    t.float "quntity", default: 1.0
     t.integer "price"
     t.integer "one_menu_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "product_type", default: 0
+    t.integer "order_id"
+    t.integer "total", default: 0
   end
 
   create_table "users", force: :cascade do |t|

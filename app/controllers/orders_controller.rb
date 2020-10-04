@@ -18,7 +18,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-     @one_menus = OneMenu.all
+     @one_menus = OneMenu.order(:position)
      @order = Order.new
   end
 

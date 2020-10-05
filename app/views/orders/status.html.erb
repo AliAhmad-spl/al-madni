@@ -3,20 +3,20 @@
 <table class="table table-bordered">
 	<tbody>
 		<tr>
+			<th>Order #</th>
 			<th>Name</th>
-			<th>Contact Number</th>
-			<th>Address</th>
-			<th>Special Note</th>
+			<th>Placed at</th>
+			<th>total bill</th>
 			<th>Status</th>
 			<th>Details</th>
 		</tr>
 		
 	<% @orders.each do |order|%>	
 	<tr>
-		<td><%= order.user.name %></td>
-		<td><%= order&.user.contact %></td>
-		<td><%= order&.user.address %></td>
-		<td><%= order&.special_notes %></td>
+		<td><%= order.id %></td>
+		<td><%= order&.customer_name %></td>
+		<td><%= order&.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %></td>
+		<td><%= order&.total %></td>
 		<% if order.status == "delivered" %>
 				<td ><span class="btn btn-success"><%= order&.status  %></span></td>
 			<% elsif order.status == "rejected" %>

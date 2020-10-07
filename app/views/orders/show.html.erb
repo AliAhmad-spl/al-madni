@@ -6,7 +6,7 @@
 <!-- <center><p style = "font-family:courier,arial,helvetica;font-size: 15px;">Al Madni Hotel</p></center> -->
 <center><%= image_tag('poly.png', :style => "width:152px; height:108px; padding: 0px;") %></center>
 <p id="notice"><%= notice %></p>
-<%= link_to "Home", root_path, :class => 'navbar-link btn btn-danger btn-sm pull-right', style:'color: white'  %>
+<%= link_to "Home", root_path, :class => 'navbar-link btn btn-danger btn-sm pull-right', id: "home", style:'color: white'  %>
 <div class="hotel">
 
 <p>
@@ -82,8 +82,19 @@ Other charges Rs:<%= @other %>
  		window.print();
  		location.reload();
  		document.getElementsById("1").setAttribute("class", "remove_button");
- 		document.getElementsById("2").setAttribute("class", "remove_button"); 
+ 		document.getElementsById("2").setAttribute("class", "remove_button");
+ 		// $("#home").prop("class", "remove"); 
  		document.getElementsById("print").setAttribute("class", "remove_button");  
+ 	});
+ </script>
+  <script >
+ 	$('#home').click(function()
+ 	{
+ 		window.print();
+ 		location.reload();
+ 		document.getElementsById("1").setAttribute("class", "remove_button-1");
+ 		document.getElementsById("2").setAttribute("class", "remove_button-1"); 
+ 		document.getElementsById("home").setAttribute("class", "remove_button-1");  
  	});
  </script>
  <script>
@@ -121,9 +132,11 @@ Other charges Rs:<%= @other %>
 </script>
 <script type="text/javascript">
 	function removebtn(){
-	document.getElementsByTagName("button")[0].setAttribute("class", "remove");
-	document.getElementById("edit").setAttribute("class", "remove");
-	document.getElementById("back").setAttribute("class", "remove");
-		}
+	// document.getElementsByTagName("button")[0].setAttribute("class", "remove");
+	// document.getElementById("edit").setAttribute("class", "remove");
+	// document.getElementById("back").setAttribute("class", "remove");
+	$('#print').css('display', 'none');
+	$('#home').css('display', 'none');
+  }
 
 </script>

@@ -55,7 +55,7 @@
     <% @one_menus.each_with_index do |one_menu, plus| %>
       <% plus + 1 %>
 
-   <div class="col-md-4 col" style="min-height: 500px;">
+   <div class="col-md-4 col" >
 
        <center><b> <%= one_menu.name %> </b>
         <%if current_user.admin? %>
@@ -93,6 +93,7 @@
   if (checkBox.checked == true){
     text.style.display = "inline";
     document.getElementById("text"+index).required = true;
+    document.getElementById("text"+index).focus();
   } else {
     text.style.display = "none";
     document.getElementById("text"+index).required = false;

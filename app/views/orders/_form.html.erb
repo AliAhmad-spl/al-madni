@@ -25,7 +25,7 @@
 <% if current_user.sale? || current_user.admin? %>
   <div class="field">
     <%= form.label :customer_name %>
-    <%= form.text_field :customer_name, class: 'form-control', style: "width: 30%;", required: true %>
+    <%= form.text_field :customer_name, class: 'form-control', style: "width: 30%;", required: true, value: "No Name" %>
   </div>
    <div class="field">
     <%= form.label :Discount_in_percentage %>

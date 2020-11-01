@@ -10,20 +10,19 @@
 <div class="hotel">
 
 <p>
-  Name:
   <%= @order.customer_name %>
 </p>
 <p>
 #:<%= @order.id %>
 </p>
 <p>
-Date:<%= @order.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>
+<%= @order.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>
 </p>
 <% @other = @order.other_charges rescue 0 %>
 
 <%if @other > 0 %> 
 <p>
-Other charges Rs:<%= @other %>
+Other Rs:<%= @other %>
 </p>
 <%end%>
 <table class="table table-bordered">
@@ -31,14 +30,14 @@ Other charges Rs:<%= @other %>
 		<td>Name</td>
 		<td>Qty</td>
 		<td>Price</td>
-		<td>total</td>
+		<td>Total</td>
 	</tr>
 	<% x = 1 %>
 	<% y = 1 %>
 
 	<%@order.order_products.order(:total).reverse.each do |product|%>
 	<tr>
-		<td style="font-size: 10px;"><%= product.name %>		</td>
+		<td style="font-size: 10px; padding: 0px 50px 0px 0px; text-align: left;"><%= product.name %>		</td>
 		<td><%= product.quntity%></td>
 		<td><%= product.price %></td>
 		<td><%= product.total %></td>

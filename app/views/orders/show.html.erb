@@ -37,7 +37,7 @@ Other Rs:<%= @other %>
 
 	<%@order.order_products.order(:total).reverse.each do |product|%>
 	<tr>
-		<td style="font-size: 10px; padding: 0px 0px 0px 100px; text-align: left;"><%= product.name %>		</td>
+		<td style="font-size: 10px; padding: 0px 50px 0px 0px; text-align: left;"><%= product.name %>		</td>
 		<td><%= product.quntity%></td>
 		<td><%= product.price %></td>
 		<td><%= product.total %></td>

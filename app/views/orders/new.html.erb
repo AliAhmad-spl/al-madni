@@ -23,7 +23,8 @@
 	 <%= link_to 'add new product', new_product_path, class: "btn btn-warning", style: "color: white;"%>
 	  <%= link_to 'Expenses', expenses_path, class: "btn btn-warning", style: "color: white;"%>
 	 <% if current_user.admin? %>
-	 	<%= link_to 'History', orders_path, class: "btn btn-warning", style: "color: white;" %>
+	 	<%= link_to 'Sales', orders_path, class: "btn btn-warning", style: "color: white;" %>
+	 	<%= link_to 'Menu sorting', menu_sorting_orders_path, class: "btn btn-warning", style: "color: white;" %>
 	 	<%= link_to 'Inventory History', histories_items_path, class: "btn btn-primary", style: "color: white;"%>
 
 	 	<a type="button" style="color: white;" class="btn btn-success" href="<%= all_users_orders_path%>">

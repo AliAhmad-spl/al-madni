@@ -15,6 +15,21 @@ class OrdersController < ApplicationController
   def show
     @show_image = true
   end
+  def update_menu
+    menu = OneMenu.where(position: params[:position]).first
+    if menu.present?
+      new_menu = OneMenu.find(params[:id])
+      menu.update(position: new_menu.position)
+      new_menu.update(position: params[:position])
+      redirect_to menu_sorting_orders_path, notice: 'Updated successfully!'
+    else
+      redirect_to menu_sorting_orders_path, notice: 'check current position & add proper value'
+    end
+  end
+
+  def menu_sorting
+    @menus = OneMenu.all
+  end
 
   # GET /orders/new
   def new

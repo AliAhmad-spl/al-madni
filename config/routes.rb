@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   resources :orders do
   	collection do
   		get :status
+      get :menu_sorting
+      post :update_menu
   		get :inbox
       get :all_users
       get :small

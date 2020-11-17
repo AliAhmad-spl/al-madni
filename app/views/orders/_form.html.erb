@@ -57,7 +57,7 @@
 
    <div class="col-md-4 col" >
 
-       <center><b> <%= one_menu.name %> </b>
+       <center><b><b>[<%= one_menu.position%>]</b><%= one_menu.name %> </b>
         <%if current_user.admin? %>
           <%= link_to 'Destroy', one_menu, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm", style: "color: white" %>
          <%end%></center>

@@ -13,14 +13,14 @@
 
 	<%end%>
  <% if current_user.sale? || current_user.admin? %>
-	 <%= link_to 'add new category', new_one_menu_path, class: "btn btn-warning", style: "color: white;"%>
+	 <%= link_to 'Add new category', new_one_menu_path, class: "btn btn-warning", style: "color: white;"%>
 	 
-	 	<%= link_to 'inventory details', items_path, class: "btn btn-primary", style: "color: white;"%>
+	 	<%= link_to 'Inventory details', items_path, class: "btn btn-primary", style: "color: white;"%>
 
 	 	<a type="button" style="color: white;" class="btn btn-primary" href="<%= inbox_orders_path%>">
   			Inbox <span class="badge badge-light"><%=Order.placed.count%></span>
 		</a>
-	 <%= link_to 'add new product', new_product_path, class: "btn btn-warning", style: "color: white;"%>
+	 <%= link_to 'Add new product', new_product_path, class: "btn btn-warning", style: "color: white;"%>
 	  <%= link_to 'Expenses', expenses_path, class: "btn btn-warning", style: "color: white;"%>
 	 <% if current_user.admin? %>
 	 	<%= link_to 'Sales', orders_path, class: "btn btn-warning", style: "color: white;" %>

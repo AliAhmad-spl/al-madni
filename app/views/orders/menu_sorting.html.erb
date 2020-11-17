@@ -15,7 +15,7 @@
       <td><%= menu.name%></td>
       <td><%= menu.position%></td>
       <%= form_tag update_menu_orders_path do %>
-      <td><%= number_field_tag :position %></td>
+      <td><%= select_tag "position", options_from_collection_for_select(OneMenu.all, "position", "name")%></td>
       <td><%= hidden_field_tag :id, menu.id %></td>
       <td><%= submit_tag('update') %></td>
     <%end%>

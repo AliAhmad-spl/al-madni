@@ -29,6 +29,7 @@ class OneMenusController < ApplicationController
 
     respond_to do |format|
       if @one_menu.save
+        @one_menu.update(position: @one_menu.id)
         format.html { redirect_to root_path, notice: 'One menu was successfully created.' }
         format.json { render :show, status: :created, location: @one_menu }
       else

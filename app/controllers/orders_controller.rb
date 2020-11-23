@@ -39,6 +39,8 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
+    @one_menus = OneMenu.order(:position)
+    @order = Order.find(params[:id])
   end
 
   def all_users
@@ -54,7 +56,7 @@ class OrdersController < ApplicationController
       if @order.save
          qty=params[:order][:quntities].first.permit!.to_h.first.last
         products.each do |p|                    
-          OrderProduct.create!(name: p.name, price: p.price, quntity: qty[:"#{p.id}"].to_f, total: p.price * qty[:"#{p.id}"].to_f, order_id: @order.id)          
+          OrderProduct.create!(product_id: p.id, name: p.name, price: p.price, quntity: qty[:"#{p.id}"].to_f, total: p.price * qty[:"#{p.id}"].to_f, order_id: @order.id)          
         end
         @other = @order.other_charges rescue 0
         if current_user.sale? || current_user.admin?
@@ -98,11 +100,39 @@ class OrdersController < ApplicationController
   # PATCH/PUT /orders/1.json
   def update
     respond_to do |format|
-      if @order.update(status: params[:status])
-        format.html { redirect_to inbox_orders_path, notice: 'Order was successfully updated.' }
-        format.json { render :show, status: :ok, location: @order }
+       new_est = params[:order][:product_ids]
+       existing = @order.order_products.pluck(:product_id)
+       id =  existing.map { |e| e.to_s } -  new_est
+       ops = OrderProduct.where(order_id: @order.id, product_id: id)
+       ops.destroy_all
+      @order.update(order_params)
+      if @order.present?
+         qty=params[:order][:quntities].first.permit!.to_h.first.last
+        products.each do |p|                    
+        op = OrderProduct.find_by(name: p.name, price: p.price, order_id: @order.id)          
+          if op.present?
+           op.update(quntity: qty[:"#{p.id}"].to_f, total: p.price * qty[:"#{p.id}"].to_f)
+          else
+            OrderProduct.create(name: p.name, price: p.price, quntity: qty[:"#{p.id}"].to_f, total: p.price * qty[:"#{p.id}"].to_f, order_id: @order.id)
+          end
+        end
+        @other = @order.other_charges rescue 0
+        if current_user.sale? || current_user.admin?
+          @order.update(status: 'delivered')
+        end
+
+        if @order.discount > 0
+          discounted = (OrderProduct.where(order_id: @order.id).pluck(:total).sum + @other) - ((OrderProduct.where(order_id: @order.id).pluck(:total).sum + @other) * @order.discount/100)
+          @disc = (OrderProduct.where(order_id: @order.id).pluck(:total).sum + @other) * @order.discount/100
+          @order.update(total: discounted, disc: @disc)
+        else
+          @order.update(total: (OrderProduct.where(order_id: @order.id).pluck(:total).sum + @other))
+        end
+
+        format.html { redirect_to @order }
+        format.json { render :show, status: :created, location: @order }
       else
-        format.html { render :edit }
+        format.html { render :new }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end

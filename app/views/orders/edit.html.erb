@@ -1,6 +1,108 @@
-<h1>Editing Order</h1>
+<div class="container">
+<%= form_with scope: :order, url: order_path(@order), method: :put do |form| %>
 
-<%= render 'form', order: @order %>
+<% if current_user.sale? || current_user.admin? %>
+  <div class="actions">
+    <%= form.submit 'Update Order', :class => 'btn btn-success pull-right'  %>
+  </div>
+  <%else%>
+    <div class="actions">
+    <%= form.submit 'Place Order', :class => 'btn btn-success pull-right'  %>
+  </div>
+  <%end%>
+  <% if @order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
 
-<%= link_to 'Show', @order %> |
-<%= link_to 'Back', orders_path %>
+      <ul>
+      <% @order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<% if current_user.sale? || current_user.admin? %>
+  <div class="field">
+    <%= form.label :customer_name %>
+    <%= form.text_field :customer_name, class: 'form-control', style: "width: 30%;", required: true, value: "No Name" %>
+  </div>
+   <div class="field">
+    <%= form.label :Discount_in_percentage %>
+    <%= form.hidden_field :user_id, value: current_user.id %>
+    <%= form.number_field :discount, class: 'form-control', style: "width: 30%;", min:"0", max: 100 %>
+  </div>
+  <div class="field">
+    <%= form.label :other_charges %>
+    <%= form.number_field :other_charges, class: 'form-control', style: "width: 30%;", min:"0" %>
+  </div>
+<%end%>
+<% if !current_user.sale? && !current_user.admin? %>
+     <div class="field">
+    <%= form.label :Special_notes %>
+    <%= form.text_area :special_notes, class: 'form-control', placeholder: 'e.g: extra mayo',style: "width: 30%;" %>
+  </div>
+   <div class="field">
+    <%= form.hidden_field :user_id, value: current_user.id %>
+    <%= form.hidden_field :customer, value: true %>
+    <%#= form.number_field :discount, class: 'form-control', style: "width: 30%;" %>
+  </div>
+  <%end%>
+
+  <div class="container">
+  <div class="row">
+<div class="col-container">
+    <% @one_menus.reverse.each_with_index do |one_menu, plus| %>
+      <% plus + 1 %>
+
+   <div class="col-md-4 col" >
+
+       <center><b><b>[<%= one_menu.position%>]</b><%= one_menu.name %> </b>
+        <%if current_user.admin? %>
+          <%= link_to 'Destroy', one_menu, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm", style: "color: white" %>
+         <%end%></center>
+          <% one_menu.products.sort_by {|e| e.price}.reverse.each_with_index do |product, index| %>
+            <ul>
+            	<% orderproduct = @order.order_products.where(name:"#{product.name}", price:"#{product.price}").first %>
+            <li>
+           <span style="float: left;">
+                <%= form.check_box("product_ids", {:multiple => true, id: "myCheck1#{plus}#{index}", onclick: "myFunction(1#{plus}#{index})"}, "#{product.id}", nil) %><%= product.name%>
+                <% if orderproduct.present? %>
+        <input type="number" name="order[quntities][][product][<%= product.id %>]" step=".01"
+        id="text1<%= plus %><%= index %>" min=".01" value=<%= "#{orderproduct.quntity}" %> style="display:inline; width:4em;" placeholder="Qty"></span> <span style="float: right;"><%= product.price %></span>
+        <%else%>
+                <input type="number" name="order[quntities][][product][<%= product.id %>]" step=".01"
+        id="text1<%= plus %><%= index %>" min=".01" style="display:none; width:4em;" placeholder="Qty"></span> <span style="float: right;"><%= product.price %></span>
+        <%end%> 
+                  </li>
+            </ul>
+       
+          <% end %>  
+           </div>
+
+
+  <% end %>  
+          </div>
+          </div>    
+          </div>          
+<% end %>
+
+</div>
+<script type="text/javascript">
+  function myFunction(index) {
+  // Get the checkbox
+  var checkBox = document.getElementById("myCheck"+index);
+  // Get the output text
+  var text = document.getElementById("text"+index);
+
+  // If the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    text.style.display = "inline";
+    document.getElementById("text"+index).required = true;
+    document.getElementById("text"+index).focus();
+  } else {
+    text.style.display = "none";
+    document.getElementById("text"+index).required = false;
+  }
+}
+</script>

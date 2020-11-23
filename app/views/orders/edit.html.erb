@@ -4,6 +4,7 @@
 <% if current_user.sale? || current_user.admin? %>
   <div class="actions">
     <%= form.submit 'Update Order', :class => 'btn btn-success pull-right'  %>
+    <%= link_to "Home", root_path, :class => 'navbar-link btn btn-danger pull-right', id: "home", style:'color: white; margin-right:10px'  %> 
   </div>
   <%else%>
     <div class="actions">

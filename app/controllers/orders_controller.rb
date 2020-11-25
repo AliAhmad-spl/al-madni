@@ -33,7 +33,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-     @one_menus = OneMenu.order(:position).reverse
+     @one_menus = OneMenu.order(:position)
      @order = Order.new
   end
 
@@ -106,6 +106,7 @@ class OrdersController < ApplicationController
        ops = OrderProduct.where(order_id: @order.id, product_id: id)
        ops.destroy_all
       @order.update(order_params)
+      @order.update(edited: true)
       if @order.present?
          qty=params[:order][:quntities].first.permit!.to_h.first.last
         products.each do |p|                    

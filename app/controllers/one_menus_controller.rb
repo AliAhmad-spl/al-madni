@@ -44,7 +44,7 @@ class OneMenusController < ApplicationController
   def update
     respond_to do |format|
       if @one_menu.update(one_menu_params)
-        format.html { redirect_to @one_menu, notice: 'One menu was successfully updated.' }
+        format.html { redirect_to menu_sorting_orders_path, notice: 'One menu was successfully updated.' }
         format.json { render :show, status: :ok, location: @one_menu }
       else
         format.html { render :edit }

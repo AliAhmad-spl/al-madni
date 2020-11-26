@@ -10,6 +10,14 @@ class OrdersController < ApplicationController
     @current_orders = @orders.size
   end
 
+  def edited_orders
+    @date             = Date.parse(params[:date]) rescue Date.today
+    @orders           = Order.where(:created_at => @date.at_midnight..@date.next_day.at_midnight, edited: true)
+    @today_sale       = @orders.pluck(:total).reject(&:blank?).sum
+    @total_orders   = Order.count
+    @current_orders = @orders.size
+  end
+
   # GET /orders/1
   # GET /orders/1.json
   def show

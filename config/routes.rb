@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   		get :status
       get :menu_sorting
       post :update_menu
+      get :edited_orders
   		get :inbox
       get :all_users
       get :small

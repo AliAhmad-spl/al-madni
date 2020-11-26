@@ -10,9 +10,7 @@
   <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link', class: 'btn btn-success'  %> |
   <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
 <% end %>
-|<%= link_to 'Back',  new_order_path, class: "btn btn-warning btn-md" %> |
-<%= link_to 'Sold products', sold_products_orders_url(:date => @date), class:"btn btn-warning",style:"color:white" %>|
-<%= link_to 'Edited Orders', edited_orders_orders_url(:date => @date), class:"btn btn-warning",style:"color:white" %>
+|<%= link_to 'Back',  new_order_path, class: "btn btn-warning btn-md" %> 
 </p>
 <h2 style="float: right;">Today's Sale: Rs. <%= @today_sale %></h2>
 <h1>Orders</h1>

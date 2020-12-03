@@ -31,7 +31,7 @@ class OrdersController < ApplicationController
       new_menu.update(position: params[:position])
       redirect_to menu_sorting_orders_path, notice: 'Updated successfully!'
     else
-      redirect_to menu_sorting_orders_path, notice: 'check current position & add proper value'
+      redirect_to menu_sorting_orders_path, alert: 'check current position & add proper value'
     end
   end
 
@@ -87,7 +87,7 @@ class OrdersController < ApplicationController
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     else
-      format.html { redirect_to root_path, notice: "Please select at least 1 product!" }
+      format.html { redirect_to root_path, alert: "Please select at least 1 product!" }
     end
     end
   end
@@ -150,7 +150,7 @@ class OrdersController < ApplicationController
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
       else
-      format.html { redirect_to edit_order_path(@order), notice:"Please select at least 1 product to continue." } 
+      format.html { redirect_to edit_order_path(@order), alert:"Please select at least 1 product to continue." } 
       end
       end
   end
@@ -177,7 +177,7 @@ class OrdersController < ApplicationController
 
     def verify_admin
       if !current_user.admin?
-        redirect_to  new_order_path, notice: "You are not allowed to check orders" 
+        redirect_to  new_order_path, alert: "You are not allowed to check orders" 
       end
     end
 

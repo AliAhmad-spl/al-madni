@@ -19,7 +19,7 @@
 <p>
 <%= @order.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %d/%m/%Y") %>
 </p>
-<% @other = @order.other_charges rescue 0 %>
+<% @other = @order.other_charges || 0 rescue 0 %>
 
 <%if @other > 0 %> 
 <p>

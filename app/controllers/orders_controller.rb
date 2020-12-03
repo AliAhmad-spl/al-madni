@@ -61,6 +61,7 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     respond_to do |format|
+      if @order.product_ids.any?
       if @order.save
          qty=params[:order][:quntities].first.permit!.to_h.first.last
         products.each do |p|                    
@@ -85,6 +86,9 @@ class OrdersController < ApplicationController
         format.html { render :new }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
+    else
+      format.html { redirect_to root_path, notice: "Please select at least 1 product!" }
+    end
     end
   end
 
@@ -110,6 +114,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
        new_est = params[:order][:product_ids]
        existing = @order.order_products.pluck(:product_id)
+        if new_est.present?
        id =  existing.map { |e| e.to_s } -  new_est
        ops = OrderProduct.where(order_id: @order.id, product_id: id)
        ops.destroy_all
@@ -144,7 +149,10 @@ class OrdersController < ApplicationController
         format.html { render :new }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
-    end
+      else
+      format.html { redirect_to edit_order_path(@order), notice:"Please select at least 1 product to continue." } 
+      end
+      end
   end
 
   def inbox

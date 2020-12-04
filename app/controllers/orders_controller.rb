@@ -41,6 +41,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
+    @show_image = true
      @one_menus = OneMenu.order(:position)
      @order = Order.new
   end

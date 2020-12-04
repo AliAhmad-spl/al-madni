@@ -1,4 +1,3 @@
-<div class="container">
 <%= form_with(model: order, local: true) do |form| %>
 
 <% if current_user.sale? || current_user.admin? %>
@@ -49,7 +48,6 @@
   </div>
   <%end%>
 
-  <div class="container">
   <div class="row">
 <div class="col-container">
     <% @one_menus.each_with_index do |one_menu, plus| %>
@@ -77,11 +75,9 @@
 
   <% end %>  
           </div>
-          </div>    
-          </div>          
+          </div>            
 <% end %>
 
-</div>
 <script type="text/javascript">
   function myFunction(index) {
   // Get the checkbox
@@ -100,3 +96,6 @@
   }
 }
 </script>
+
+
+

@@ -1,41 +1,109 @@
-<p class="pull-right">
-<% if user_signed_in? %>
-  Logged in as <strong><%= current_user.email %></strong>.
-  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link btn btn-success btn-sm',style:'color: white' %> |
-  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link btn btn-danger btn-sm', style:'color: white'  %>
-<% else %>
-  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link', class: 'btn btn-success btn-sm'  %> |
-  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-<% end %>
-</p>
-	<% if !current_user.sale? || !current_user.admin? %>
-		<%= link_to 'My order status', status_orders_path, class: "btn btn-warning", style: "color: white;"%>
+        <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h3>AL Madni Hotel</h3>
+                </div>
 
-	<%end%>
- <% if current_user.sale? || current_user.admin? %>
-	 <%= link_to 'Add new category', new_one_menu_path, class: "btn btn-warning", style: "color: white;"%>
-	 
-	 	<%= link_to 'Inventory details', items_path, class: "btn btn-primary", style: "color: white;"%>
+                <ul class="list-unstyled components">
+                    <p>Manage Account</p>
+                    <li class="active">
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Status</a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                           <% if !current_user.sale? || !current_user.admin? %>
+								<li><%= link_to 'My order status', status_orders_path%></li>
+							<%end%>
+                        </ul>
+                    </li>
+                    <li>
+                        <%= link_to 'All products', products_path %>
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" >Product Management </a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+				 <% if current_user.sale? || current_user.admin? %>
+					 <li><%= link_to 'Add new category', new_one_menu_path%></li>
+					 
+					 	<li><%= link_to 'Inventory details', items_path%></li>
 
-	 	<a type="button" style="color: white;" class="btn btn-primary" href="<%= inbox_orders_path%>">
-  			Inbox <span class="badge badge-light"><%=Order.placed.count%></span>
-		</a>
-	 <%= link_to 'Add new product', new_product_path, class: "btn btn-warning", style: "color: white;"%>
-	  <%= link_to 'Expenses', expenses_path, class: "btn btn-warning", style: "color: white;"%>
-	 <% if current_user.admin? %>
-	 	<%= link_to 'Sales', orders_path, class: "btn btn-warning", style: "color: white;" %>
-	 	<%= link_to 'Menu settings', menu_sorting_orders_path, class: "btn btn-warning", style: "color: white;" %>
-	 	<%= link_to 'Inventory History', histories_items_path, class: "btn btn-primary", style: "color: white;"%>
+					 	<li><a type="button" style="color: white;" href="<%= inbox_orders_path%>">
+				  			Inbox
+						</a></li>
+					 <li><%= link_to 'Add new product', new_product_path%></li>
+					  <li><%= link_to 'Expenses', expenses_path%><li>
+					 <% if current_user.admin? %>
+					 	<li><%= link_to 'Sales', orders_path %></li>
+					 	<li><%= link_to 'Menu settings', menu_sorting_orders_path %></li>
+					 	<li><%= link_to 'Inventory History', histories_items_path%></li>
 
-	 	<a type="button" style="color: white;" class="btn btn-success" href="<%= all_users_orders_path%>">
-  			Total users <span class="badge badge-light"><%=User.count%></span>
-	 	<%= link_to 'All products', products_path, class: "btn btn-warning", style: "color: white;" %>
-	 <%end%>
- <%end%>
-<div class="container">
-<h1>New Order</h1>
-</div>
+					 	<li><a type="button" href="<%= all_users_orders_path%>">
+				  			Total users
+					 	</a></li>
+					 <%end%>
+					 <%end%>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
 
-<%= render 'form', order: @order %>
+                <ul class="list-unstyled CTAs">
+                    <li><a href="#" class="article">Welcome To Al-Madni</a></li>
+                </ul>
+            </nav>
+
+            <!-- Page Content Holder -->
+            <div id="content">
+
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+
+                        <div class="navbar-header">
+                            <button type="button" id="sidebarCollapse" class="navbar-btn">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right">
+                   <% if user_signed_in? %>
+						<li> <a><strong><%= current_user.email %></strong></a></li>
+						<li> <%= link_to 'Edit profile', edit_user_registration_path %> </li> 
+						<li><%= link_to "Logout", destroy_user_session_path, method: :delete%></li>
+						<% else %>
+						<li><%= link_to "Sign up", new_user_registration_path  %></li> 
+						<li><%= link_to "Login", new_user_session_path  %></li>
+					<% end %>
+
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+             <%= render 'form', order: @order %>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- jQuery CDN -->
+         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+         <!-- Bootstrap Js CDN -->
+         <script type="text/javascript">
+             $(document).ready(function () {
+                 $('#sidebarCollapse').on('click', function () {
+                     $('#sidebar').toggleClass('active');
+                     $(this).toggleClass('active');
+                 });
+             });
+         </script>
+
+
+
+
+
 
 

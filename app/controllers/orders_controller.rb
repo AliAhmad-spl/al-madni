@@ -94,7 +94,7 @@ class OrdersController < ApplicationController
   end
 
   def products
-    @products ||= Product.where(id: @order.product_ids)
+    @products ||= Product.includes(:one_menu).where(id: @order.product_ids)
   end
 
   def sold_products
@@ -117,7 +117,7 @@ class OrdersController < ApplicationController
        existing = @order.order_products.pluck(:product_id)
         if new_est.present?
        id =  existing.map { |e| e.to_s } -  new_est
-       ops = OrderProduct.where(order_id: @order.id, product_id: id)
+       ops = OrderProduct.includes(:order).where(order_id: @order.id, product_id: id)
        ops.destroy_all
       @order.update(order_params)
       @order.update(edited: true)

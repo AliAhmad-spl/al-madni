@@ -10,6 +10,13 @@ class OrdersController < ApplicationController
     @current_orders = @orders.size
   end
 
+  def ice
+     @show_image = true
+     @one_menus = OneMenu.where(ice: true).order(:position)
+     @order = Order.new 
+     @ice = true   
+  end
+
   def edited_orders
     @date             = Date.parse(params[:date]) rescue Date.today
     @orders           = Order.where(:created_at => @date.at_midnight..@date.next_day.at_midnight, edited: true)
@@ -42,7 +49,7 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     @show_image = true
-     @one_menus = OneMenu.order(:position)
+     @one_menus = OneMenu.where(ice: false).order(:position)
      @order = Order.new
   end
 

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :orders do
   	collection do
   		get :status
+      get :ice
       get :menu_sorting
       post :update_menu
       get :edited_orders

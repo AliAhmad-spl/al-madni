@@ -11,10 +11,10 @@
       </ul>
     </div>
   <% end %>
-    <%= form.text_field :name ,class: "form-control", placeholder: "Enter product name"%>
+    <%= form.text_field :name ,class: "form-control", placeholder: "Enter product name", required: true%>
 <br>
   <div class="field">
-    <p><%= form.number_field :price ,class: "form-control", placeholder: "Enter price Rs"%></p> 
+    <p><%= form.number_field :price ,class: "form-control", placeholder: "Enter price Rs", required: true%></p> 
   </div>
 
   <div class="field">

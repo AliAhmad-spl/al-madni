@@ -59,7 +59,7 @@
         <%if current_user.admin? %>
           <%= link_to 'Destroy', one_menu, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm", style: "color: white" %>
          <%end%></center>
-          <% one_menu.products.sort_by {|e| e.price}.compact.reverse.each_with_index do |product, index| %>
+          <% one_menu.products.compact.sort_by {|e| e.price}.reverse.each_with_index do |product, index| %>
             <ul>
             <li>
            <span style="float: left;">

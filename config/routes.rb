@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get :ice
       get :menu_sorting
       post :update_menu
+      get :role
       get :edited_orders
   		get :inbox
       get :all_users

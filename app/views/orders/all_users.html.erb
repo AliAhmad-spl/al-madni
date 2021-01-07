@@ -7,16 +7,20 @@
 			<th>Contact</th>
 			<th>Address</th>
 			<th>Joined at</th>
+			<th>Role</th>
+			<th>Actions</th>>
 		</tr>
 	</thead>
 	<%@users.each do |user|%>
-	<% if user.admin? || user.sale %>
+	<% if user.admin? %>
 	<tr>
 		<td color='red'><%=user.name%></td>
 		<td><%= user.email%></span></td>
 		<td><%= user.contact%></td>
 		<td><%= truncate(user.address)%></td>
 		<td><%= user.created_at.to_date%></td>
+		<td style="color: green;"> Admin</td>
+		<td> No Access</td>
 	</tr>
 	<%else%>
 	<tr>
@@ -25,6 +29,16 @@
 		<td><%= user.contact%></td>
 		<td><%= truncate(user.address, length: 15) %></td>
 		<td><%= user.created_at.to_date%></td>
+		<% if user.sale? %>
+		  <td style="color: green;"> Sales Man</td>
+		 <%else%>
+		  <td style="color: green;"> Normal User</td>
+		 <%end%>
+		 <% if !user.admin?%>
+		  <td><%= link_to "make sales", role_orders_path(user_id: user.id, sale: true)%></td>
+		  <td><%= link_to "Remove access", role_orders_path(user_id: user.id, sale: false)%></td>
+		 <%end%>
+
 	</tr>
 	<%end%>
 	<%end%>

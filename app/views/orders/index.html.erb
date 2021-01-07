@@ -17,12 +17,17 @@
 <h2 style="float: right;">Today's Sale: Rs. <%= @today_sale %></h2>
 <h1>Orders</h1>
 
+<%= form_tag :orders, method: :get do %>
+  <%= select_tag name="order[sale_id]", options_from_collection_for_select(User.where(sale: true), "id", "name"),:include_blank => true, style:"width: 10%; height:25px;"%>
+<%= submit_tag("Filter") %>
+<%end%>
 <table class="table table-bordered">
   <thead>
     <tr>
       <th>Order #</th>
       <th>Table No</th>
       <th>Placed at</th>
+      <th>created_by</th>
       <th>Edited</th>
       <th>Status</th>
       <th>Total Bill</th>
@@ -36,6 +41,7 @@
         <td><%= order.id %></td>
         <td><%= order.customer_name %></td>
         <td><%= order.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>(<%= time_ago_in_words(order.created_at) %> ago)</td>
+        <td><%= order.user.name %></td>
         <% if order.edited? %>
           <td><button class="btn btn-danger">YES</button></td>
         <%else%>

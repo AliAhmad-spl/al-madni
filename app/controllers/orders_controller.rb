@@ -5,11 +5,14 @@ class OrdersController < ApplicationController
   def index
     @date             = Date.parse(params[:date]) rescue Date.today
     @orders           = Order.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
+    if params[:order] != nil
+      @orders           = @orders.map{|e| e if e.user_id == params[:order][:sale_id].to_i}.compact if @orders.present?
+    end
     @today_sale       = @orders.pluck(:total).reject(&:blank?).sum
     @total_orders   = Order.count
     @current_orders = @orders.size
   end
-
+  
   def ice
      @show_image = true
      @one_menus = OneMenu.where(ice: true).order(:position)
@@ -61,6 +64,11 @@ class OrdersController < ApplicationController
 
   def all_users
    @users = User.paginate(page: params[:page])
+  end
+
+  def role
+    User.find_by(id: params[:user_id]).update(sale: params[:sale])
+    redirect_to all_users_orders_path
   end
     
 
@@ -180,7 +188,7 @@ class OrdersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
-      @order = Order.find(params[:id])
+      @order = Order.find_by(id: params[:id])
     end
 
     def verify_admin
@@ -191,6 +199,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:customer_name, :user_id, :special_notes, :address, :contact_number, :discount, :customer, :disc, :other_charges, :quntities => [], :product_ids => [])
+      params.require(:order).permit(:sale_id, :customer_name, :user_id, :special_notes, :address, :contact_number, :discount, :customer, :disc, :other_charges, :quntities => [], :product_ids => [])
     end
 end

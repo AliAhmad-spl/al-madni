@@ -21,6 +21,10 @@
   <%= select_tag name="order[sale_id]", options_from_collection_for_select(User.where(sale: true), "id", "name"),:include_blank => true, style:"width: 10%; height:25px;"%>
 <%= submit_tag("Filter") %>
 <%end%>
+<%= form_tag :orders, method: :get do %>
+  <%= text_field_tag :search%>
+<%= submit_tag("Search") %>
+<%end%>
 <%= link_to 'Reset', orders_path, class:"btn btn-warning"%>
 <table class="table table-bordered">
   <thead>

@@ -7,9 +7,9 @@
 <center><%= image_tag('poly.png', :style => "width:152px; height:108px; padding: 0px;") %></center>
 <p id="notice"><%= notice %></p>
 <%= link_to "Home", root_path, :class => 'navbar-link btn btn-danger btn-sm pull-right', id: "home", style:'color: white'  %> 
-<%= link_to "Edit", edit_order_path(id: @order.id), :class => 'navbar-link btn btn-primary btn-sm pull-right', id: "Edit", style:'color: white; margin-right: 10px'  %>
-<div class="hotel">
+<%= link_to "Edit", edit_order_path(id: @order.id), :class => 'navbar-link btn btn-primary btn-sm pull-right', id: "Edit", style:'color: white; margin-right: 10px'  %><p> </p>
 
+<div class="hotel">
 <p>
   <%= @order.customer_name %>
 </p>
@@ -26,6 +26,7 @@
 Other Rs:<%= @other %>
 </p>
 <%end%>
+<p style="float: right; color: black;">Prepared by: <%= @order.user&.name %></p>
 <table class="table table-bordered">
 	<tr>
 		<td>Name</td>

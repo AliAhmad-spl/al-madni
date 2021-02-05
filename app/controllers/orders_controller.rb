@@ -8,6 +8,9 @@ class OrdersController < ApplicationController
     if params[:order] != nil
       @orders           = @orders.map{|e| e if e.user_id == params[:order][:sale_id].to_i}.compact if @orders.present?
     end
+    if params[:search] != nil
+      @orders =  Order.where('customer_name LIKE ?', "%#{params[:search]}%")
+    end
     @today_sale       = @orders.pluck(:total).reject(&:blank?).sum
     @total_orders   = Order.count
     @current_orders = @orders.size

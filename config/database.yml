@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: one-way_production
-  username: one-way
+  username: root
   password: <%= ENV['ONE-WAY_DATABASE_PASSWORD'] %>

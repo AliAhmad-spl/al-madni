@@ -22,6 +22,9 @@ class RegistrationsController < Devise::RegistrationsController
   # PUT /resource
   def update
     super
+    if resource.errors.present?
+      flash[:alert] = resource.errors.full_messages.first 
+    end
   end
 
   # DELETE /resource

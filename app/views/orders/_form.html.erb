@@ -31,10 +31,10 @@
     <%= form.hidden_field :user_id, value: current_user.id %>
     <%= form.number_field :discount, class: 'form-control', style: "width: 30%;", min:"0", max: 100, required: true %>
   </div>
-  <div class="field">
+  <!-- <div class="field">
     <%= form.label :other_charges %>
     <%= form.number_field :other_charges, class: 'form-control', style: "width: 30%;", min:"0", required: true %>
-  </div>
+  </div> -->
 <%end%>
 <% if !current_user.sale? && !current_user.admin? %>
      <div class="field">
@@ -53,7 +53,7 @@
     <% @one_menus.includes(:products).each_with_index do |one_menu, plus| %>
       <% plus + 1 %>
 
-   <div class="col-md-4 col" >
+   <div class="col-md-4 col"  style="min-height: 600px;" >
 
        <center><b><b>[<%= one_menu.position%>]</b><%= one_menu.name %> </b>
         <%if current_user.admin? %>

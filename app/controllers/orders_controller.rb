@@ -74,7 +74,6 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    @show_image = true
      @one_menus = OneMenu.where(ice: false).order(:position)
      @order = Order.new
   end

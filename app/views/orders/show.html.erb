@@ -3,8 +3,11 @@
 		display: none;
 	}
 </style>
-<!-- <center><p style = "font-family:courier,arial,helvetica;font-size: 15px;">Al Madni Hotel</p></center> -->
-<center><%= image_tag('poly.png', :style => "width:152px; height:108px; padding: 0px;") %></center>
+<%if Hotel.first.present? %>
+  <center><%= image_tag('poly.png', :style => "width:152px; height:108px; padding: 0px;") %></center>
+<%else%>
+  <center><p style = "font-family:courier,arial,helvetica;font-size: 15px;"><%= current_user.hotels.first.name%></p></center>
+<%end%>
 <p id="notice"><%= notice %></p>
 <%= link_to "Home", root_path, :class => 'navbar-link btn btn-danger btn-sm pull-right', id: "home", style:'color: white'  %> 
 <%= link_to "Edit", edit_order_path(id: @order.id), :class => 'navbar-link btn btn-primary btn-sm pull-right', id: "Edit", style:'color: white; margin-right: 10px'  %><p> </p>
@@ -70,7 +73,7 @@ Other Rs:<%= @other %>
 	<button onclick="removebtn()" id="print" class="btn btn-danger">Print recipte</button>
 <%end%>
 
-<center><h4 style="font-style: oblique; font-size: 10px;">Thank you for visiting here</h4><p>03216813535</p><p>جی ٹی روڈ کامونکی</p></center>
+<center><h4 style="font-style: oblique; font-size: 10px;">Thank you for visiting here</h4><p><%= current_user.hotels.first.contact %></p><p><%= current_user.hotels.first.address%></p></center>
 <script
   src="https://code.jquery.com/jquery-3.4.1.min.js"
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="

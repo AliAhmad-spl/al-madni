@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
   
+  resources :hotels do 
+    member do
+      get :access
+    end
+  end
   resources :items do
     collection do 
       get :histories
@@ -15,6 +20,13 @@ Rails.application.routes.draw do
       get :role
       get :edited_orders
   		get :inbox
+      get :decision
+      get :blocked_notification
+      get :apply
+      get :approve
+      get :reject
+      get :make_admin
+      get :hotel_request
       get :all_users
       get :small
       get :sold_products
@@ -26,7 +38,6 @@ Rails.application.routes.draw do
     sessions: 'sessions',
     registrations: 'registrations'
   }
-  root 'orders#new'
-  
+  root 'orders#new'  
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

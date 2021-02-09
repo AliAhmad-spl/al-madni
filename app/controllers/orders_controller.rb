@@ -2,17 +2,37 @@ class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   # GET /orders
   # GET /orders.json
+  before_action :check_user, only: [:new]
+  before_action :check_block, only: [:new, :ice]    
+
+  def check_block
+    if current_user.hotels.first.active?
+      redirect_to blocked_notification_orders_path
+    else
+      true
+    end
+  end
+  def blocked_notification
+    
+  end
+  def check_user  
+    if current_user.admin? || current_user.hotels.any?
+      true
+    else
+      redirect_to decision_orders_path
+    end
+  end
   def index
     @date             = Date.parse(params[:date]) rescue Date.today
-    @orders           = Order.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
+    @orders           = current_user.hotels.first.orders.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
     if params[:order] != nil
       @orders           = @orders.map{|e| e if e.user_id == params[:order][:sale_id].to_i}.compact if @orders.present?
     end
     if params[:search] != nil
-      @orders =  Order.where('customer_name LIKE ?', "%#{params[:search]}%")
+      @orders =  current_user.hotels.first.orders.where('customer_name LIKE ?', "%#{params[:search]}%")
     end
     @today_sale       = @orders.pluck(:total).reject(&:blank?).sum
-    @total_orders   = Order.count
+    @total_orders   = current_user.hotels.first.orders.size
     @current_orders = @orders.size
   end
   
@@ -25,9 +45,9 @@ class OrdersController < ApplicationController
 
   def edited_orders
     @date             = Date.parse(params[:date]) rescue Date.today
-    @orders           = Order.where(:created_at => @date.at_midnight..@date.next_day.at_midnight, edited: true)
+    @orders           = current_user.hotels.first.orders.where(:created_at => @date.at_midnight..@date.next_day.at_midnight, edited: true)
     @today_sale       = @orders.pluck(:total).reject(&:blank?).sum
-    @total_orders   = Order.count
+    @total_orders   = current_user.hotels.first.orders.size
     @current_orders = @orders.size
   end
 
@@ -49,7 +69,7 @@ class OrdersController < ApplicationController
   end
 
   def menu_sorting
-    @menus = OneMenu.all
+    @menus = current_user&.hotels&.first&.one_menus
   end
 
   # GET /orders/new
@@ -65,13 +85,53 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
   end
 
+  def decision
+    if params[:search].blank?
+      @hotels = Hotel.all.paginate(page: params[:page])
+    else
+      @hotels = Hotel.where('name LIKE ?', "%#{params[:search]}%").paginate(page: params[:page])
+    end
+  end
+
+  def apply
+    UserRequest.first_or_create(hotel_id: params[:hotel_id], user_id: current_user.id)
+    redirect_to decision_orders_path, notice: 'Applied. Please wait untill your request being processed'
+  end
+
+  def hotel_request
+    @user_requests = UserRequest.where(pending: true)
+  end
+
+  def make_admin
+    @users = User.paginate(page: params[:page])
+  end
+
+  def approve
+    request = UserRequest.find_by(id: params[:id])
+    User.find_by(id: request.user_id)
+    UserHotel.create(user_id: request.user_id, hotel_id: current_user.hotels.first.id)
+    request.update(pending: false)
+    redirect_to hotel_request_orders_path, notice: "Request Approved successfully"
+  end
+
+  def reject
+    request = UserRequest.find_by(id: params[:id])
+    request.destroy
+    redirect_to hotel_request_orders_path, alert: 'Request Rejected successfully'
+  end
+
   def all_users
-   @users = User.paginate(page: params[:page])
+   @users = current_user&.hotels&.first&.users&.paginate(page: params[:page])
   end
 
   def role
-    User.find_by(id: params[:user_id]).update(sale: params[:sale])
-    redirect_to all_users_orders_path
+    User.find_by(id: params[:user_id]).update(sale: params[:sale]) if params[:sale].present?
+    User.find_by(id: params[:user_id]).update(admin: params[:admin]) if params[:admin].present?
+    if params[:admin].present?
+      redirect_to make_admin_orders_path, notice:"Updated successfully"
+    else
+      redirect_to all_users_orders_path
+    end
   end
     
 
@@ -117,7 +177,7 @@ class OrdersController < ApplicationController
 
   def sold_products
     @date = Date.parse(params[:date]) rescue Date.today
-    @orders = Order.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
+    @orders = current_user.hotels.first.orders.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
     @products = OrderProduct.where(order_id: @orders.ids)
     @total_qty = @products.pluck(:quntity).sum rescue 0
     @amount = @products.pluck(:total).sum rescue 0
@@ -175,7 +235,7 @@ class OrdersController < ApplicationController
   end
 
   def inbox
-    @orders = Order.where(customer: true).paginate(page: params[:page])
+    @orders = current_user.hotels.first.orders.where(customer: true).paginate(page: params[:page])
   end
 
   # DELETE /orders/1
@@ -202,6 +262,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:sale_id, :customer_name, :user_id, :special_notes, :address, :contact_number, :discount, :customer, :disc, :other_charges, :quntities => [], :product_ids => [])
+      params.require(:order).permit(:sale_id, :customer_name, :user_id, :special_notes, :address, :contact_number, :discount, :customer, :disc, :hotel_id, :other_charges, :quntities => [], :product_ids => [])
     end
 end

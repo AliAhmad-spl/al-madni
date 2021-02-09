@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_17_152452) do
+ActiveRecord::Schema.define(version: 2021_02_09_173058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,16 @@ ActiveRecord::Schema.define(version: 2020_12_17_152452) do
     t.index ["user_id"], name: "index_histories_on_user_id"
   end
 
+  create_table "hotels", force: :cascade do |t|
+    t.string "name"
+    t.string "contact"
+    t.string "address"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "active", default: false
+  end
+
   create_table "items", force: :cascade do |t|
     t.string "name"
     t.integer "quantity"
@@ -54,6 +64,7 @@ ActiveRecord::Schema.define(version: 2020_12_17_152452) do
     t.integer "index", default: 1
     t.integer "position"
     t.boolean "ice", default: false
+    t.integer "hotel_id"
   end
 
   create_table "order_products", force: :cascade do |t|
@@ -85,6 +96,7 @@ ActiveRecord::Schema.define(version: 2020_12_17_152452) do
     t.string "product_ids", default: [], array: true
     t.string "quntities", default: [], array: true
     t.boolean "edited", default: false
+    t.integer "hotel_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -97,6 +109,22 @@ ActiveRecord::Schema.define(version: 2020_12_17_152452) do
     t.integer "product_type", default: 0
     t.integer "order_id"
     t.integer "total", default: 0
+  end
+
+  create_table "user_hotels", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "hotel_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_requests", force: :cascade do |t|
+    t.integer "hotel_id"
+    t.integer "user_id"
+    t.boolean "approve", default: false
+    t.boolean "pending", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -112,6 +140,7 @@ ActiveRecord::Schema.define(version: 2020_12_17_152452) do
     t.string "address"
     t.string "contact"
     t.string "name"
+    t.boolean "super_user", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

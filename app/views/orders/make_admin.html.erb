@@ -11,7 +11,7 @@
 			<th>Actions</th>>
 		</tr>
 	</thead>
-	<%@users&.each do |user|%>
+	<%@users.each do |user|%>
 	<% if user.admin? %>
 	<tr>
 		<td color='red'><%=user.name%></td>
@@ -36,6 +36,7 @@
 		 <%end%>
 		 <% if !user.admin?%>
 		  <td><%= link_to "make sales", role_orders_path(user_id: user.id, sale: true)%></td>
+          <td><%= link_to "make Admin", role_orders_path(user_id: user.id, admin: true)%></td>
 		  <td><%= link_to "Remove access", role_orders_path(user_id: user.id, sale: false)%></td>
 		 <%end%>
 
@@ -43,11 +44,10 @@
 	<%end%>
 	<%end%>
 </table>
-<%if @users.present?%>
+
 <div class="digg_pagination">
     <div class="page_info">
       <%= page_entries_info @users %>
     </div>
     <%= will_paginate @users, :container => false %>
 </div>
-<%end%>

@@ -16,7 +16,7 @@
       <td><%= menu.name%></td>
       <td><%= menu.position%></td>
       <%= form_tag update_menu_orders_path do %>
-      <td><%= select_tag "position", options_from_collection_for_select(OneMenu.all, "position", "position")%></td>
+      <td><%= select_tag "position", options_from_collection_for_select(current_user.hotels.first.one_menus, "position", "position")%></td>
       <td><%= hidden_field_tag :id, menu.id %></td>
       <td><%= submit_tag('update') %></td>
       <td><%= link_to 'Edit', edit_one_menu_path(menu) %></td>

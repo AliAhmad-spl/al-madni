@@ -38,7 +38,21 @@
 					 	<li><a type="button" href="<%= all_users_orders_path%>">
 				  			Total users
 					 	</a></li>
+                        <li><a type="button" href="<%= new_hotel_path%>">
+                            Create Hotel
+                        </a></li>
+                            <li><a type="button" href="<%= hotel_request_orders_path%>">
+                            Pending Requests
+                        </a></li>
 					 <%end%>
+                     <%if current_user.super_user?%>
+                        <li><a type="button" href="<%= make_admin_orders_path%>">
+                            Approve admins
+                        </a></li>
+                        <li><a type="button" href="<%= hotels_path%>">
+                            All hotels
+                        </a></li>
+                        <%end%>
 					 <%end%>
                         </ul>
                     </li>

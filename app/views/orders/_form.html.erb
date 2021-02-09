@@ -19,7 +19,7 @@
       <% end %>
       </ul>
     </div>
-  <% end %>
+  <% end %> 
 
 <% if current_user.sale? || current_user.admin? %>
   <div class="field">
@@ -29,6 +29,7 @@
    <div class="field">
     <%= form.label :Discount_in_percentage %>
     <%= form.hidden_field :user_id, value: current_user.id %>
+    <%= form.hidden_field :hotel_id, value: current_user&.hotels&.first&.id %>
     <%= form.number_field :discount, class: 'form-control', style: "width: 30%;", min:"0", max: 100, required: true %>
   </div>
   <!-- <div class="field">
@@ -50,7 +51,7 @@
 
   <div class="row">
 <div class="col-container">
-    <% @one_menus.includes(:products).each_with_index do |one_menu, plus| %>
+    <% current_user&.hotels&.first&.one_menus&.includes(:products)&.order(:position)&.each_with_index do |one_menu, plus| %>
       <% plus + 1 %>
 
    <div class="col-md-4 col"  style="min-height: 600px;" >

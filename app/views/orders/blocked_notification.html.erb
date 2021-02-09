@@ -1,0 +1,28 @@
+             <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+
+                        <div class="navbar-header">
+                            <button type="button" id="sidebarCollapse" class="navbar-btn">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right">
+                   <% if user_signed_in? %>
+						<li> <a><strong><%= current_user.email %></strong></a></li>
+						<li> <%= link_to 'Edit profile', edit_user_registration_path %> </li> 
+						<li><%= link_to "Logout", destroy_user_session_path, method: :delete%></li>
+						<% else %>
+						<li><%= link_to "Sign up", new_user_registration_path  %></li> 
+						<li><%= link_to "Login", new_user_session_path  %></li>
+					<% end %>
+
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+                <center><h1>You account has been blocked! by Super Admin. Please proceed with payment or contact us.</h1></center>

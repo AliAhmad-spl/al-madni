@@ -71,6 +71,6 @@ class OneMenusController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def one_menu_params
-      params.require(:one_menu).permit(:name)
+      params.require(:one_menu).permit(:name, :hotel_id)
     end
 end

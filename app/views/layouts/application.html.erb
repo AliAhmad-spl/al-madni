@@ -19,6 +19,12 @@
   <body>
   <% if @show_image.blank? %>
   <center><%= image_tag('photo.png', :style => "width:180px; height:130px; padding: 0px;") %></center>
+  <%else%>
+   <%if current_user.hotels.any?%>
+   <center><h3><%=current_user.hotels.first.name%></h3></center>
+   <%else%>
+   <center><h3>Your Next Step to create Hotel From Side Bar</h3></center>
+   <%end%>
   <% end %>
   <% if notice %>
   <p class="alert alert-success"><%= notice %></p>

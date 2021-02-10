@@ -29,15 +29,19 @@ class HotelsController < ApplicationController
   # POST /hotels
   # POST /hotels.json
   def create
-    @hotel = Hotel.new(hotel_params)
-    respond_to do |format|
-      if @hotel.save
-        UserHotel.create(user_id: @hotel.user_id, hotel_id: @hotel.id)
-        format.html { redirect_to root_path, notice: 'Hotel was successfully created. Please now start adding Menus' }
-        format.json { render :index, status: :created, location: @hotel }
-      else
-        format.html { render :new }
-        format.json { render json: @hotel.errors, status: :unprocessable_entity }
+    if current_user.hotels.first.present?
+      redirect_to root_path, alert: "You can't create more than 1 hotel. Please contact to support. thanks"
+    else
+      @hotel = Hotel.new(hotel_params)
+      respond_to do |format|
+        if @hotel.save
+          UserHotel.create(user_id: @hotel.user_id, hotel_id: @hotel.id)
+          format.html { redirect_to root_path, notice: 'Hotel was successfully created. Please now start adding Menus' }
+          format.json { render :index, status: :created, location: @hotel }
+        else
+          format.html { render :new }
+          format.json { render json: @hotel.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

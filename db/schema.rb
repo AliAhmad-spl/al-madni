@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_09_173058) do
+ActiveRecord::Schema.define(version: 2021_02_10_152059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 2021_02_09_173058) do
     t.integer "product_type", default: 0
     t.integer "order_id"
     t.integer "total", default: 0
+    t.integer "hotel_id"
   end
 
   create_table "user_hotels", force: :cascade do |t|

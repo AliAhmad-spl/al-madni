@@ -98,7 +98,7 @@ class OrdersController < ApplicationController
   end
 
   def apply
-    UserRequest.first_or_create(hotel_id: params[:hotel_id], user_id: current_user.id)
+    UserRequest.create(hotel_id: params[:hotel_id], user_id: current_user.id)
     redirect_to decision_orders_path, notice: 'Applied. Please wait untill your request being processed'
   end
 

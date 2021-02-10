@@ -41,7 +41,7 @@
   </thead>
 
   <tbody>
-    <% @orders.each do |order| %>
+    <% @orders&.each do |order| %>
       <tr>
         <td><%= order.id %></td>
         <td><%= order.customer_name %></td>

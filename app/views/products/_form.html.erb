@@ -19,8 +19,10 @@
 
   <div class="field">
     <%= form.label :Menu %>
-    <%= form.select(:one_menu_id, OneMenu.all.collect {|p| [ p.name, p.id ] }, { include_blank: true }) %>
-    <%= form.hidden_field :hotel_id, value: current_user.hotels.first.id %>
+    <% if current_user.hotels.any? %>
+    <%= form.select(:one_menu_id, current_user&.hotels&.first&.one_menus&.collect {|p| [ p.name, p.id ] }, { include_blank: true }) %>
+    <%end%>
+    <%= form.hidden_field :hotel_id, value: current_user&.hotels&.first&.id %>
   </div>
   <div class="actions">
     <%= form.submit class: "btn btn-success" %>

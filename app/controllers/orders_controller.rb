@@ -55,6 +55,7 @@ class OrdersController < ApplicationController
   # GET /orders/1.json
   def show
     @show_image = true
+    @name = false
   end
   def update_menu
     menu = OneMenu.where(position: params[:position]).first

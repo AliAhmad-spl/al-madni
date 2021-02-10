@@ -3,10 +3,9 @@
 		display: none;
 	}
 </style>
-<%if Hotel.first.present? %>
+<%if Hotel.first.users.pluck(:id).include?(current_user&.id) %>
   <center><%= image_tag('poly.png', :style => "width:152px; height:108px; padding: 0px;") %></center>
 <%else%>
-  <center><p style = "font-family:courier,arial,helvetica;font-size: 15px;"><%= current_user.hotels.first.name%></p></center>
 <%end%>
 <p id="notice"><%= notice %></p>
 <%= link_to "Home", root_path, :class => 'navbar-link btn btn-danger btn-sm pull-right', id: "home", style:'color: white'  %> 

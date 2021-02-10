@@ -24,7 +24,7 @@
   </thead>
 
   <tbody>
-    <% @products.each do |product| %>
+    <% current_user.hotels.first.products.each do |product| %>
       <tr>
         <td><%= product.name %></td>
         <td><%= product.price %></td>

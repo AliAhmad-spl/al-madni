@@ -78,6 +78,10 @@ class OrdersController < ApplicationController
      @order = Order.new
   end
 
+  def my_hotel
+    
+  end
+
   # GET /orders/1/edit
   def edit
     @one_menus = OneMenu.order(:position)

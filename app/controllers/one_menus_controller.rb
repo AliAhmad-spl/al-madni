@@ -25,6 +25,7 @@ class OneMenusController < ApplicationController
   # POST /one_menus
   # POST /one_menus.json
   def create
+    if current_user.hotels.first.present?
     @one_menu = OneMenu.new(one_menu_params)
 
     respond_to do |format|
@@ -36,6 +37,9 @@ class OneMenusController < ApplicationController
         format.html { render :new }
         format.json { render json: @one_menu.errors, status: :unprocessable_entity }
       end
+    end
+    else
+      redirect_to new_hotel_path, alert:"Please create your Hotel first"
     end
   end
 

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   		get :inbox
       get :decision
       get :blocked_notification
+      get :my_hotel
       get :apply
       get :approve
       get :reject

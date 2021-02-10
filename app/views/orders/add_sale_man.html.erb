@@ -1,0 +1,12 @@
+<div class="container">
+<h3>Add new sale man</h3>
+<%= form_tag :create_sale_man_orders, method: :post do %>
+  <p>Enter Name</p>
+  <%= text_field_tag :name,"", class: "form-control", required: true%>
+  <p>Enter Email</p>
+  <%= text_field_tag :email,"", class: "form-control", required: true%>
+  <p>Enter password</p>
+  <%= text_field_tag :password,"", {class: "form-control", required: true}	%>
+<%= submit_tag("Add Sale Man") %>
+<%end%>
+</div>

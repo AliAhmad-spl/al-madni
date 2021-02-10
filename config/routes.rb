@@ -23,6 +23,8 @@ Rails.application.routes.draw do
       get :decision
       get :blocked_notification
       get :my_hotel
+      get :add_sale_man
+      post :create_sale_man
       get :apply
       get :approve
       get :reject

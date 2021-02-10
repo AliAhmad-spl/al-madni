@@ -11,7 +11,7 @@
   </thead>
 
   <tbody>
-    <% @menus.order(:position).each do |menu|%>
+    <% @menus&.order(:position)&.each do |menu|%>
     <tr>
       <td><%= menu.name%></td>
       <td><%= menu.position%></td>

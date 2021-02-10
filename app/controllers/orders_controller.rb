@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
   before_action :check_block, only: [:new, :ice]    
 
   def check_block
-    if current_user.hotels.first.active?
+    if current_user.hotels.any? && current_user.hotels.first.active?
       redirect_to blocked_notification_orders_path
     else
       true
@@ -24,16 +24,16 @@ class OrdersController < ApplicationController
   end
   def index
     @date             = Date.parse(params[:date]) rescue Date.today
-    @orders           = current_user.hotels.first.orders.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
+    @orders           = current_user&.hotels&.first&.orders&.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
     if params[:order] != nil
       @orders           = @orders.map{|e| e if e.user_id == params[:order][:sale_id].to_i}.compact if @orders.present?
     end
     if params[:search] != nil
-      @orders =  current_user.hotels.first.orders.where('customer_name LIKE ?', "%#{params[:search]}%")
+      @orders =  current_user&.hotels&.first&.orders&.where('customer_name LIKE ?', "%#{params[:search]}%")
     end
-    @today_sale       = @orders.pluck(:total).reject(&:blank?).sum
-    @total_orders   = current_user.hotels.first.orders.size
-    @current_orders = @orders.size
+    @today_sale       = @orders&.pluck(:total)&.reject(&:blank?)&.sum
+    @total_orders   = current_user&.hotels&.first&.orders&.size
+    @current_orders = @orders&.size
   end
   
   def ice
@@ -238,7 +238,7 @@ class OrdersController < ApplicationController
   end
 
   def inbox
-    @orders = current_user.hotels.first.orders.where(customer: true).paginate(page: params[:page])
+    @orders = current_user&.hotels&.first&.orders&.where(customer: true)&.paginate(page: params[:page])
   end
 
   # DELETE /orders/1

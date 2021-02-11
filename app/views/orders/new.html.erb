@@ -23,17 +23,17 @@
 				 <% if current_user.sale? || current_user.admin? %>
 					 <li><%= link_to 'Add new category', new_one_menu_path%></li>
 					 
-					 	<li><%= link_to 'Inventory details', items_path%></li>
+					 	<!-- <li><%= link_to 'Inventory details', items_path%></li> -->
 
 					 	<li><a type="button" style="color: white;" href="<%= inbox_orders_path%>">
 				  			Inbox
 						</a></li>
 					 <li><%= link_to 'Add new product', new_product_path%></li>
-					  <li><%= link_to 'Expenses', expenses_path%><li>
+					  <!-- <li><%= link_to 'Expenses', expenses_path%><li> -->
 					 <% if current_user.admin? %>
 					 	<li><%= link_to 'Sales', orders_path %></li>
 					 	<li><%= link_to 'Menu settings', menu_sorting_orders_path %></li>
-					 	<li><%= link_to 'Inventory History', histories_items_path%></li>
+					 	<!-- <li><%= link_to 'Inventory History', histories_items_path%></li> -->
 
 					 	<li><a type="button" href="<%= all_users_orders_path%>">
 				  			Total users
@@ -47,9 +47,9 @@
                         <li><a type="button" href="<%= new_hotel_path%>">
                             Create Hotel
                         </a></li>
-                            <li><a type="button" href="<%= hotel_request_orders_path%>">
+  <!--                           <li><a type="button" href="<%= hotel_request_orders_path%>">
                             Pending Requests
-                        </a></li>
+                        </a></li> -->
 					 <%end%>
                      <%if current_user.super_user?%>
                         <li><a type="button" href="<%= make_admin_orders_path%>">

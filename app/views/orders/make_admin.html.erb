@@ -11,7 +11,7 @@
 			<th>Actions</th>>
 		</tr>
 	</thead>
-	<%@users.each do |user|%>
+	<%@users.order("created_at DESC").each do |user|%>
 	<% if user.admin? %>
 	<tr>
 		<td color='red'><%=user.name%></td>

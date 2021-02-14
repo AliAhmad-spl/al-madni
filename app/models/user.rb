@@ -11,5 +11,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable
   	has_many :orders
 
-  	validates :name, :email, :contact, uniqueness: true
+  	validates :name, :email, uniqueness: true
 end

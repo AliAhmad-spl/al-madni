@@ -1,5 +1,5 @@
 <%= form_with(model: order, local: true) do |form| %>
-
+<%= form.hidden_field :hotel_id, value: current_user&.hotels&.first&.id %>
 <% if current_user.sale? || current_user.admin? %>
   <div class="actions">
     <%= form.submit 'Preview Order', :class => 'btn btn-success pull-right'  %>
@@ -29,7 +29,6 @@
    <div class="field">
     <%= form.label :Discount_in_percentage %>
     <%= form.hidden_field :user_id, value: current_user.id %>
-    <%= form.hidden_field :hotel_id, value: current_user&.hotels&.first&.id %>
     <%= form.number_field :discount, class: 'form-control', style: "width: 30%;", min:"0", max: 100, required: true %>
   </div>
   <!-- <div class="field">

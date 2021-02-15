@@ -59,7 +59,7 @@ class OrdersController < ApplicationController
     user = User.create(name: params[:name], email: params[:email], password: params[:password], password_confirmation: params[:password], sale: true)
     if user.errors.blank?
      obj = UserHotel.create(user_id: user.id, hotel_id: current_user.hotels.first.id)
-     redirect_to add_sale_man_orders_path, notice:"Sales Man created!" 
+     redirect_to root_path, notice:"Sales Man created!" 
     else
     redirect_to add_sale_man_orders_path, alert: user.errors.full_messages
     end

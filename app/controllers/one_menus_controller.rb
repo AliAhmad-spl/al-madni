@@ -13,6 +13,12 @@ class OneMenusController < ApplicationController
   def show
   end
 
+  def change_status
+    @order = Order.find_by(id: params[:id])
+    @order.update(status: params[:status])
+    redirect_to inbox_orders_path, notice: "Order Updated successfully"
+  end
+
   # GET /one_menus/new
   def new
     @one_menu = OneMenu.new

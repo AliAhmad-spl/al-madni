@@ -204,12 +204,11 @@ class OrdersController < ApplicationController
   def status
    @orders = current_user.orders.paginate(page: params[:page])    
   end
-
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
   def update
     respond_to do |format|
-       new_est = params[:order][:product_ids]
+       new_est = params[:order][:product_ids] 
        existing = @order.order_products.pluck(:product_id)
         if new_est.present?
        id =  existing.map { |e| e.to_s } -  new_est

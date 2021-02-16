@@ -35,7 +35,11 @@ Rails.application.routes.draw do
       get :sold_products
   	end
   end
-  resources :one_menus
+  resources :one_menus do
+    collection do 
+      get :change_status
+    end
+  end
   resources :products
   devise_for :users, controllers: {
     sessions: 'sessions',

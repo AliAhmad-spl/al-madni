@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :detail_milks
+  resources :accounts
   resources :hotels do 
     member do
       get :access

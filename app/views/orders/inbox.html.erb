@@ -27,10 +27,12 @@
 				<td ><span class="btn btn-warning"><%= order&.status  %></span></td>
 			<%end%>
 			<td ><span class="btn btn-warning"><%= link_to "Order details", order_path(id: order.id), style: "color: white;" %></span></td>
+			<% if !order.accepted? %>
 			<td> <%= link_to "Accepted", change_status_one_menus_path(id: order.id, status: "accepted"), method: :get%> </td>
 			<td> <%= link_to "Delivered", change_status_one_menus_path(id: order.id, status: "delivered"), method: :get%> </td>
 			<% if order.status == 'placed' || order.status == 'accepted'%>
 				<td><%= link_to "Rejected", change_status_one_menus_path(id: order.id, status: "rejected"), method: :get%></td>
+			<%end%>
 			<%end%>
 		</tr>
 		<% end %>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  milk: 1
+  weight: 1
+  account_id: 1
+
+two:
+  milk: 1
+  weight: 1
+  account_id: 1

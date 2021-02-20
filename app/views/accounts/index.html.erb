@@ -1,0 +1,38 @@
+
+<h1>Accounts</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Credit</th>
+      <th>Advance</th>
+      <th>Type</th> 
+      <th colspan="5"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @accounts.each do |account| %>
+      <tr>
+        <td><%= account.name %></td>
+        <td><%= account.phone %></td>
+        <td><%= account.credit %></td>
+        <td><%= account.advance %></td>
+        <td><%= account.user_type%></td>
+        <%if account.milk_man?%>
+        <td><%= link_to 'Add Milk', detail_milks_path(id: account.id)%></td>
+        <%end%>
+        <td><%= link_to 'Add Advance', advances_path(id: account.id)%></td>
+        <td><%= link_to 'Account', '#'%></td>
+        <td><%= link_to 'Edit', edit_account_path(account) %></td>
+        <td><%= link_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Account', new_account_path , class:"btn btn-primary"%>

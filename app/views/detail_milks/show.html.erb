@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Milk:</strong>
+  <%= @detail_milk.milk %>
+</p>
+
+<p>
+  <strong>Weight:</strong>
+  <%= @detail_milk.weight %>
+</p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @detail_milk.account_id %>
+</p>
+
+<%= link_to 'Edit', edit_detail_milk_path(@detail_milk) %> |
+<%= link_to 'Back', detail_milks_path %>

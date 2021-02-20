@@ -1,0 +1,38 @@
+<div class="container">
+<%= form_with(model: detail_milk, local: true) do |form| %>
+  <% if detail_milk.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(detail_milk.errors.count, "error") %> prohibited this detail_milk from being saved:</h2>
+
+      <ul>
+      <% detail_milk.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :milk %>
+    <%= form.number_field :milk, class: "form-control", required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :weight %>
+    <%= form.number_field :weight, class: "form-control", required: true %>
+  </div>
+    <div class="field">
+    <%= form.label :rate %>
+    <%= form.number_field :rate, class: "form-control", required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :account_id %>
+    <%= form.select :account_id, options_from_collection_for_select(current_user.hotels.first.accounts.milk_man, "id", "name"),:include_blank => true, style:"width: 10%; height:25px;"%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+</div>

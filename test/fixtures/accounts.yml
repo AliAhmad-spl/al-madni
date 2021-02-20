@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  phone: MyString
+  credit: 1
+  advance: 1
+
+two:
+  name: MyString
+  phone: MyString
+  credit: 1
+  advance: 1

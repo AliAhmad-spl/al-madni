@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @advance.amount %>
+</p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @advance.account_id %>
+</p>
+
+<%= link_to 'Edit', edit_advance_path(@advance) %> |
+<%= link_to 'Back', advances_path %>

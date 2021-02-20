@@ -22,6 +22,12 @@
                         <ul class="collapse list-unstyled" id="pageSubmenu">
 				 <% if current_user.sale? || current_user.admin? %>
 					 <li><%= link_to 'Add new category', new_one_menu_path%></li>
+           <li><a type="button" href="<%= accounts_path%>">
+                            View Accounts
+                        </a></li>
+            <li><a type="button" href="<%= new_account_path%>">
+                            Add Account
+                        </a></li>
 					 
 					 	<!-- <li><%= link_to 'Inventory details', items_path%></li> -->
 
@@ -40,12 +46,6 @@
 					 	</a></li>
                         <li><a type="button" href="<%= add_sale_man_orders_path%>">
                             Add Sale Man
-                        </a></li>
-                            <li><a type="button" href="<%= accounts_path%>">
-                            View Accounts
-                        </a></li>
-                        <li><a type="button" href="<%= new_account_path%>">
-                            Add Account
                         </a></li>
                         <li><a type="button" href="<%= my_hotel_orders_path%>">
                             My Hotel

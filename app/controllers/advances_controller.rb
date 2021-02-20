@@ -64,7 +64,7 @@ class AdvancesController < ApplicationController
     amount = @advance.account.advance - @advance.amount
     @advance.account.update(advance: amount)
     respond_to do |format|
-      format.html { redirect_to advances_url, notice: 'Advance was successfully destroyed.' }
+      format.html { redirect_to accounts_url, notice: 'Advance was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

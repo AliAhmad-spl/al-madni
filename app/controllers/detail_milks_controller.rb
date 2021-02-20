@@ -70,7 +70,7 @@ class DetailMilksController < ApplicationController
     amount = @detail_milk.account.credit - @detail_milk.total
     @detail_milk.account.update(credit: amount)
     respond_to do |format|
-      format.html { redirect_to detail_milks_url, notice: 'Detail milk was successfully destroyed.' }
+      format.html { redirect_to accounts_url, notice: 'Detail milk was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

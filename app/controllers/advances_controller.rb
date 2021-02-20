@@ -28,7 +28,6 @@ class AdvancesController < ApplicationController
 
     respond_to do |format|
       if @advance.save
-        byebug
         amount = @advance.account.advance + @advance.amount
         @advance.account.update(advance: amount)
         format.html { redirect_to accounts_path, notice: 'Advance was successfully created.' }

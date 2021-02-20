@@ -8,6 +8,7 @@
       <th>Real weight</th>
       <th>Rate</th>
       <th>Total</th>
+      <th>Date</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,13 +21,14 @@
         <td><%= detail_milk.milk - detail_milk.weight %></td>
         <td><%= detail_milk.rate%></td>
         <td><%= detail_milk.total%></td>
+        <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>(<%= time_ago_in_words(detail_milk.created_at) %> ago)</td>
         <td><%= link_to 'Edit', edit_detail_milk_path(detail_milk) %></td>
         <td><%= link_to 'Destroy', detail_milk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
+<%= link_to 'Add new milk details', new_detail_milk_url(id: @detail_milks&.last&.account&.id, :date => @date.prev_day), class:"btn btn-primary", style:"color:white" %>
 <br>
 
 <p><b><%= "Showing #{@current_orders} orders for #{@date}" %></b></p>

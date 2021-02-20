@@ -4,9 +4,9 @@ class DetailMilksController < ApplicationController
   # GET /detail_milks
   # GET /detail_milks.json
   def index
-    @date             = Date.parse(params[:date]) rescue Date.today
+    @date = Date.parse(params[:date]) rescue Date.today
     @detail_milks = Account.find_by(id: params[:id])&.detail_milks&.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
-    @today_sale       = @detail_milks&.pluck(:total)&.reject(&:blank?)&.sum
+    @today_sale =  @detail_milks&.pluck(:total)&.reject(&:blank?)&.sum
     @total_orders   = @detail_milks&.size
     @current_orders = @detail_milks&.count
   end
@@ -34,6 +34,8 @@ class DetailMilksController < ApplicationController
       if @detail_milk.save
         price = (@detail_milk.milk - @detail_milk.weight) * @detail_milk.rate
         @detail_milk.update(total: price.to_i)
+        total_amount = @detail_milk.account.credit + price.to_i
+        @detail_milk.account.update(credit: total_amount)
         format.html { redirect_to accounts_path, notice: 'Detail milk was successfully created.' }
         format.json { render :show, status: :created, location: @detail_milk }
       else
@@ -47,7 +49,11 @@ class DetailMilksController < ApplicationController
   # PATCH/PUT /detail_milks/1.json
   def update
     respond_to do |format|
+      amount =@detail_milk.account.credit - @detail_milk.total
+      @detail_milk.account.update(credit: amount)
       if @detail_milk.update(detail_milk_params)
+      updated_amount =@detail_milk.account.credit + @detail_milk.total
+      @detail_milk.account.update(credit: amount)
         format.html { redirect_to accounts_path, notice: 'Detail milk was successfully updated.' }
         format.json { render :show, status: :ok, location: @detail_milk }
       else
@@ -61,6 +67,8 @@ class DetailMilksController < ApplicationController
   # DELETE /detail_milks/1.json
   def destroy
     @detail_milk.destroy
+    amount = @detail_milk.account.credit - @detail_milk.total
+    @detail_milk.account.update(credit: amount)
     respond_to do |format|
       format.html { redirect_to detail_milks_url, notice: 'Detail milk was successfully destroyed.' }
       format.json { head :no_content }

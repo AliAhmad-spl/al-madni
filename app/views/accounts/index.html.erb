@@ -24,6 +24,7 @@
         <%if account.milk_man?%>
         <td><%= link_to 'Add Milk', detail_milks_path(id: account.id)%></td>
         <%end%>
+        <td><%= link_to 'Add Advance', advances_path(id: account.id)%></td>
         <td><%= link_to 'Account', '#'%></td>
         <td><%= link_to 'Edit', edit_account_path(account) %></td>
         <td><%= link_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>

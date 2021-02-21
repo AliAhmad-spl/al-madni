@@ -15,8 +15,9 @@
         <td><%= advance.amount %></td>
         <td><%= advance.account.name %></td>
         <td><%= advance.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>(<%= time_ago_in_words(advance.created_at) %> ago)</td>
-        <td><%= link_to 'Edit', edit_advance_path(advance) %></td>
+        <%if current_user.admin?%>
         <td><%= link_to 'Destroy', advance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end%>
       </tr>
     <% end %>
   </tbody>

@@ -2,7 +2,11 @@
             <!-- Sidebar Holder -->
             <nav id="sidebar">
                 <div class="sidebar-header">
-                    <h3>AL Madni Hotel</h3>
+                  <% if current_user&.hotels&.first&.name&.present?%>
+                    <h3><%= current_user.hotels.first.name%></h3>
+                    <%else%>
+                    <h3>Please add hotel</h3>
+                    <%end%>
                 </div>
 
                 <ul class="list-unstyled components">

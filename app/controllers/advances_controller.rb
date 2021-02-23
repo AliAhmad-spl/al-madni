@@ -4,6 +4,7 @@ class AdvancesController < ApplicationController
   # GET /advances
   # GET /advances.json
   def index
+    @account_id = params[:id]
     @advances = current_user.hotels.first.accounts.where(id: params[:id]).first.advances
   end
 
@@ -14,6 +15,7 @@ class AdvancesController < ApplicationController
 
   # GET /advances/new
   def new
+    @account_id = params[:id]
     @advance = Advance.new
   end
 
@@ -30,6 +32,7 @@ class AdvancesController < ApplicationController
       if @advance.save
         amount = @advance.account.advance + @advance.amount
         @advance.account.update(advance: amount)
+        @advance.account.update(credit: @advance.account.credit - @advance.amount)
         format.html { redirect_to accounts_path, notice: 'Advance was successfully created.' }
         format.json { render :show, status: :created, location: @advance }
       else
@@ -60,9 +63,10 @@ class AdvancesController < ApplicationController
   # DELETE /advances/1
   # DELETE /advances/1.json
   def destroy
-    @advance.destroy
     amount = @advance.account.advance - @advance.amount
     @advance.account.update(advance: amount)
+    @advance.account.update(credit: @advance.account.credit + @advance.amount)
+    @advance.destroy
     respond_to do |format|
       format.html { redirect_to accounts_url, notice: 'Advance was successfully destroyed.' }
       format.json { head :no_content }

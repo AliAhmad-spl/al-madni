@@ -4,8 +4,10 @@ class DetailMilksController < ApplicationController
   # GET /detail_milks
   # GET /detail_milks.json
   def index
+    session[:account_id] = params[:id] if params[:id].present?
+    @account_id = session[:account_id]
     @date = Date.parse(params[:date]) rescue Date.today
-    @detail_milks = Account.find_by(id: params[:id])&.detail_milks&.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
+    @detail_milks = Account.find_by(id: @account_id)&.detail_milks&.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
     @today_sale =  @detail_milks&.pluck(:total)&.reject(&:blank?)&.sum
     @total_orders   = @detail_milks&.size
     @current_orders = @detail_milks&.count
@@ -18,6 +20,7 @@ class DetailMilksController < ApplicationController
 
   # GET /detail_milks/new
   def new
+    @account_id = params[:id]
     @detail_milk = DetailMilk.new
   end
 
@@ -36,6 +39,7 @@ class DetailMilksController < ApplicationController
         @detail_milk.update(total: price.to_i)
         total_amount = @detail_milk.account.credit + price.to_i
         @detail_milk.account.update(credit: total_amount)
+        @detail_milk.account.update(advance: @detail_milk.account.advance - price)
         format.html { redirect_to accounts_path, notice: 'Detail milk was successfully created.' }
         format.json { render :show, status: :created, location: @detail_milk }
       else
@@ -69,6 +73,7 @@ class DetailMilksController < ApplicationController
     @detail_milk.destroy
     amount = @detail_milk.account.credit - @detail_milk.total
     @detail_milk.account.update(credit: amount)
+    @detail_milk.account.update(advance: @detail_milk.account.advance + @detail_milk.total)
     respond_to do |format|
       format.html { redirect_to accounts_url, notice: 'Detail milk was successfully destroyed.' }
       format.json { head :no_content }

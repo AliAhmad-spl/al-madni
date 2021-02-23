@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Deposits</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Amount</th>
+      <th>Account</th>
+      <th>Date</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @deposits.each do |deposit| %>
+      <tr>
+        <td><%= deposit.amount %></td>
+        <td><%= deposit.account_id %></td>
+        <td><%= deposit.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>(<%= time_ago_in_words(deposit.created_at) %> ago)</td>
+        <td><%= link_to 'Destroy', deposit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Deposit', new_deposit_path(id: @account_id) %>

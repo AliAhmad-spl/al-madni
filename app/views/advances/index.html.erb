@@ -10,7 +10,7 @@
   </thead>
 
   <tbody>
-    <% @advances.each do |advance| %>
+    <% @advances.order("created_at DESC").each do |advance| %>
       <tr>
         <td><%= advance.amount %></td>
         <td><%= advance.account.name %></td>
@@ -23,4 +23,4 @@
   </tbody>
 </table>
 <br>
-<%= link_to 'New Advance', new_advance_path, class:"btn btn-primary"%>
+<%= link_to 'New Advance', new_advance_path(id: @account_id), class:"btn btn-primary"%>

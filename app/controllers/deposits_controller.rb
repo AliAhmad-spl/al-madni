@@ -4,6 +4,7 @@ class DepositsController < ApplicationController
   # GET /deposits
   # GET /deposits.json
   def index
+    @account_id = params[:id]
     @deposits = Account.find_by(id: params[:id]).deposits
   end
 
@@ -25,12 +26,12 @@ class DepositsController < ApplicationController
   # POST /deposits
   # POST /deposits.json
   def create
-    @deposit = Deposit.new(deposit_params)
+    @deposit = Deposit.new(different_params)
 
     respond_to do |format|
       if @deposit.save
-        @deposit.account.update(deposit: @deposit.account.deposit + @deposit.amount)
-        format.html { redirect_to @deposit, notice: 'Deposit was successfully created.' }
+        @deposit.account.update(deposit: @deposit.account.deposit + @deposit.amount.to_i)
+        format.html { redirect_to accounts_path, notice: 'Deposit was successfully created.' }
         format.json { render :show, status: :created, location: @deposit }
       else
         format.html { render :new }
@@ -44,7 +45,8 @@ class DepositsController < ApplicationController
   def update
     respond_to do |format|
       if @deposit.update(deposit_params)
-        format.html { redirect_to @deposit, notice: 'Deposit was successfully updated.' }
+        @deposit.account.update(deposit: @deposit.account.deposit - @deposit.amount.to_i)
+        format.html { redirect_to accounts_path, notice: 'Deposit was successfully updated.' }
         format.json { render :show, status: :ok, location: @deposit }
       else
         format.html { render :edit }
@@ -57,9 +59,9 @@ class DepositsController < ApplicationController
   # DELETE /deposits/1.json
   def destroy
     @deposit.destroy
-    @deposit.account.update(deposit: @deposit.account.deposit - @deposit.amount)
+    @deposit.account.update(deposit: @deposit.account.deposit - @deposit.amount.to_i)
     respond_to do |format|
-      format.html { redirect_to deposits_url, notice: 'Deposit was successfully destroyed.' }
+      format.html { redirect_to accounts_path, notice: 'Deposit was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -70,8 +72,12 @@ class DepositsController < ApplicationController
       @deposit = Deposit.find(params[:id])
     end
 
+    def different_params
+      params.require(:deposit).permit(:amount, :account_id, :status)
+    end
+
     # Only allow a list of trusted parameters through.
     def deposit_params
-      params.require(:deposit).permit(:amount, :account_id)
+      params.permit(:amount, :account_id, :status)
     end
 end

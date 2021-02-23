@@ -22,14 +22,14 @@
     <%= form.number_field :weight, class: "form-control", required: true %>
   </div>
     <div class="field">
-    <%= form.label :rate %>
-    <%= form.number_field :rate, class: "form-control", required: true %>
+    <%= form.hidden_field :rate, value: Account.find_by(id: @account_id).rate%>
+    <%= form.hidden_field :account_id, value: @account_id%>
   </div>
 
-  <div class="field">
+<!--   <div class="field">
     <%= form.label :account_id %>
     <%= form.select :account_id, options_from_collection_for_select(current_user.hotels.first.accounts.milk_man, "id", "name"),:include_blank => true, style:"width: 10%; height:25px;"%>
-  </div>
+  </div> -->
 
   <div class="actions">
     <%= form.submit %>

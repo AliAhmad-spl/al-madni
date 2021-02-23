@@ -29,11 +29,11 @@
     <% end %>
   </tbody>
 </table>
-<%= link_to 'Add new milk details', new_detail_milk_url(id: @detail_milks&.last&.account&.id, :date => @date.prev_day), class:"btn btn-primary", style:"color:white" %>
+<%= link_to 'Add new milk details', new_detail_milk_url(id: @account_id, :date => @date.prev_day), class:"btn btn-primary", style:"color:white" %>
 <br>
 
 <p><b><%= "Showing #{@current_orders} orders for #{@date}" %></b></p>
 <p><b><%= "There are a total of #{@total_orders} orders."%></b></p>
-<%= link_to 'View Previous day Orders', detail_milks_url(id: @detail_milks&.last&.account&.id, :date => @date.prev_day), class:"btn btn-primary", style:"color:white" %>
-<%= link_to 'View Next day Orders', detail_milks_url(id: @detail_milks&.last&.account&.id, :date => @date.next_day), class:"btn btn-warning",style:"color:white" %>
+<%= link_to 'View Previous day Orders', detail_milks_url(id: @account_id, :date => @date.prev_day), class:"btn btn-primary", style:"color:white" %>
+<%= link_to 'View Next day Orders', detail_milks_url(id: @account_id, :date => @date.next_day), class:"btn btn-warning",style:"color:white" %>
 </div>

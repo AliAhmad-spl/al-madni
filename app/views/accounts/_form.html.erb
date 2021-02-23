@@ -21,6 +21,10 @@
     <%= form.label :phone %>
     <%= form.text_field :phone, class:"form-control", required: true %>
   </div>
+  <div class="field">
+    <%= form.label :rate %>
+    <%= form.text_field :rate, class:"form-control", required: true %>
+  </div>
 
   <div class="field">
     <%= form.select :user_type, options_for_select(Account.user_types.map {|k, v| [k.humanize.capitalize, k]}), class:"form-control", style:"margin-top: 18px;" %>

@@ -34,7 +34,7 @@
   <% end %>
   <%end%>
   <% if @show_image.blank?%>
-    <%= link_to "Home", root_path, :class => 'navbar-link btn btn-danger btn-sm pull-right', style:'color: white'  %>
+    <%= link_to "Home", root_path, :class => 'navbar-link btn btn-danger btn-sm pull-right', style:'color: white', id:"home"  %>
   <%end%>
   <% if notice %>
   <p class="alert alert-success"><%= notice %></p>

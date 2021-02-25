@@ -1,9 +1,10 @@
 <div class="container">
 <%= form_tag report_account_path(id: @account.id), method: :get do %>
   <%= text_field_tag :text, nil, name:"daterange", value:"01/01/2021 - 01/15/2021", class: "form-control" %>
-<%= submit_tag("Search", class:"btn btn-warning", style: "margin-top: 10px;")  %>
+<%= submit_tag("Search", class:"btn btn-warning", style: "margin-top: 10px;", id:"Search")  %>
 <%end%>
-
+<button onclick="removebtn()" style="float:right;"" id="print" class="btn btn-danger">Print Report</button>
+<center><h3>Report for <%= @account.name %>, From <%= @from %> To <%= @till %> </h3></center>
 <table class="table table-bordered" style="margin-top: 20px;">
   <thead>
     <tr>
@@ -55,16 +56,58 @@
     <% end %>
   </tbody>
 </table> 
-<h2 style="float: right;">Total Advance: Rs. <%= @advance rescue 0%></h2>
+<h2 style="float: right;">Total Advance: Rs. <%= @advance rescue 0%></h2><br>
+<h3 style="margin-top: 70px;" > Deposits</h3>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Amount</th>
+      <th>Account</th>
+      <th>status</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @deposits&.each do |deposit| %>
+      <tr>
+        <td><%= deposit.amount %></td>
+        <td><%= deposit.account.name %></td>
+        <td><%= deposit.status %></td>
+        <td><%= deposit.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>(<%= time_ago_in_words(deposit.created_at) %> ago)</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<h2 style="float: right;">Total Deposits: Rs. <%=  @deposit rescue 0%></h2>
 </div>
 
 
 
 
+<script type="text/javascript">
+	function removebtn(){
+	// document.getElementsByTagName("button")[0].setAttribute("class", "remove");
+	// document.getElementById("edit").setAttribute("class", "remove");
+	// document.getElementById("back").setAttribute("class", "remove");
+	$('#print').css('display', 'none');
+	$('#home').css('display', 'none');
+	$('#Search').css('display', 'none');
+	
+  }
 
-
-
-
+</script>
+ <script >
+ 	$('#print').click(function()
+ 	{
+ 		window.print();
+ 		location.reload();
+ 		document.getElementsById("1").setAttribute("class", "remove_button");
+ 		document.getElementsById("2").setAttribute("class", "remove_button");
+ 		// $("#home").prop("class", "remove"); 
+ 		document.getElementsById("print").setAttribute("class", "remove_button");  
+ 	});
+ </script>
 
 <script>
 $(function() {

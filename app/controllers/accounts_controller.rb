@@ -61,7 +61,7 @@ class AccountsController < ApplicationController
     end
     @today_sale =  @detail_milks&.pluck(:total)&.reject(&:blank?)&.sum rescue 0
     @advance =  @advances&.pluck(:amount)&.reject(&:blank?)&.sum
-    @deposit =  @deposits&.pluck(:amount).map{|e| e.to_i }&.reject(&:blank?)&.sum
+    @deposit =  @deposits&.pluck(:amount)&.map{|e| e.to_i }&.reject(&:blank?)&.sum
   end
 
   def result

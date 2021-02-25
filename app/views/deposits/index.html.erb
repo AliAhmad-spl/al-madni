@@ -14,7 +14,7 @@
   </thead>
 
   <tbody>
-    <% @deposits.each do |deposit| %>
+    <% @deposits&.each do |deposit| %>
       <tr>
         <td><%= deposit.amount %></td>
         <td><%= deposit.account_id %></td>

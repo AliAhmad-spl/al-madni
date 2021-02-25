@@ -1,0 +1,32 @@
+<h2 style="float: right;">Today's Sale: Rs. <%= @today_sale rescue 0%></h2>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Milk</th>
+      <th>Can Weight</th>
+      <th>Real weight</th>
+      <th>Rate</th>
+      <th>Total</th>
+      <th>Date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @detail_milks&.each do |detail_milk| %>
+      <tr>
+        <td><%= detail_milk.milk %></td>
+        <td><%= detail_milk.weight %></td>
+        <td><%= detail_milk.milk - detail_milk.weight %></td>
+        <td><%= detail_milk.rate%></td>
+        <td><%= detail_milk.total%></td>
+        <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>(<%= time_ago_in_words(detail_milk.created_at) %> ago)</td>
+        <%if current_user.admin?%>
+        <td><%= link_to 'Destroy', detail_milk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end%>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>

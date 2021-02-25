@@ -1,0 +1,77 @@
+<div class="container">
+<%= form_tag report_account_path(id: @account.id), method: :get do %>
+  <%= text_field_tag :text, nil, name:"daterange", value:"01/01/2021 - 01/15/2021", class: "form-control" %>
+<%= submit_tag("Search", class:"btn btn-warning", style: "margin-top: 10px;")  %>
+<%end%>
+
+<table class="table table-bordered" style="margin-top: 20px;">
+  <thead>
+    <tr>
+      <th>Milk</th>
+      <th>Can Weight</th>
+      <th>Real weight</th>
+      <th>Rate</th>
+      <th>Total</th>
+      <th>Date</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @detail_milks&.each do |detail_milk| %>
+      <tr>
+        <td><%= detail_milk.milk %></td>
+        <td><%= detail_milk.weight %></td>
+        <td><%= detail_milk.milk - detail_milk.weight %></td>
+        <td><%= detail_milk.rate%></td>
+        <td><%= detail_milk.total%></td>
+        <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>(<%= time_ago_in_words(detail_milk.created_at) %> ago)</td>
+        <%if current_user.admin?%>
+
+        <%end%>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<p><h2 style="float: right;">Total amount: Rs. <%= @today_sale rescue 0%></h2></p><br>
+<h3 style="margin-top: 70px;" > Advances</h3>
+<table class="table table-bordered" >
+  <thead>
+    <tr>
+      <th>Amount</th>
+      <th>Account</th>
+      <th>Date</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @advances&.order("created_at DESC")&.each do |advance| %>
+      <tr>
+        <td><%= advance.amount %></td>
+        <td><%= advance.account.name %></td>
+        <td><%= advance.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>(<%= time_ago_in_words(advance.created_at) %> ago)</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table> 
+<h2 style="float: right;">Total Advance: Rs. <%= @advance rescue 0%></h2>
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+$(function() {
+  $('input[name="daterange"]').daterangepicker({
+    opens: 'left'
+  }, function(start, end, label) {
+    console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+  });
+});
+</script>

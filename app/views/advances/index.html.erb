@@ -10,7 +10,7 @@
   </thead>
 
   <tbody>
-    <% @advances.order("created_at DESC").each do |advance| %>
+    <% @advances&.order("created_at DESC")&.each do |advance| %>
       <tr>
         <td><%= advance.amount %></td>
         <td><%= advance.account.name %></td>

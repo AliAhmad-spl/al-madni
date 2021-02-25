@@ -30,6 +30,7 @@
         <%end%>
         <td><%= link_to 'Manage Advance', advances_path(id: account.id)%></td>
         <td><%= link_to 'Deposits', deposits_path(id: account.id)%></td>
+        <td><%= link_to 'Generate Report', report_account_path(id: account.id)%></td>
         <td><%= link_to 'Account', '#'%></td>
         <td><%= link_to 'Edit', edit_account_path(account) %></td>
         <td><%= link_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>

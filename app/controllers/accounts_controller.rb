@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  before_action :set_account, only: [:show, :edit, :update, :destroy]
+  before_action :set_account, only: [:show, :edit, :update, :destroy, :report, :result]
 
   # GET /accounts
   # GET /accounts.json
@@ -49,6 +49,20 @@ class AccountsController < ApplicationController
         format.json { render json: @account.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def report
+    if params[:daterange].present?
+      from = (Date.strptime(params[:daterange].split("-").first.strip,'%m/%d/%y') + 1.year).to_s
+      till = (Date.strptime(params[:daterange].split("-").last.strip,'%m/%d/%y') + 1.year).to_s
+      @detail_milks = @account.detail_milks.where("created_at >= ? AND created_at <= ?", from, till) if params[:daterange].present?
+      @advances = @account.advances.where("created_at >= ? AND created_at <= ?", from, till) if params[:daterange].present?
+    end
+    @today_sale =  @detail_milks&.pluck(:total)&.reject(&:blank?)&.sum rescue 0
+    @advance =  @advances&.pluck(:amount)&.reject(&:blank?)&.sum
+  end
+
+  def result
   end
 
   # DELETE /accounts/1

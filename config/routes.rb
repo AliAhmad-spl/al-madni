@@ -3,7 +3,12 @@ Rails.application.routes.draw do
   resources :deposits
   resources :advances
   resources :detail_milks
-  resources :accounts
+  resources :accounts do
+    member do
+      get :report
+      get :result
+    end 
+  end
   resources :hotels do 
     member do
       get :access

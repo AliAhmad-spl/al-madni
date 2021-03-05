@@ -1,5 +1,7 @@
 <button onclick="removebtn()" style="float:right; margin-right: 20px;" id="print" class="btn btn-sm btn-warning">Print Report</button><br>
-<br><h2 style="float: right;">Milk Total: Rs. <%= @today_sale %></h2>
+
+<br>
+<p style="float: right; color: black;">Print by: <%= @current_user&.name %></p>
 
 <table class="table table-bordered">
   <thead>
@@ -22,7 +24,7 @@
         <td><%= detail_milk.milk - detail_milk.weight %></td>
         <td><%= detail_milk.rate%></td>
         <td><%= detail_milk.total%></td>
-        <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>(<%= time_ago_in_words(detail_milk.created_at) %> ago)</td>
+        <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %></td>
         <%if current_user.admin?%>
         <td><%= link_to 'Destroy', detail_milk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <%end%>
@@ -30,12 +32,13 @@
     <% end %>
   </tbody>
 </table>
+<br><h5 style="float: right;">Milk Total: Rs. <%= @today_sale %></h5>
 <%= link_to 'Add new milk details', new_detail_milk_url(id: @account_id), class:"btn btn-primary", style:"color:white", id:"milk" %>
 <br>
 
-<h2 style="float: right;">Advance Total: Rs. <%= @advance %></h2>
 
-<h1>Advances</h1>
+
+<h4>Advances</h4>
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -51,7 +54,7 @@
       <tr>
         <td><%= advance.amount %></td>
         <td><%= advance.account.name %></td>
-        <td><%= advance.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>(<%= time_ago_in_words(advance.created_at) %> ago)</td>
+        <td><%= advance.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %></td>
         <%if current_user.admin?%>
         <td><%= link_to 'Destroy', advance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <%end%>
@@ -60,9 +63,10 @@
   </tbody>
 </table>
 <br>
+<h5 style="float: right;">Advance Total: Rs. <%= @advance %></h5>
 <%= link_to 'New Advance',  new_advance_path(id: @account_id), class:"btn btn-primary", id:"adv"%>
 
-  <h2>Today's Calculation</h2>
+  <h4>Today's Calculation</h4>
   <table class="table table-bordered">
   <thead>
     <tr>

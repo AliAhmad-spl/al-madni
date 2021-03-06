@@ -1,4 +1,5 @@
 <div class="container">
+<h3><%= Account.find_by(id: @account_id).name %></h3>
 <%= form_with(model: detail_milk, local: true) do |form| %>
   <% if detail_milk.errors.any? %>
     <div id="error_explanation">

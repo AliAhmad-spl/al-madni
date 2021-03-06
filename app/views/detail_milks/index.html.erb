@@ -1,7 +1,9 @@
 <button onclick="removebtn()" style="float:right; margin-right: 20px;" id="print" class="btn btn-sm btn-warning">Print Report</button><br>
 
 <br>
+<p style="float: left; color: black;">Name: <%= Account.find_by(id: @account_id)&.name %></p>
 <p style="float: right; color: black;">Print by: <%= @current_user&.name %></p>
+
 
 <table class="table table-bordered">
   <thead>
@@ -10,8 +12,9 @@
       <th>Can Weight</th>
       <th>Real weight</th>
       <th>Rate</th>
+      <th>Created_by</th>
       <th>Total</th>
-      <th>Date</th>
+      <th>Time</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -23,8 +26,11 @@
         <td><%= detail_milk.weight %></td>
         <td><%= detail_milk.milk - detail_milk.weight %></td>
         <td><%= detail_milk.rate%></td>
+        <% if current_user.admin? %>
+          <td><%= detail_milk&.user&.name%></td>
+        <%end%>
         <td><%= detail_milk.total%></td>
-        <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %></td>
+        <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p") %></td>
         <%if current_user.admin?%>
         <td><%= link_to 'Destroy', detail_milk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <%end%>
@@ -38,8 +44,8 @@
 
 
 
-<h4>Advances</h4>
-<table class="table table-bordered">
+<h4 id="advnce">Advances</h4>
+<table class="table table-bordered" id="table">
   <thead>
     <tr>
       <th>Amount</th>
@@ -81,7 +87,9 @@
       <tr>
         <td><%= @today_sale %></td>
         <td><%= @advance %></td>
+        <% if @today_sale.present? && @advance.present? %>
         <td><%= @today_sale - @advance %></td>
+        <% end %>
       </tr>
   </tbody>
 </table>
@@ -98,6 +106,8 @@
   // document.getElementsByTagName("button")[0].setAttribute("class", "remove");
   // document.getElementById("edit").setAttribute("class", "remove");
   // document.getElementById("back").setAttribute("class", "remove");
+  $('#advnce').css('display', 'none');
+  $('#table').css('display', 'none');
   $('#print').css('display', 'none');
   $('#home').css('display', 'none');
   $('#next').css('display', 'none');

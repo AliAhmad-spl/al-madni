@@ -9,7 +9,7 @@ class DetailMilksController < ApplicationController
     @date = Date.parse(params[:date]) rescue Date.today
     @detail_milks = Account.find_by(id: @account_id)&.detail_milks&.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
     @today_sale =  @detail_milks&.pluck(:total)&.reject(&:blank?)&.sum
-    @advances = current_user.hotels.first.accounts.where(id: params[:id]).first.advances.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
+    @advances = current_user&.hotels&.first&.accounts&.where(id: params[:id])&.first&.advances&.where(:created_at => @date&.at_midnight..@date&.next_day&.at_midnight)
     @advance =  @advances&.pluck(:amount)&.reject(&:blank?)&.sum
     @total_orders   = @detail_milks&.size
     @current_orders = @detail_milks&.count
@@ -90,6 +90,6 @@ class DetailMilksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def detail_milk_params
-      params.require(:detail_milk).permit(:milk, :weight, :account_id, :rate)
+      params.require(:detail_milk).permit(:milk, :weight, :account_id, :rate, :user_id)
     end
 end

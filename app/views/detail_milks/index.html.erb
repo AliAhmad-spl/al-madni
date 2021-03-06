@@ -1,7 +1,7 @@
 <button onclick="removebtn()" style="float:right; margin-right: 20px;" id="print" class="btn btn-sm btn-warning">Print Report</button><br>
 
 <br>
-<p style="float: left; color: black;">Name: <%= Account.find_by(id: @account_id).name %></p>
+<p style="float: left; color: black;">Name: <%= Account.find_by(id: @account_id)&.name %></p>
 <p style="float: right; color: black;">Print by: <%= @current_user&.name %></p>
 
 
@@ -12,6 +12,7 @@
       <th>Can Weight</th>
       <th>Real weight</th>
       <th>Rate</th>
+      <th>Created_by</th>
       <th>Total</th>
       <th>Time</th>
       <th colspan="3"></th>
@@ -25,6 +26,9 @@
         <td><%= detail_milk.weight %></td>
         <td><%= detail_milk.milk - detail_milk.weight %></td>
         <td><%= detail_milk.rate%></td>
+        <% if current_user.admin? %>
+          <td><%= detail_milk&.user&.name%></td>
+        <%end%>
         <td><%= detail_milk.total%></td>
         <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p") %></td>
         <%if current_user.admin?%>
@@ -83,7 +87,9 @@
       <tr>
         <td><%= @today_sale %></td>
         <td><%= @advance %></td>
+        <% if @today_sale.present? && @advance.present? %>
         <td><%= @today_sale - @advance %></td>
+        <% end %>
       </tr>
   </tbody>
 </table>

@@ -2,6 +2,7 @@ class User < ApplicationRecord
 	has_many :foods
 	has_many :items
 	has_many :histories
+  has_many :detail_milks
 	has_many :user_hotels
 	has_many :hotels, through: :user_hotels
 

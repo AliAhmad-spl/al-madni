@@ -7,6 +7,9 @@
   <%= text_field_tag :email,"", class: "form-control", required: true%>
   <p>Enter password</p>
   <%= text_field_tag :password,"", {class: "form-control", required: true}	%>
+  <p>Select Type</p>
+  <%= select_tag :type, options_for_select([["Admin", "admin"], ["Sale", "sale"], ["normal", "normal"]]) %>
+  <br><p></p>
 <%= submit_tag("Add Sale Man") %>
 <%end%>
 </div>

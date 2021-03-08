@@ -56,9 +56,14 @@ class OrdersController < ApplicationController
   end
 
   def create_sale_man
-    user = User.create(name: params[:name], email: params[:email], password: params[:password], password_confirmation: params[:password], sale: true)
+    user = User.create(name: params[:name], email: params[:email], password: params[:password], password_confirmation: params[:password])
     if user.errors.blank?
      obj = UserHotel.create(user_id: user.id, hotel_id: current_user.hotels.first.id)
+    if params[:type] == 'sale'
+      user.update(sale: true)
+    elsif params[:type] == 'admin'
+      user.update(admin: true)
+    end
      redirect_to root_path, notice:"Sales Man created!" 
     else
     redirect_to add_sale_man_orders_path, alert: user.errors.full_messages

@@ -39,7 +39,8 @@
     <% end %>
   </tbody>
 </table>
-<br><h5 style="float: right;">Milk Total: Rs. <%= @today_sale %></h5>
+<br><h5 style="float: right;">Total amount: Rs. <%= @today_sale %></h5>
+<h5 style="float: right; margin-right: 50px;">Total Milk: <%= @milk_total %></h5>
 <%= link_to 'Add new milk details', new_detail_milk_url(id: @account_id), class:"btn btn-primary", style:"color:white", id:"milk" %>
 <br>
 

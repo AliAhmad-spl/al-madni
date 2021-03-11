@@ -9,9 +9,10 @@ class DetailMilksController < ApplicationController
     @date = Date.parse(params[:date]) rescue Date.today
     @detail_milks = Account.find_by(id: @account_id)&.detail_milks&.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
     @today_sale =  @detail_milks&.pluck(:total)&.reject(&:blank?)&.sum
-    @advances = current_user&.hotels&.first&.accounts&.where(id: params[:id])&.first&.advances&.where(:created_at => @date&.at_midnight..@date&.next_day&.at_midnight)
+    @advances = Account.find_by(id: @account_id)&.advances&.where(:created_at => @date&.at_midnight..@date&.next_day&.at_midnight)
     @advance =  @advances&.pluck(:amount)&.reject(&:blank?)&.sum
     @total_orders   = @detail_milks&.size
+    @milk_total = @detail_milks&.pluck(:total)&.reject(&:blank?)&.sum / Account.find_by(id: @account_id).rate
     @current_orders = @detail_milks&.count
   end
 
@@ -34,7 +35,7 @@ class DetailMilksController < ApplicationController
   # POST /detail_milks.json
   def create
     @detail_milk = DetailMilk.new(detail_milk_params)
-
+    @account_id = params[:account_id] if params[:account_id].present?
     respond_to do |format|
       if @detail_milk.save
         price = (@detail_milk.milk - @detail_milk.weight) * @detail_milk.rate
@@ -42,7 +43,7 @@ class DetailMilksController < ApplicationController
         total_amount = @detail_milk.account.credit + price.to_i
         @detail_milk.account.update(credit: total_amount)
         @detail_milk.account.update(advance: @detail_milk.account.advance - price)
-        format.html { redirect_to accounts_path, notice: 'Detail milk was successfully created.' }
+        format.html { redirect_to detail_milks_path, notice: 'Detail milk was successfully created.' }
         format.json { render :show, status: :created, location: @detail_milk }
       else
         format.html { render :new }

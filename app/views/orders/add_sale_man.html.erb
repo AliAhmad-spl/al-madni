@@ -1,5 +1,5 @@
 <div class="container">
-<h3>Add new sale man</h3>
+<h3>Add new user</h3>
 <%= form_tag :create_sale_man_orders, method: :post do %>
   <p>Enter Name</p>
   <%= text_field_tag :name,"", class: "form-control", required: true%>
@@ -10,6 +10,6 @@
   <p>Select Type</p>
   <%= select_tag :type, options_for_select([["Admin", "admin"], ["Sale", "sale"], ["normal", "normal"]]) %>
   <br><p></p>
-<%= submit_tag("Add Sale Man") %>
+<%= submit_tag("Add New User") %>
 <%end%>
 </div>

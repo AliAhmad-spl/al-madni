@@ -27,13 +27,13 @@ class AdvancesController < ApplicationController
   # POST /advances.json
   def create
     @advance = Advance.new(advance_params)
-
+    @account_id = params[:account_id] if params[:account_id].present?
     respond_to do |format|
       if @advance.save
         amount = @advance.account.advance + @advance.amount
         @advance.account.update(advance: amount)
         @advance.account.update(credit: @advance.account.credit - @advance.amount)
-        format.html { redirect_to accounts_path, notice: 'Advance was successfully created.' }
+        format.html { redirect_to detail_milks_path, notice: 'Advance was successfully created.' }
         format.json { render :show, status: :created, location: @advance }
       else
         format.html { render :new }

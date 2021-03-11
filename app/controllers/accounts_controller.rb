@@ -55,7 +55,7 @@ class AccountsController < ApplicationController
     if params[:daterange].present?
       @from = (Date.strptime(params[:daterange].split("-").first.strip,'%m/%d/%y') + 1.year)
       @till = (Date.strptime(params[:daterange].split("-").last.strip,'%m/%d/%y') + 1.year)
-      @detail_milks = DetailMilk.where('created_at BETWEEN ? AND ?', @from.beginning_of_day, @till.end_of_day) if params[:daterange].present?
+      @detail_milks = DetailMilk.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day) if params[:daterange].present?
       @advances = @account.advances.where("created_at >= ? AND created_at <= ?", @from, @till) if params[:daterange].present?
       @deposits = @account.deposits.where("created_at >= ? AND created_at <= ?", @from, @till)
     end

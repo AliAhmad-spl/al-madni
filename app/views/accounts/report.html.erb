@@ -4,7 +4,7 @@
 <%= submit_tag("Search", class:"btn btn-warning", style: "margin-top: 10px;", id:"Search")  %>
 <%end%>
 <button onclick="removebtn()" style="float:right;"" id="print" class="btn btn-danger">Print Report</button>
-<center><h3>Report for <%= @account.name %>, From <%= @from %> To <%= @till %> </h3></center>
+<center><h3>Report for <%= @account.name %>, From <%= @from.strftime("%d/%m/%Y") %> To <%= @till.strftime("%d/%m/%Y") %> </h3></center>
 <table class="table table-bordered" style="margin-top: 20px;">
   <thead>
     <tr>

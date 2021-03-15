@@ -56,8 +56,8 @@ class AccountsController < ApplicationController
       @from = (Date.strptime(params[:daterange].split("-").first.strip,'%m/%d/%y') + 1.year)
       @till = (Date.strptime(params[:daterange].split("-").last.strip,'%m/%d/%y') + 1.year)
       @detail_milks = DetailMilk.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day) if params[:daterange].present?
-      @advances = @account.advances.where("created_at >= ? AND created_at <= ?", @from, @till) if params[:daterange].present?
-      @deposits = @account.deposits.where("created_at >= ? AND created_at <= ?", @from, @till)
+      @advances = Adavnce.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day) if params[:daterange].present?
+      @deposits = Deposit.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day)
     end
     @today_sale =  @detail_milks&.pluck(:total)&.reject(&:blank?)&.sum rescue 0
     @advance =  @advances&.pluck(:amount)&.reject(&:blank?)&.sum

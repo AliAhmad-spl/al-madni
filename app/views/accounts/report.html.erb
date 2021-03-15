@@ -26,7 +26,7 @@
         <td><%= detail_milk.milk - detail_milk.weight %></td>
         <td><%= detail_milk.rate%></td>
         <td><%= detail_milk.total%></td>
-        <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>(<%= time_ago_in_words(detail_milk.created_at) %> ago)</td>
+        <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %></td>
         <%if current_user.admin?%>
 
         <%end%>
@@ -51,7 +51,7 @@
       <tr>
         <td><%= advance.amount %></td>
         <td><%= advance.account.name %></td>
-        <td><%= advance.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>(<%= time_ago_in_words(advance.created_at) %> ago)</td>
+        <td><%= advance.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %></td>
       </tr>
     <% end %>
   </tbody>

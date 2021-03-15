@@ -104,7 +104,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
-    @one_menus = OneMenu.order(:position)
+    @one_menus = current_user&.hotels&.first&.one_menus.order(:position)
     @order = Order.find(params[:id])
   end
 

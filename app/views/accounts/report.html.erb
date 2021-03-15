@@ -4,7 +4,7 @@
 <%= submit_tag("Search", class:"btn btn-warning", style: "margin-top: 10px;", id:"Search")  %>
 <%end%>
 <button onclick="removebtn()" style="float:right;"" id="print" class="btn btn-danger">Print Report</button>
-<center><h3>Report for <%= @account.name %>, From <%= @from&.strftime("%d/%m/%Y") %> To <%= @till&.strftime("%d/%m/%Y") %> </h3></center>
+<center><h4>Report for <%= @account.name %>, From <%= @from&.strftime("%d/%m/%Y") %> To <%= @till&.strftime("%d/%m/%Y") %> </h4></center>
 <table class="table table-bordered" style="margin-top: 20px;">
   <thead>
     <tr>
@@ -34,8 +34,8 @@
     <% end %>
   </tbody>
 </table>
-<p><h2 style="float: right;">Total amount: Rs. <%= @today_sale rescue 0%></h2></p><br>
-<h3 style="margin-top: 70px;" > Advances</h3>
+<p><h5 style="float: right;">Total amount: Rs. <%= @today_sale rescue 0%></h5></p><br>
+<h4 style="margin-top: 70px;" > Advances</h4>
 <table class="table table-bordered" >
   <thead>
     <tr>
@@ -56,30 +56,30 @@
     <% end %>
   </tbody>
 </table> 
-<h2 style="float: right;">Total Advance: Rs. <%= @advance rescue 0%></h2><br>
-<h3 style="margin-top: 70px;" > Deposits</h3>
-<table class="table table-bordered">
+<h5 style="float: right;">Total Advance: Rs. <%= @advance rescue 0%></h5><br>
+  <h4>Total Calculation</h4>
+  <table class="table table-bordered">
   <thead>
     <tr>
-      <th>Amount</th>
-      <th>Account</th>
-      <th>status</th>
-      <th>Date</th>
+      <th>Total credit</th>
+      <th>Total advance</th>
+      <th>Payment</th>
+
     </tr>
   </thead>
 
   <tbody>
-    <% @deposits&.each do |deposit| %>
       <tr>
-        <td><%= deposit.amount %></td>
-        <td><%= deposit.account.name %></td>
-        <td><%= deposit.status %></td>
-        <td><%= deposit.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>(<%= time_ago_in_words(deposit.created_at) %> ago)</td>
+        <td><%= @today_sale %></td>
+        <td><%= @advance %></td>
+        <% if @today_sale.present? && @advance.present? %>
+        <td><%= @today_sale - @advance %></td>
+        <%else%>
+        <td></td>
+        <% end %>
       </tr>
-    <% end %>
   </tbody>
 </table>
-<h2 style="float: right;">Total Deposits: Rs. <%=  @deposit rescue 0%></h2>
 </div>
 
 

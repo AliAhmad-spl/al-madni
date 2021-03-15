@@ -60,7 +60,7 @@
           <% one_menu.products.compact.sort_by {|e| e.price}.reverse.each_with_index do |product, index| %>
             <ul>
             <li>
-           <span style="float: left;">
+           <span style="float: left; font-size: 1em; font-family: 'Noto Naskh Arabic', serif;">
                 <%= form.check_box("product_ids", {:multiple => true, id: "myCheck1#{plus}#{index}", onclick: "myFunction(1#{plus}#{index})"}, "#{product.id}", nil) %><%= product.name%>
         <input type="number" name="order[quntities][][product][<%= product.id %>]" step=".01"
         id="text1<%= plus %><%= index %>" min=".01" style="display:none; width:4em;" placeholder="Qty"></span> <span style="float: right;"><%= product.price %></span> 

@@ -3,8 +3,16 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   before_action :check_user, only: [:new]
-  before_action :check_block, only: [:new, :ice]    
+  before_action :check_block, only: [:new, :ice]
+  before_action :check_admin, only: [:index, :add_sale_man, :create_sale_man, :my_hotel, :decision, :make_admin]    
 
+  def check_admin
+    if current_user.admin?
+      true
+    else
+      redirect_to root_path, alert: "Access Denied! You are not allowed to see this view."
+    end
+  end
   def check_block
     if current_user.hotels.any? && current_user.hotels.first.active?
       redirect_to blocked_notification_orders_path

@@ -51,12 +51,14 @@
     <% current_user&.hotels&.first&.one_menus&.includes(:products)&.order(:position)&.each_with_index do |one_menu, plus| %>
       <% plus + 1 %>
 
-   <div class="col-md-4 col"  style="min-height: 600px;" >
-
-       <center><b><b>[<%= one_menu.position%>]</b><%= one_menu.name %> </b>
+   <div class="col-md-4 col" >
+      <div>
+       <center><b><b>[<%= one_menu.position%>]</b><a data-toggle="collapse" href="#collapseExample<%=one_menu.id%>" role="button" aria-expanded="false" aria-controls="collapseExample"><%= one_menu.name %> </a></b>
         <%if current_user.admin? %>
           <%= link_to 'Destroy', one_menu, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm", style: "color: white" %>
          <%end%></center>
+         </div>
+         <div class="collapse" id="collapseExample<%=one_menu.id%>">
           <% one_menu.products.compact.sort_by {|e| e.price}.reverse.each_with_index do |product, index| %>
             <ul>
             <li>
@@ -66,7 +68,8 @@
         id="text1<%= plus %><%= index %>" min=".01" style="display:none; width:4em;" placeholder="Qty"></span> <span style="float: right;"><%= product.price %></span> 
                   </li>
             </ul>       
-    <% end %>  
+    <% end %>
+    </div>  
     </div>
   <% end %>  
  </div>

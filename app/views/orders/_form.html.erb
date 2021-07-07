@@ -51,9 +51,9 @@
     <% current_user&.hotels&.first&.one_menus&.includes(:products)&.order(:position)&.each_with_index do |one_menu, plus| %>
       <% plus + 1 %>
 
-   <div class="col-md-4 col" >
+   <div class="col-md-4 col" onmouseover="idFunction(<%=one_menu.id%>)" onmouseout="normal(<%=one_menu.id%>)" >
       <div>
-       <center><b><b>[<%= one_menu.position%>]</b><a data-toggle="collapse" href="#collapseExample<%=one_menu.id%>" role="button" aria-expanded="false" aria-controls="collapseExample"><%= one_menu.name %> </a></b>
+       <center><b><b>[<%= one_menu.position%>]</b><a data-toggle="collapse" href="#collapseExample<%=one_menu.id%>" role="button" aria-expanded="false" id="elm<%=one_menu.id%>" aria-controls="collapseExample" onclick="myclick(<%=one_menu.id%>)"><%= one_menu.name %> </a></b>
         <%if current_user.admin? %>
           <%= link_to 'Destroy', one_menu, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm", style: "color: white" %>
          <%end%></center>
@@ -96,4 +96,15 @@
 </script>
 
 
+ <script>
+// self executing function here
 
+function idFunction(x) {
+    $('#collapseExample'+x).removeClass("collapse")
+    $('#collapseExample'+x).addClass("collapse in")
+}
+function normal(x){
+   $('#collapseExample'+x).removeClass("collapse in")
+   $('#collapseExample'+x).addClass("collapse")
+}
+</script>

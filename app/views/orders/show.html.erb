@@ -64,7 +64,7 @@ Other Rs:<%= @other %>
 	<p><span style="font-size: 15px;" > Disc:</span> <span class="pull-right"  style="font-size: 15px;"> <%= @order.disc %></span></p>
 	<p><span style="font-size: 15px;" >Net total:</span> <span class="pull-right"  style="font-size: 15px;"> <%= @order.total%></span></p>
 	<%else%>
-	<p><span style="font-size: 15px;" >Total amount:</span> <span id="grand_total" class="pull-right" ><%= @order.total%></span></p>
+	<p style="margin-top: 10px; margin-bottom: 10px;"><span style="font-size: 14px;" ><b>Total Amount:</b></span> <span style="font-size: 18px; id="grand_total" class="pull-right" ><b><%= @order.total%></b></span></p>
 	<%end%>
 
 </div>

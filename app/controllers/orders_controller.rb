@@ -31,8 +31,8 @@ class OrdersController < ApplicationController
     end
   end
   def index
-    @date             = Date.parse(params[:date]) rescue Date.today
-    @orders           = current_user&.hotels&.first&.orders&.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
+    @date             = Date.parse(params[:date]) rescue Date.current
+    @orders           = current_user&.hotels&.first&.orders&.where(:created_at => @date.beginning_of_day..@date.end_of_day)
     if params[:order] != nil
       @orders           = @orders.map{|e| e if e.user_id == params[:order][:sale_id].to_i}.compact if @orders.present?
     end
@@ -52,7 +52,7 @@ class OrdersController < ApplicationController
   end
 
   def edited_orders
-    @date             = Date.parse(params[:date]) rescue Date.today
+    @date             = Date.parse(params[:date]) rescue Date.current
     @orders           = current_user.hotels.first.orders.where(:created_at => @date.at_midnight..@date.next_day.at_midnight, edited: true)
     @today_sale       = @orders.pluck(:total).reject(&:blank?).sum
     @total_orders   = current_user.hotels.first.orders.size

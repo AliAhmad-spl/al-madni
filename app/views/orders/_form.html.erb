@@ -51,7 +51,7 @@
     <% current_user&.hotels&.first&.one_menus&.includes(:products)&.order(:position)&.each_with_index do |one_menu, plus| %>
       <% plus + 1 %>
 
-   <div class="col-md-4 col" onmouseover="idFunction(<%=one_menu.id%>)" onmouseout="normal(<%=one_menu.id%>)" >
+   <div class="col-md-4 col">
       <div>
        <center><b><b>[<%= one_menu.position%>]</b><a id="elm<%=one_menu.id%>" aria-controls="collapseExample" onclick="myclick(<%=one_menu.id%>)"><%= one_menu.name %> </a></b>
         <%if current_user.admin? %>
@@ -60,14 +60,15 @@
          </div>
          <div id="collapseExample<%=one_menu.id%>">
           <% one_menu.products.compact.sort_by {|e| e.price}.reverse.each_with_index do |product, index| %>
-            <ul>
-            <li>
-           <span style="float: left; font-size: 1em; font-family: 'Noto Naskh Arabic', serif;">
-                <%= form.check_box("product_ids", {:multiple => true, id: "myCheck1#{plus}#{index}", onclick: "myFunction(1#{plus}#{index})"}, "#{product.id}", nil) %><%= product.name%>
+            
+            <li style="list-style-type: none;">
+           <span>
+                <%= form.check_box("product_ids", {:multiple => true, class:"box", id: "myCheck1#{plus}#{index}", onclick: "myFunction(1#{plus}#{index})"}, "#{product.id}", nil) %>
+                <span style="direction: rtl;font-size: 1.5em; font-family: 'Noto Naskh Arabic', serif;"><%= product.name%></span>
         <input type="number" name="order[quntities][][product][<%= product.id %>]" step=".01"
         id="text1<%= plus %><%= index %>" min=".01" style="display:none; width:4em;" placeholder="Qty"></span> <span style="float: right;"><%= product.price %></span> 
                   </li>
-            </ul>       
+                 
     <% end %>
     </div>  
     </div>

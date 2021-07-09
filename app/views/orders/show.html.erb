@@ -37,8 +37,8 @@ Other Rs:<%= @other %>
 	<tr>
 		<td>Name</td>
 		<td>Qty</td>
-		<td>Rate</td>
-		<td>Total</td>
+		<td><span style="float: right;">Rate</span></td>
+		<td><span style="float: right;">Total</span></td>
 	</tr>
 	<% x = 1 %>
 	<% y = 1 %>
@@ -46,8 +46,8 @@ Other Rs:<%= @other %>
 	<tr>
 		<td style="direction: rtl;font-size: 15px; font-family: 'Noto Naskh Arabic', serif; padding: 0px 50px 0px 0px; text-align: left;"><b><%= product.name %></b></td>
 		<td><%= product.quntity%></td>
-		<td><%= product.price %></td>
-		<td><%= product.total %></td>
+		<td><span style="float:right;"><%= product.price %></span></td>
+		<td><span style="float:right;"><%= product.total %></span></td>
 	</tr>
 	<% x = x + 1 %>
 	<% y = y + 1 %>

@@ -22,7 +22,7 @@
   <center><%= image_tag('photo.png', :style => "width:180px; height:130px; padding: 0px;") %></center>
   <%else%>
    <%if current_user&.hotels&.any?%>
-     <center><h4 style = "font-family:courier,arial,helvetica;font-size: 15px;"><%= current_user.hotels.first.name%></h4></center>
+     <center><h4 style = "font-family:courier,arial,helvetica;font-size: 18px;"><b><%= current_user.hotels.first.name%></b></h4></center>
    <%else%>
    <center><h3>Your Next Step to create Hotel From Side Bar</h3></center>
    <%end%>

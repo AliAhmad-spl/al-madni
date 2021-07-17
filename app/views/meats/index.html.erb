@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Meats</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Qty</th>
+      <th>Price</th>
+      <th>Cat type</th>
+      <th>Accounts</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @meats.each do |meat| %>
+      <tr>
+        <td><%= meat.qty %></td>
+        <td><%= meat.price %></td>
+        <td><%= meat.cat_type %></td>
+        <td><%= meat.accounts %></td>
+        <td><%= link_to 'Show', meat %></td>
+        <td><%= link_to 'Edit', edit_meat_path(meat) %></td>
+        <td><%= link_to 'Destroy', meat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Meat', new_meat_path %>

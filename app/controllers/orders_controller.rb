@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   # GET /orders.json
   before_action :check_user, only: [:new]
   before_action :check_block, only: [:new, :ice]
-  before_action :check_admin, only: [:index, :add_sale_man, :create_sale_man, :my_hotel, :decision, :make_admin]    
+  before_action :check_admin, only: [:index, :add_sale_man, :create_sale_man, :my_hotel, :make_admin]    
 
   def check_admin
     if current_user.admin?

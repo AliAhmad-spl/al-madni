@@ -1,5 +1,6 @@
 class Account < ApplicationRecord
   belongs_to :hotel
+  has_many :meats
   has_many :detail_milks
   has_many :advances 
   has_many :deposits

@@ -100,7 +100,7 @@
 
                             <ul class="nav navbar-nav navbar-right">
                    <% if user_signed_in? %>
-                   <% if current_user.hotels.first.orders.placed.present?%>
+                   <% if current_user&.hotels&.first&.orders&.placed&.present?%>
                        <li><span style="color: red;margin-right: 400px; margin-top: 25px;">You have new order in inbox. Please check!</span></li>
                    <%end%>
 						<li> <a><strong><%= current_user.email %></strong></a></li>

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Qty:</strong>
+  <%= @meat.qty %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @meat.price %>
+</p>
+
+<p>
+  <strong>Cat type:</strong>
+  <%= @meat.cat_type %>
+</p>
+
+<p>
+  <strong>Accounts:</strong>
+  <%= @meat.accounts %>
+</p>
+
+<%= link_to 'Edit', edit_meat_path(@meat) %> |
+<%= link_to 'Back', meats_path %>

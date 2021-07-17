@@ -1,0 +1,33 @@
+<%= form_with(model: meat, local: true) do |form| %>
+  <% if meat.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(meat.errors.count, "error") %> prohibited this meat from being saved:</h2>
+
+      <ul>
+      <% meat.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :qty %>
+    <%= form.text_field :qty %>
+  </div>
+
+  <div class="field">
+    <%= form.label :price %>
+    <%= form.number_field :price %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cat_type %>
+    <%= select_tag :cat_type, options_for_select(Meat.cat_types.map {|k, v| [k.humanize.capitalize, v]}) %>
+
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

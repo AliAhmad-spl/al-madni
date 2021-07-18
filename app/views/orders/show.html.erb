@@ -9,7 +9,10 @@
 </style>
 <%if Hotel.first.users.pluck(:id).include?(current_user&.id) %>
   <center><%= image_tag('poly.png', :style => "width:152px; height:108px; padding: 0px;") %></center>
+  <%elsif Hotel.find(5).users.pluck(:id).include?(current_user.id)%>
+  <center><%= image_tag('brando.png', :style => "width:152px; height:108px; padding: 0px;") %></center>
 <%else%>
+ <center><h4 style = "font-family:courier,arial,helvetica;font-size: 20px;"><b><%= current_user.hotels.first.name%></b></h4></center>
 <%end%>
 <p id="notice"><%= notice %></p>
 <%= link_to "Home", root_path, :class => 'navbar-link btn btn-danger btn-sm pull-right', id: "home", style:'color: white'  %> 
@@ -33,21 +36,21 @@ Other Rs:<%= @other %>
 </b></p>
 <%end%>
 <b style="float: right; color: black;">Sale Man: <%= @order.user&.name %></b>
-<table class="table table-bordered">
-	<tr>
-		<td>Name</td>
-		<td>Qty</td>
-		<td><span style="float: right;">Rate</span></td>
-		<td><span style="float: right;">Total</span></td>
+<table class="table table-bordered" style="border:thick solid">
+	<tr style="border:thick solid">
+		<td style="border:thick solid">Name</td>
+		<td style="border:thick solid">Qty</td>
+		<td style="border:thick solid"><span style="float: right;">Rate</span></td>
+		<td style="border:thick solid"><span style="float: right;">Total</span></td>
 	</tr>
 	<% x = 1 %>
 	<% y = 1 %>
 	<%@order.order_products.order(:total).reverse.each do |product|%>
 	<tr>
-		<td style="direction: rtl;font-size: 15px; font-family: 'Noto Naskh Arabic', serif; padding: 0px 50px 0px 0px; text-align: left;"><b><%= product.name %></b></td>
-		<td><%= product.quntity%></td>
-		<td><span style="float:right;"><%= product.price %></span></td>
-		<td><span style="float:right;"><%= product.total %></span></td>
+		<td style="direction: rtl; border:thick solid; font-size: 15px; font-family: 'Noto Naskh Arabic', serif; padding: 0px 50px 0px 0px; text-align: left;"><b><%= product.name %></b></td>
+		<td style="border:thick solid"><%= product.quntity%></td>
+		<td style="border:thick solid"><span style="float:right;"><%= product.price %></span></td>
+		<td style="border:thick solid"><span style="float:right;"><%= product.total %></span></td>
 	</tr>
 	<% x = x + 1 %>
 	<% y = y + 1 %>

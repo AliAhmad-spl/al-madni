@@ -17,12 +17,12 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
    </head>
   <body>
-  <%if current_user.present? %>
+  <%if current_user.present? && !current_user.hotels.first %>
   <% if Hotel.first.users.pluck(:id).include?(current_user&.id) && !@show_image.present? %>
   <center><%= image_tag('photo.png', :style => "width:180px; height:130px; padding: 0px;") %></center>
   <%else%>
    <%if current_user&.hotels&.any?%>
-     <center><h4 style = "font-family:courier,arial,helvetica;font-size: 18px;"><b><%= current_user.hotels.first.name%></b></h4></center>
+     
    <%else%>
    <center><h3>Your Next Step to create Hotel From Side Bar</h3></center>
    <%end%>

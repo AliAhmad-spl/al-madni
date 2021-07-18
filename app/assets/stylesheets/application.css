@@ -13,6 +13,17 @@
  *= require_self
  */
  @import url(https://fonts.googleapis.com/earlyaccess/notonaskharabic.css);
+ @media print{
+        .table thead tr td,.table tbody tr td{
+            border-width: 1px !important;
+            border-style: solid !important;
+            border-color: black !important;
+            font-size: 10px !important;
+            background-color: red;
+            padding:0px;
+            -webkit-print-color-adjust:exact ;
+        }
+    }
 .mark
 {
   display: none;

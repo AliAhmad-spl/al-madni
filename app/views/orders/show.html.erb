@@ -36,21 +36,21 @@ Other Rs:<%= @other %>
 </b></p>
 <%end%>
 <b style="float: right; color: black;">Sale Man: <%= @order.user&.name %></b>
-<table class="table table-bordered" style="border:thick solid">
-	<tr style="border:thick solid">
-		<td style="border:thick solid">Name</td>
-		<td style="border:thick solid">Qty</td>
-		<td style="border:thick solid"><span style="float: right;">Rate</span></td>
-		<td style="border:thick solid"><span style="float: right;">Total</span></td>
+<table class="table table-bordered">
+	<tr>
+		<td>Name</td>
+		<td>Qty</td>
+		<td><span style="float: right;">Rate</span></td>
+		<td><span style="float: right;">Total</span></td>
 	</tr>
 	<% x = 1 %>
 	<% y = 1 %>
 	<%@order.order_products.order(:total).reverse.each do |product|%>
 	<tr>
-		<td style="direction: rtl; border:thick solid; font-size: 15px; font-family: 'Noto Naskh Arabic', serif; padding: 0px 50px 0px 0px; text-align: left;"><b><%= product.name %></b></td>
-		<td style="border:thick solid"><%= product.quntity%></td>
-		<td style="border:thick solid"><span style="float:right;"><%= product.price %></span></td>
-		<td style="border:thick solid"><span style="float:right;"><%= product.total %></span></td>
+		<td style="direction: rtl; font-size: 11px; font-family: 'Noto Naskh Arabic', serif; padding: 0px 50px 0px 0px; text-align: left;"><b><%= product.name %></b></td>
+		<td><%= product.quntity%></td>
+		<td><span style="float:right;"><%= product.price %></span></td>
+		<td><span style="float:right;"><%= product.total %></span></td>
 	</tr>
 	<% x = x + 1 %>
 	<% y = y + 1 %>
@@ -78,7 +78,7 @@ Other Rs:<%= @other %>
 	<button onclick="removebtn()" id="print" class="btn btn-danger">Print recipte</button>
 <%end%>
 
-<center><h4 style="font-style: oblique; font-size: 20px;">Thank you for visiting here</h4><p><b><%= current_user.hotels.first.contact %></b></b><p><b><%= current_user.hotels.first.address%></b></p></center>
+<center><h4 style="font-style: oblique; font-size: 15x;">Thank you for order here</h4><p><b><%= current_user.hotels.first.contact %></b></b><p><b><%= current_user.hotels.first.address%></b></p></center>
 <script
   src="https://code.jquery.com/jquery-3.4.1.min.js"
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="

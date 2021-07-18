@@ -4,7 +4,11 @@ class HotelsController < ApplicationController
   # GET /hotels
   # GET /hotels.json
   def index
-    @hotels = Hotel.all
+    if current_user.super_user?
+      @hotels = Hotel.all
+    else
+      redirect_to root_path
+    end
   end
 
   # GET /hotels/1

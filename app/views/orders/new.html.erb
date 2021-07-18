@@ -25,7 +25,7 @@
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" >Product Management </a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
 				 <% if current_user.sale? || current_user.admin? %>
-					 <li><%= link_to 'Add new category', new_one_menu_path%></li>
+					 <li><%= link_to 'Add new menu', new_one_menu_path%></li>
            <li><a type="button" href="<%= accounts_path%>">
                             View Accounts
                         </a></li>

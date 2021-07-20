@@ -47,7 +47,7 @@
         <td><%= order.id %></td>
         <td><%= order.customer_name %></td>
         <td><%= order.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>(<%= time_ago_in_words(order.created_at) %> ago)</td>
-        <td><%= order.user.name %></td>
+        <td><%= order&.user&.name %></td>
         <% if order.edited? %>
           <td><button class="btn btn-danger">YES</button></td>
         <%else%>

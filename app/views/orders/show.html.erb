@@ -47,7 +47,7 @@ Other Rs:<%= @other %>
 	<% y = 1 %>
 	<%@order.order_products.order(:total).reverse.each do |product|%>
 	<tr>
-		<td style="direction: rtl; font-size: 17px; font-family: 'Noto Naskh Arabic', serif; padding: 0px 50px 0px 0px; text-align: left;"><b><%= product.name %></b></td>
+		<td style="direction: rtl; font-size: 20px; font-family: 'Noto Naskh Arabic', serif; padding: 0px 50px 0px 0px; text-align: left;"><b><%= product.name %></b></td>
 		<td style="font-variant: normal; font-size: 17px;"><%= product.quntity%></td>
 		<td><span style="float:right; font-variant: normal; font-size: 17px;"><%= product.price %></span></td>
 		<td><span style="float:right; font-variant: normal; font-size: 17px;"><%= product.total %></span></td>
@@ -67,7 +67,7 @@ Other Rs:<%= @other %>
 	<p><span style="font-size: 15px;" > Disc:</span> <span class="pull-right"  style="font-size: 15px;">(<%=@order.discount%>%)<%= @order.disc %></span></p>
 	<p><span style="font-size: 15px;" >Net total:</span> <span class="pull-right"  style="font-size: 15px;"> <%= @order.total%></span></p>
 	<%else%>
-	<p style="margin-top: 10px; margin-bottom: 10px;"><span style="font-size: 14px;" ><b>Total Amount:</b></span> <span style="font-size: 18px; id="grand_total" class="pull-right" ><%= @order.total%></span></p>
+	<p style="margin-top: 10px; margin-bottom: 10px;"><span style="font-size: 14px;" ><b>Total Amount:</b></span> <span style="font-size: 18px; id="grand_total" class="pull-right" ><span style="font-size: 20px;"><%= @order.total%></span></span></p>
 	<%end%>
 
 </div>

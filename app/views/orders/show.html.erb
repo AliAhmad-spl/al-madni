@@ -47,10 +47,10 @@ Other Rs:<%= @other %>
 	<% y = 1 %>
 	<%@order.order_products.order(:total).reverse.each do |product|%>
 	<tr>
-		<td style="direction: rtl; font-size: 15px; font-family: 'Noto Naskh Arabic', serif; padding: 0px 50px 0px 0px; text-align: left;"><b><%= product.name %></b></td>
-		<td><%= product.quntity%></td>
-		<td><span style="float:right;"><%= product.price %></span></td>
-		<td><span style="float:right;"><%= product.total %></span></td>
+		<td style="direction: rtl; font-size: 17px; font-family: 'Noto Naskh Arabic', serif; padding: 0px 50px 0px 0px; text-align: left;"><b><%= product.name %></b></td>
+		<td style="font-variant: normal; font-size: 17px;"><%= product.quntity%></td>
+		<td><span style="float:right; font-variant: normal; font-size: 17px;"><%= product.price %></span></td>
+		<td><span style="float:right; font-variant: normal; font-size: 17px;"><%= product.total %></span></td>
 	</tr>
 	<% x = x + 1 %>
 	<% y = y + 1 %>

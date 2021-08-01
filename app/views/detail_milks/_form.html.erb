@@ -22,6 +22,12 @@
     <%= form.label :weight %>
     <%= form.number_field :weight, class: "form-control", required: true %>
   </div>
+  <% if current_user.admin? || current_user.super_user? %>
+  <div class="field">
+    <%= form.label :Date %>
+    <%= form.date_field :created_at, class: "form-control", required: true %>
+  </div>
+  <% end %>
     <div class="field">
     <%= form.hidden_field :rate, value: Account.find_by(id: @account_id).rate%>
     <%= form.hidden_field :account_id, value: @account_id%>

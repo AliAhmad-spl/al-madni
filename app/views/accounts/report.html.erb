@@ -1,6 +1,6 @@
 <div class="container">
 <%= form_tag report_account_path(id: @account.id), method: :get do %>
-  <%= text_field_tag :text, nil, name:"daterange", value:"03/01/2021 - 03/15/2021", class: "form-control" %>
+  <%= text_field_tag :text, nil, name:"daterange", value:"07/01/2021 - 08/15/2021", class: "form-control" %>
 <%= submit_tag("Search", class:"btn btn-warning", style: "margin-top: 10px;", id:"Search")  %>
 <%end%>
 <button onclick="removebtn()" style="float:right;"" id="print" class="btn btn-danger">Print Report</button>

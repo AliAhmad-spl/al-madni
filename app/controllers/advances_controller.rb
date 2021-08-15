@@ -81,6 +81,6 @@ class AdvancesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def advance_params
-      params.require(:advance).permit(:amount, :account_id)
+      params.require(:advance).permit(:amount, :account_id, :created_at)
     end
 end

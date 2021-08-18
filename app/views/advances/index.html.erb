@@ -1,4 +1,6 @@
 <h1>Advances</h1>
+<%= link_to 'New Advance', new_advance_path(id: @account_id), class:"btn btn-primary"%>
+
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -23,4 +25,3 @@
   </tbody>
 </table>
 <br>
-<%= link_to 'New Advance', new_advance_path(id: @account_id), class:"btn btn-primary"%>

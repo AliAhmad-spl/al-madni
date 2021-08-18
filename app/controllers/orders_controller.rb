@@ -53,7 +53,7 @@ class OrdersController < ApplicationController
 
   def edited_orders
     @date             = Date.parse(params[:date]) rescue Date.current
-    @orders           = current_user.hotels.first.orders.where(:created_at => @date.at_midnight..@date.next_day.at_midnight, edited: true)
+    @orders           = current_user.hotels.first.orders.where(:created_at => @date.beginning_of_day..@date.next_day.end_of_day, edited: true)
     @today_sale       = @orders.pluck(:total).reject(&:blank?).sum
     @total_orders   = current_user.hotels.first.orders.size
     @current_orders = @orders.size
@@ -207,9 +207,9 @@ class OrdersController < ApplicationController
   end
 
   def sold_products
-    @date = Date.parse(params[:date]) rescue Date.today
-    @orders = current_user.hotels.first.orders.where(:created_at => @date.at_midnight..@date.next_day.at_midnight)
-    @products = OrderProduct.where(order_id: @orders.ids)
+    @date = Date.parse(params[:date]) rescue Date.current
+    @orders = current_user.hotels.first.orders.where(:created_at => @date.beginning_of_day..@date.next_day.end_of_day)
+    @products = OrderProduct.where(order_id: @orders.ids).where.not(product_id: nil)
     @total_qty = @products.pluck(:quntity).sum rescue 0
     @amount = @products.pluck(:total).sum rescue 0
   end
@@ -236,7 +236,7 @@ class OrdersController < ApplicationController
           if op.present?
            op.update(quntity: qty[:"#{p.id}"].to_f, total: p.price * qty[:"#{p.id}"].to_f)
           else
-            OrderProduct.create(name: p.name, price: p.price, quntity: qty[:"#{p.id}"].to_f, total: p.price * qty[:"#{p.id}"].to_f, order_id: @order.id)
+            OrderProduct.create(product_id: p.id, name: p.name, price: p.price, quntity: qty[:"#{p.id}"].to_f, total: p.price * qty[:"#{p.id}"].to_f, order_id: @order.id)
           end
         end
         @other = @order.other_charges rescue 0

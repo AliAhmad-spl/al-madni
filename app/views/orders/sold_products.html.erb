@@ -17,12 +17,16 @@
 
 <h1>Today's Sold Products</h1>
 <br>
+<%= form_tag :sold_products_orders, method: :get do %>
+  <%= date_field_tag :date%>
+<%= submit_tag("Search") %>
+<%end%>
 <table class="table table-bordered">
   <thead>
     <tr>
       <th>id#</th>
       <th>Name</th>
-      <th>sold count</th>
+      <th>Quantity</th>
       <th>Orders links</th>
     </tr>
   </thead>

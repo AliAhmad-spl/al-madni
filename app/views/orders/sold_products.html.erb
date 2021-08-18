@@ -20,24 +20,24 @@
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th>Order #</th>
+      <th>id#</th>
       <th>Name</th>
-      <th>QTY</th>
-      <th>Price</th>
-      <th>Total</th>
-      <th>Order Details</th>
+      <th>sold count</th>
+      <th>Orders links</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @products.each do |product| %>
+    <% @products.uniq {|e| e.name }.each do |product| %>
       <tr>
-        <td><%= product.order_id %></td>
+        <td><%= product.id %></td>
         <td><%= product.name %></td>
-        <td><%= product.quntity%></td>
-        <td><%= product.price %></td>
-        <td><%= product.total%></td>
-        <td><%= link_to 'view complete order', order_path(id: product.order_id), class: "btn btn-warning", style: "color: white;" %></td>
+        <td><%= @products.where(name: product.name).size %></td>
+        <td>
+        <% @products.where(name: product.name).each do |e| %>
+          <%= link_to e.order_id, order_path(id: e.order_id), class: "btn btn-warning", style: "color: white;" %>|
+        <% end %>
+      </td>
       </tr>
     <% end %>
   </tbody>

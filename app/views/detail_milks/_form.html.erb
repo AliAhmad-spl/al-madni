@@ -15,12 +15,12 @@
 
   <div class="field">
     <%= form.label :milk %>
-    <%= form.number_field :milk, class: "form-control", required: true %>
+    <%= form.number_field :milk, class: "form-control", required: true, step: 0.1, min: 0 %>
   </div>
 
   <div class="field">
     <%= form.label :weight %>
-    <%= form.number_field :weight, class: "form-control", required: true %>
+    <%= form.number_field :weight, class: "form-control", required: true, step: 0.1, min: 0 %>
   </div>
   <% if current_user.admin? || current_user.super_user? %>
   <div class="field">

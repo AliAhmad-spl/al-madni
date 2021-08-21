@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_14_192448) do
+ActiveRecord::Schema.define(version: 2021_08_21_183931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,8 +44,8 @@ ActiveRecord::Schema.define(version: 2021_07_14_192448) do
   end
 
   create_table "detail_milks", force: :cascade do |t|
-    t.integer "milk", default: 0
-    t.integer "weight", default: 0
+    t.float "milk", default: 0.0
+    t.float "weight", default: 0.0
     t.integer "account_id"
     t.integer "rate"
     t.integer "total", default: 0
@@ -71,7 +71,6 @@ ActiveRecord::Schema.define(version: 2021_07_14_192448) do
     t.string "unit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "prev_qty", default: 0
     t.index ["item_id"], name: "index_histories_on_item_id"
     t.index ["user_id"], name: "index_histories_on_user_id"
   end
@@ -132,6 +131,8 @@ ActiveRecord::Schema.define(version: 2021_07_14_192448) do
     t.string "customer_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "product_ids", default: [], array: true
+    t.float "quntities", default: [], array: true
     t.integer "user_id"
     t.integer "status", default: 0
     t.string "contact_number"
@@ -143,8 +144,6 @@ ActiveRecord::Schema.define(version: 2021_07_14_192448) do
     t.integer "total"
     t.integer "other_charges", default: 0
     t.integer "disc", default: 0
-    t.string "product_ids", default: [], array: true
-    t.string "quntities", default: [], array: true
     t.boolean "edited", default: false
     t.integer "hotel_id"
   end

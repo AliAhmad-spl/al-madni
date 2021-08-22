@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_14_192448) do
+ActiveRecord::Schema.define(version: 2021_08_21_183931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,8 +44,8 @@ ActiveRecord::Schema.define(version: 2021_07_14_192448) do
   end
 
   create_table "detail_milks", force: :cascade do |t|
-    t.integer "milk", default: 0
-    t.integer "weight", default: 0
+    t.float "milk", default: 0.0
+    t.float "weight", default: 0.0
     t.integer "account_id"
     t.integer "rate"
     t.integer "total", default: 0

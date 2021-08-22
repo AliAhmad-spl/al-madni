@@ -6,7 +6,7 @@ class DetailMilksController < ApplicationController
   def index
     session[:account_id] = params[:id] if params[:id].present?
     @account_id = session[:account_id]
-    @date = Date.parse(params[:date]) rescue Date.today
+    @date = Date.parse(params[:date]) rescue Date.current
     @detail_milks = Account.find_by(id: @account_id)&.detail_milks&.where(:created_at => @date.beginning_of_day..@date.end_of_day)
     @today_sale =  @detail_milks&.pluck(:total)&.reject(&:blank?)&.sum
     @advances = Account.find_by(id: @account_id)&.advances&.where(:created_at => @date&.beginning_of_day..@date&.end_of_day)

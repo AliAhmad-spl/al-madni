@@ -3,7 +3,11 @@
 <br>
 <p style="float: left; color: black;">Name: <%= Account.find_by(id: @account_id)&.name %></p>
 <p style="float: right; color: black;">Print by: <%= @current_user&.name %></p>
-
+<center><%= form_tag :detail_milks, method: :get do %>
+  <%= date_field_tag :date%>
+<%= submit_tag("Search") %>
+<%end%>
+</center>
 
 <table class="table table-bordered">
   <thead>
@@ -95,11 +99,6 @@
       </tr>
   </tbody>
 </table>
-<p id="show"><b><%= "Showing #{@current_orders} orders for #{@date}" %></b></p>
-<p id="show1"><b><%= "There are a total of #{@total_orders} orders."%></b></p>
-<%= link_to 'View Previous day Orders', detail_milks_url(id: @account_id, :date => @date.prev_day), class:"btn btn-primary", style:"color:white", id: "prev" %>
-<%= link_to 'View Next day Orders', detail_milks_url(id: @account_id, :date => @date.next_day), class:"btn btn-warning",style:"color:white", id:"next" %>
-</div>
 
 
 

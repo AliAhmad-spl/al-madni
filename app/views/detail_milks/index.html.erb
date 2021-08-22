@@ -4,10 +4,11 @@
 <p style="float: left; color: black;">Name: <%= Account.find_by(id: @account_id)&.name %></p>
 <p style="float: right; color: black;">Print by: <%= @current_user&.name %></p>
 <center><%= form_tag :detail_milks, method: :get do %>
-  <%= date_field_tag :date%>
+<%= date_field_tag :date%>
 <%= submit_tag("Search") %>
 <%end%>
 </center>
+Date: <%= @date %>
 
 <table class="table table-bordered">
   <thead>

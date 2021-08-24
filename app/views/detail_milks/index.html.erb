@@ -8,7 +8,7 @@
 <%= submit_tag("Search") %>
 <%end%>
 </center>
-Date: <%= @date %>
+Date: <%= @date.strftime("%d/%m/%Y") %>
 
 <table class="table table-bordered">
   <thead>

@@ -36,7 +36,7 @@ Date: <%= @date.strftime("%d/%m/%Y") %>
           <td><%= detail_milk&.user&.name%></td>
         <%end%>
         <td><%= detail_milk.total%></td>
-        <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p") %></td>
+        <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %d/%m/%Y") %></td>
         <%if current_user.admin?%>
         <td><%= link_to 'Destroy', detail_milk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <%end%>

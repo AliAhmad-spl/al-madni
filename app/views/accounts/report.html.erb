@@ -52,7 +52,7 @@
       <tr>
         <td><%= advance.amount %></td>
         <td><%= advance.account.name %></td>
-        <td><%= advance.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %></td>
+        <td><%= advance.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %d/%m/%Y") %></td>
       </tr>
     <% end %>
   </tbody>

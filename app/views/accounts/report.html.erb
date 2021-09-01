@@ -1,9 +1,9 @@
 <div class="container">
 <%= form_tag report_account_path(id: @account.id), method: :get do %>
-  <%= text_field_tag :text, nil, name:"daterange", value:"07/01/2021 - 08/15/2021", class: "form-control" %>
+  <%= text_field_tag :text, nil, name:"daterange", value:"09/01/2021 - 10/15/2021", class: "form-control" %>
 <%= submit_tag("Search", class:"btn btn-warning", style: "margin-top: 10px;", id:"Search")  %>
 <%end%>
-<button onclick="removebtn()" style="float:right;"" id="print" class="btn btn-danger">Print Report</button>
+<button onclick="removebtn()" style="float:right;" id="print" class="btn btn-danger">Print Report</button>
 <center><h4>Report for <%= @account.name %>, From <%= @from&.strftime("%d/%m/%Y") %> To <%= @till&.strftime("%d/%m/%Y") %> </h4></center>
 <table class="table table-bordered" style="margin-top: 20px;">
   <thead>
@@ -26,7 +26,7 @@
         <td><%= detail_milk.milk - detail_milk.weight %></td>
         <td><%= detail_milk.rate%></td>
         <td><%= detail_milk.total%></td>
-        <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %></td>
+        <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %d/%m/%Y") %></td>
         <%if current_user.admin?%>
 
         <%end%>
@@ -34,6 +34,7 @@
     <% end %>
   </tbody>
 </table>
+<h5 style="float: left;">Total Milk: <%= @detail_milks.pluck(:milk).sum - @detail_milks.pluck(:weight).sum rescue 0%></h5>
 <p><h5 style="float: right;">Total amount: Rs. <%= @today_sale rescue 0%></h5></p><br>
 <h4 style="margin-top: 70px;" > Advances</h4>
 <table class="table table-bordered" >

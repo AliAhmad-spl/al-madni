@@ -62,12 +62,17 @@ Other Rs:<%= @other %>
 	<div class="row">
 		<div class="col-md-4">
 	<% if @order.discount > 0%>
-
 	<span style="font-size: 15px;" >Total amount:</span> <span id="grand_total" class="pull-right" style="font-size: 15px;"><%= @order.order_products.pluck(:total).sum + @other %> </span>
 	<p><span style="font-size: 15px;" > Disc:</span> <span class="pull-right"  style="font-size: 15px;">(<%=@order.discount%>%)<%= @order.disc %></span></p>
-	<p><span style="font-size: 15px;" >Net total:</span> <span class="pull-right"  style="font-size: 15px;"> <%= @order.total%></span></p>
+	<% if @order.order_number.present? %>
+		<p><span style="font-size: 15px;" > Other order total:</span> <span class="pull-right"  style="font-size: 15px;"><%= Order.find_by(id: @order.order_number)&.total %></span></p>
+	<%end%>
+	<p><span style="font-size: 15px;" >Net total:</span> <span class="pull-right"  style="font-size: 15px;"> <%= @order.total + (Order.find_by(id: @order.order_number)&.total || 0)%></span></p>
 	<%else%>
-	<p style="margin-top: 10px; margin-bottom: 10px;"><span style="font-size: 14px;" ><b>Total Amount:</b></span> <span style="font-size: 18px; id="grand_total" class="pull-right" ><span style="font-size: 20px;"><%= @order.total%></span></span></p>
+	<% if @order.order_number.present? %>
+		<p><span style="font-size: 15px;" > Other order total:</span> <span class="pull-right"  style="font-size: 15px;"><%= Order.find_by(id: @order.order_number)&.total %></span></p>
+	<%end%>
+	<p style="margin-top: 10px; margin-bottom: 10px;"><span style="font-size: 14px;" ><b>Total Amount:</b></span> <span style="font-size: 18px; id="grand_total" class="pull-right" ><span style="font-size: 20px;"><%= @order.total + (Order.find_by(id: @order.order_number)&.total || 0) %></span></span></p>
 	<%end%>
 
 </div>

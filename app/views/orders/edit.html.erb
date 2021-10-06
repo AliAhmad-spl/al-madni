@@ -28,6 +28,10 @@
     <%= form.label :customer_name %>
     <%= form.text_field :customer_name, class: 'form-control', style: "width: 30%;", required: true, value: "No Name" %>
   </div>
+  <div class="field">
+    <%= form.label :merge_order_number %>
+    <%= form.text_field :order_number, class: 'form-control', style: "width: 30%;" %>
+  </div>
    <div class="field">
     <%= form.label :Discount_in_percentage %>
     <%= form.hidden_field :user_id, value: current_user.id %>

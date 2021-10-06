@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_21_183931) do
+ActiveRecord::Schema.define(version: 2021_10_06_152421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(version: 2021_08_21_183931) do
     t.integer "disc", default: 0
     t.boolean "edited", default: false
     t.integer "hotel_id"
+    t.string "order_number"
   end
 
   create_table "products", force: :cascade do |t|

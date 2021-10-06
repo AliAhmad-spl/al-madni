@@ -34,6 +34,7 @@
       <th>Table No</th>
       <th>Placed at</th>
       <th>created_by</th>
+      <th>Merged</th>
       <th>Edited</th>
       <th>Status</th>
       <th>Total Bill</th>
@@ -48,6 +49,11 @@
         <td><%= order.customer_name %></td>
         <td><%= order.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %F") %>(<%= time_ago_in_words(order.created_at) %> ago)</td>
         <td><%= order&.user&.name %></td>
+        <% if order.order_number? %>
+          <td><button class="btn btn-danger">YES</button></td>
+        <%else%>
+          <td><button class="btn btn-success">NO</button></td>
+        <%end%>
         <% if order.edited? %>
           <td><button class="btn btn-danger">YES</button></td>
         <%else%>
@@ -71,4 +77,4 @@
 <p><b><%= "There are a total of #{@total_orders} orders."%></b></p>
 <%= link_to 'View Previous day Orders', orders_url(:date => @date.prev_day), class:"btn btn-primary", style:"color:white" %>
 <%= link_to 'View Next day Orders', orders_url(:date => @date.next_day), class:"btn btn-warning",style:"color:white" %>
-</div>
+</div>/

@@ -10,15 +10,15 @@
       </ul>
     </div>
   <% end %>
-
+<div class="container">
   <div class="field">
     <%= form.label :qty %>
-    <%= form.text_field :qty %>
+    <%= form.text_field :qty, class:"form-control", required: true %>
   </div>
 
   <div class="field">
     <%= form.label :price %>
-    <%= form.number_field :price %>
+    <%= form.number_field :price, class:"form-control", required: true %>
   </div>
 
   <div class="field">
@@ -31,3 +31,4 @@
     <%= form.submit %>
   </div>
 <% end %>
+</div>

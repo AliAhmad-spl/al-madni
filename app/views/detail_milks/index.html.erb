@@ -38,7 +38,7 @@ Date: <%= @date.strftime("%d/%m/%Y") %>
         <td><%= detail_milk.total%></td>
         <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %d/%m/%Y") %></td>
         <%if current_user.admin?%>
-        <td><%= link_to 'Destroy', detail_milk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', detail_milk_path(id: detail_milk, account_id: @account_id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <%end%>
       </tr>
     <% end %>

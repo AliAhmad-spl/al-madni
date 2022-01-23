@@ -1,4 +1,6 @@
-<button onclick="removebtn()" style="float:right; margin-right: 20px;" id="print" class="btn btn-sm btn-warning">Print Report</button><br>
+<button onclick="removebtn()" style="float:right; margin-right: 20px;" id="print" class="btn btn-sm btn-warning">Print Report</button>
+<a href="<%= accounts_path %>" style="float:right; margin-right: 20px;" class="btn btn-sm btn-primary">Accounts</a><br>
+<%#= link_to 'Accounts', accounts_path, class:"btn btn-primary", style:"float:right;" %>
 
 <br>
 <p style="float: left; color: black;">Name: <%= Account.find_by(id: @account_id)&.name %></p>

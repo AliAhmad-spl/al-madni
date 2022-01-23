@@ -73,12 +73,13 @@ class DetailMilksController < ApplicationController
   # DELETE /detail_milks/1
   # DELETE /detail_milks/1.json
   def destroy
+    @account_id = params[:account_id] if params[:account_id].present?
     @detail_milk.destroy
     amount = @detail_milk.account.credit - @detail_milk.total
     @detail_milk.account.update(credit: amount)
     @detail_milk.account.update(advance: @detail_milk.account.advance + @detail_milk.total)
     respond_to do |format|
-      format.html { redirect_to accounts_url, notice: 'Detail milk was successfully destroyed.' }
+      format.html { redirect_to detail_milks_path, notice: 'Detail milk was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

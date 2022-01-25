@@ -19,7 +19,7 @@
   </thead>
 
   <tbody>
-    <% @detail_milks&.each do |detail_milk| %>
+    <% @detail_milks&.sort_by(&:created_at)&.each do |detail_milk| %>
       <tr>
         <td><%= detail_milk.milk %></td>
         <td><%= detail_milk.weight %></td>

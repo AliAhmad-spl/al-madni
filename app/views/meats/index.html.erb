@@ -1,33 +1,132 @@
-<p id="notice"><%= notice %></p>
+<button onclick="removebtn()" style="float:right; margin-right: 20px;" id="print" class="btn btn-sm btn-warning">Print Report</button>
+<a href="<%= accounts_path %>" style="float:right; margin-right: 20px;" class="btn btn-sm btn-primary">Accounts</a><br>
+<%#= link_to 'Accounts', accounts_path, class:"btn btn-primary", style:"float:right;" %>
 
-<h1>Meats</h1>
+<br>
+<p style="float: left; color: black;">Name: <%= Account.find_by(id: @account_id)&.name %></p>
+<p style="float: right; color: black;">Print by: <%= @current_user&.name %></p>
+<center><%= form_tag :meats, method: :get do %>
+<%= date_field_tag :date%>
+<%= submit_tag("Search") %>
+<%end%>
+</center>
+Date: <%= @date.strftime("%d/%m/%Y") %>
 
-<table>
+<table class="table table-bordered">
   <thead>
     <tr>
       <th>Qty</th>
       <th>Price</th>
       <th>Cat type</th>
-      <th>Accounts</th>
+      <th>Name</th>
+      <th>Total</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @meats&.each do |meat| %>
+      <tr>
+        <td><%= meat.qty %></td>
+        <td><%= meat.price %></td>
+        <td><%= meat.cat_type %></td>
+        <td><%= meat.account.name %></td>
+        <td><%= meat.total%></td>
+        <td><%= meat.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %d/%m/%Y") %></td>
+        <%if current_user.admin?%>
+        <td><%= link_to 'Destroy', meat_path(id: meat, account_id: @account_id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end%>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br><h5 style="float: right;">Total amount: Rs. <%= @today_sale %></h5>
+<h5 style="float: right; margin-right: 50px;">Total meat: <%= @meat_total %></h5>
+<%= link_to 'Add new meat details', new_meat_url(id: @account_id), class:"btn btn-primary", style:"color:white", id:"meat" %>
+<br>
+
+
+
+<h4 id="advnce">Advances</h4>
+<table class="table table-bordered" id="table">
+  <thead>
+    <tr>
+      <th>Amount</th>
+      <th>Account</th>
+      <th>Date</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @meats.each do |meat| %>
+    <% @advances&.order("created_at DESC")&.each do |advance| %>
       <tr>
-        <td><%= meat.qty %></td>
-        <td><%= meat.price %></td>
-        <td><%= meat.cat_type %></td>
-        <td><%= meat.accounts %></td>
-        <td><%= link_to 'Show', meat %></td>
-        <td><%= link_to 'Edit', edit_meat_path(meat) %></td>
-        <td><%= link_to 'Destroy', meat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= advance.amount %></td>
+        <td><%= advance.account.name %></td>
+        <td><%= advance.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %d/%m/%Y") %></td>
+        <%if current_user.admin?%>
+        <td><%= link_to 'Destroy', advance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end%>
       </tr>
     <% end %>
   </tbody>
 </table>
-
 <br>
+<h5 style="float: right;">Advance Total: Rs. <%= @advance %></h5>
+<%= link_to 'New Advance',  new_advance_path(id: @account_id, meat: true), class:"btn btn-primary", id:"adv"%>
 
-<%= link_to 'New Meat', new_meat_path %>
+  <h4>Today's Calculation</h4>
+  <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Total credit</th>
+      <th>Total advance</th>
+      <th>Payment</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td><%= @today_sale %></td>
+        <td><%= @advance %></td>
+        <% if @today_sale.present? && @advance.present? %>
+        <td><%= @today_sale - @advance  %></td>
+        <% end %>
+      </tr>
+  </tbody>
+</table>
+
+
+
+<script type="text/javascript">
+  function removebtn(){
+  // document.getElementsByTagName("button")[0].setAttribute("class", "remove");
+  // document.getElementById("edit").setAttribute("class", "remove");
+  // document.getElementById("back").setAttribute("class", "remove");
+  $('#advnce').css('display', 'none');
+  $('#table').css('display', 'none');
+  $('#print').css('display', 'none');
+  $('#home').css('display', 'none');
+  $('#next').css('display', 'none');
+  $('#show1').css('display', 'none');
+  $('#prev').css('display', 'none');
+  $('#show').css('display', 'none');
+
+  $('#adv').css('display', 'none');
+  $('#meat').css('display', 'none');
+  
+  }
+
+</script>
+ <script >
+  $('#print').click(function()
+  {
+    window.print();
+    location.reload();
+    document.getElementsById("1").setAttribute("class", "remove_button");
+    document.getElementsById("2").setAttribute("class", "remove_button");
+    // $("#home").prop("class", "remove"); 
+    document.getElementsById("print").setAttribute("class", "remove_button");  
+  });
+ </script>

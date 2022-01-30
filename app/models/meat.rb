@@ -1,5 +1,5 @@
 class Meat < ApplicationRecord
-  belongs_to :accounts
+  belongs_to :account
 
   enum cat_type: [:chicken, :mutton, :beef]
 end

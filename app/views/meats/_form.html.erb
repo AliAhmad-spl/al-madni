@@ -15,15 +15,15 @@
     <%= form.label :qty %>
     <%= form.text_field :qty, class:"form-control", required: true %>
   </div>
-
   <div class="field">
     <%= form.label :price %>
     <%= form.number_field :price, class:"form-control", required: true %>
+    <%= form.hidden_field :account_id, value: @account_id %>
   </div>
 
   <div class="field">
     <%= form.label :cat_type %>
-    <%= select_tag :cat_type, options_for_select(Meat.cat_types.map {|k, v| [k.humanize.capitalize, v]}) %>
+        <%= form.select(:cat_type, Meat.cat_types.keys.map {|cat| [cat.titleize,cat]}) %>
 
   </div>
 

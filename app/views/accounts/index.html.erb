@@ -28,9 +28,13 @@
         <%if account.milk_man?%>
         <td><%= link_to 'Manage Milk', detail_milks_path(id: account.id)%></td>
         <%elsif account.butcher? %>
-        <td><%= link_to 'Add Meat', new_meat_path(id: account.id)%></td>
+        <td><%= link_to 'Add Meat', meats_path(id: account.id)%></td>
         <%end%>
-        <td><%= link_to 'Manage Advance', advances_path(id: account.id)%></td>
+        <% if account.butcher? %>
+          <td><%= link_to 'Manage Advance', advances_path(id: account.id, meat: true)%></td>
+          <% else %>
+          <td><%= link_to 'Manage Advance', advances_path(id: account.id)%></td>
+        <% end %>
         <td><%= link_to 'Deposits', deposits_path(id: account.id)%></td>
         <td><%= link_to 'Generate Report', report_account_path(id: account.id)%></td>
         <td><%= link_to 'Account', '#'%></td>

@@ -9,7 +9,7 @@ class DetailMilksController < ApplicationController
     @date = Date.parse(params[:date]) rescue Date.current
     @detail_milks = Account.find_by(id: @account_id)&.detail_milks&.where(:created_at => @date.beginning_of_day..@date.end_of_day)
     @today_sale =  @detail_milks&.pluck(:total)&.reject(&:blank?)&.sum
-    @advances = Account.find_by(id: @account_id)&.advances&.where(:created_at => @date&.beginning_of_day..@date&.end_of_day)
+    @advances = Account.find_by(id: @account_id)&.advances&.where(:created_at => @date&.beginning_of_day..@date&.end_of_day, meat: false)
     @advance =  @advances&.pluck(:amount)&.reject(&:blank?)&.sum
     @total_orders   = @detail_milks&.size
     @milk_total = @detail_milks&.pluck(:total)&.reject(&:blank?)&.sum / Account.find_by(id: @account_id).rate

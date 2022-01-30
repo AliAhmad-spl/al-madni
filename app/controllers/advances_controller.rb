@@ -16,6 +16,7 @@ class AdvancesController < ApplicationController
   # GET /advances/new
   def new
     @account_id = params[:id]
+    @meat = params[:meat]
     @advance = Advance.new
   end
 
@@ -33,7 +34,12 @@ class AdvancesController < ApplicationController
         amount = @advance.account.advance + @advance.amount
         @advance.account.update(advance: amount)
         @advance.account.update(credit: @advance.account.credit - @advance.amount)
-        format.html { redirect_to detail_milks_path, notice: 'Advance was successfully created.' }
+        if params[:advance][:meat].present?
+          @advance.update(meat: true)
+          format.html { redirect_to meats_path(id: @advance.account.id), notice: 'Advance was successfully created.' }
+        else
+          format.html { redirect_to detail_milks_path, notice: 'Advance was successfully created.' }
+        end
         format.json { render :show, status: :created, location: @advance }
       else
         format.html { render :new }

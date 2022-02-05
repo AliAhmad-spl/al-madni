@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  before_action :set_account, only: [:show, :edit, :update, :destroy, :report, :result]
+  before_action :set_account, only: [:show, :edit, :update, :destroy, :report, :result, :meat_report]
 
   # GET /accounts
   # GET /accounts.json
@@ -64,7 +64,17 @@ class AccountsController < ApplicationController
     @deposit =  @deposits&.pluck(:amount)&.map{|e| e.to_i }&.reject(&:blank?)&.sum
   end
 
-  def result
+  def meat_report
+    if params[:daterange].present?
+      @from = (Date.strptime(params[:daterange].split("-").first.strip,'%m/%d/%y') + 2.year)
+      @till = (Date.strptime(params[:daterange].split("-").last.strip,'%m/%d/%y') + 2.year)
+      @meats = Meat.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day) if params[:daterange].present?
+      @advances = Advance.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day) if params[:daterange].present?
+      @deposits = Deposit.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day)
+    end
+    @today_sale = @meats&.pluck(:total)&.reject(&:blank?)&.sum rescue 0
+    @advance =  @advances&.pluck(:amount)&.reject(&:blank?)&.sum
+    @deposit =  @deposits&.pluck(:amount)&.map{|e| e.to_i }&.reject(&:blank?)&.sum
   end
 
   # DELETE /accounts/1

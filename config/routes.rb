@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :accounts do
     member do
       get :report
+      get :meat_report
       get :result
     end 
   end

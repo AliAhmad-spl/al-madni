@@ -1,40 +1,39 @@
 <div class="container">
-<%= form_tag report_account_path(id: @account.id), method: :get do %>
+<%= form_tag meat_report_account_path(id: @account.id), method: :get do %>
   <%= text_field_tag :text, nil, name:"daterange", value:"#{(Date.current - 8.days).strftime("%m/%d/%Y")} - #{Date.current.strftime("%m/%d/%Y")}", class: "form-control" %>
 <%= submit_tag("Search", class:"btn btn-warning", style: "margin-top: 10px;", id:"Search")  %>
 <%end%>
 <button onclick="removebtn()" style="float:right;" id="print" class="btn btn-danger">Print Report</button>
 <center><h4>Report for <%= @account.name %>, From <%= @from&.strftime("%d/%m/%Y") %> To <%= @till&.strftime("%d/%m/%Y") %> </h4></center>
-<table class="table table-bordered" style="margin-top: 20px;">
+<table class="table table-bordered">
   <thead>
     <tr>
-      <th>Milk</th>
-      <th>Can Weight</th>
-      <th>Real weight</th>
-      <th>Rate</th>
+      <th>Qty</th>
+      <th>Price</th>
+      <th>Cat type</th>
+      <th>Name</th>
       <th>Total</th>
-      <th>Date</th>
-
+      <th>Time</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @detail_milks&.sort_by(&:created_at)&.each do |detail_milk| %>
+    <% @meats&.sort_by(&:created_at)&.each do |meat| %>
       <tr>
-        <td><%= detail_milk.milk %></td>
-        <td><%= detail_milk.weight %></td>
-        <td><%= detail_milk.milk - detail_milk.weight %></td>
-        <td><%= detail_milk.rate%></td>
-        <td><%= detail_milk.total%></td>
-        <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %d/%m/%Y") %></td>
+        <td><%= meat.qty %></td>
+        <td><%= meat.price %></td>
+        <td><%= meat.cat_type %></td>
+        <td><%= meat.account.name %></td>
+        <td><%= meat.total%></td>
+        <td><%= meat.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %d/%m/%Y") %></td>
         <%if current_user.admin?%>
-
+        <td><%= link_to 'Destroy', meat_path(id: meat, account_id: @account_id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <%end%>
       </tr>
     <% end %>
   </tbody>
 </table>
-<h5 style="float: left;">Total Milk: <%= @detail_milks.pluck(:milk).sum - @detail_milks.pluck(:weight).sum rescue 0%></h5>
+<h5 style="float: left;">Total Milk: <%= @meats.pluck(:milk).sum - @meats.pluck(:weight).sum rescue 0%></h5>
 <p><h5 style="float: right;">Total amount: Rs. <%= @today_sale rescue 0%></h5></p><br>
 <h4 style="margin-top: 70px;" > Advances</h4>
 <table class="table table-bordered" >
@@ -87,27 +86,27 @@
 
 
 <script type="text/javascript">
-	function removebtn(){
-	// document.getElementsByTagName("button")[0].setAttribute("class", "remove");
-	// document.getElementById("edit").setAttribute("class", "remove");
-	// document.getElementById("back").setAttribute("class", "remove");
-	$('#print').css('display', 'none');
-	$('#home').css('display', 'none');
-	$('#Search').css('display', 'none');
-	
+  function removebtn(){
+  // document.getElementsByTagName("button")[0].setAttribute("class", "remove");
+  // document.getElementById("edit").setAttribute("class", "remove");
+  // document.getElementById("back").setAttribute("class", "remove");
+  $('#print').css('display', 'none');
+  $('#home').css('display', 'none');
+  $('#Search').css('display', 'none');
+  
   }
 
 </script>
  <script >
- 	$('#print').click(function()
- 	{
- 		window.print();
- 		location.reload();
- 		document.getElementsById("1").setAttribute("class", "remove_button");
- 		document.getElementsById("2").setAttribute("class", "remove_button");
- 		// $("#home").prop("class", "remove"); 
- 		document.getElementsById("print").setAttribute("class", "remove_button");  
- 	});
+  $('#print').click(function()
+  {
+    window.print();
+    location.reload();
+    document.getElementsById("1").setAttribute("class", "remove_button");
+    document.getElementsById("2").setAttribute("class", "remove_button");
+    // $("#home").prop("class", "remove"); 
+    document.getElementsById("print").setAttribute("class", "remove_button");  
+  });
  </script>
 
 <script>

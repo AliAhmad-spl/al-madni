@@ -33,7 +33,7 @@
     <% end %>
   </tbody>
 </table>
-<h5 style="float: left;">Total Milk: <%= @meats.pluck(:milk).sum - @meats.pluck(:weight).sum rescue 0%></h5>
+<h5 style="float: left;">Total Meat: <%= @meats.pluck(:qty).sum rescue 0%></h5>
 <p><h5 style="float: right;">Total amount: Rs. <%= @today_sale rescue 0%></h5></p><br>
 <h4 style="margin-top: 70px;" > Advances</h4>
 <table class="table table-bordered" >

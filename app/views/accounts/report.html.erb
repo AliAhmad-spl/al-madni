@@ -19,14 +19,14 @@
   </thead>
 
   <tbody>
-    <% @detail_milks&.sort_by(&:created_at)&.each do |detail_milk| %>
+    <% @detail_milks&.keys&.each do |key| %>
       <tr>
-        <td><%= detail_milk.milk %></td>
-        <td><%= detail_milk.weight %></td>
-        <td><%= detail_milk.milk - detail_milk.weight %></td>
-        <td><%= detail_milk.rate%></td>
-        <td><%= detail_milk.total%></td>
-        <td><%= detail_milk.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %d/%m/%Y") %></td>
+        <td><%= @detail_milks[key].pluck(:milk).sum %></td>
+        <td><%= @detail_milks[key].pluck(:weight).sum %></td>
+        <td><%= @detail_milks[key].pluck(:milk).sum - @detail_milks[key].pluck(:weight).sum %></td>
+        <td><%= @detail_milks[key].pluck(:rate).sum %></td>
+        <td><%= @detail_milks[key].pluck(:total).sum %></td>
+        <td><%= key.in_time_zone("Islamabad").strftime("%I:%M%p %d/%m/%Y") %></td>
         <%if current_user.admin?%>
 
         <%end%>
@@ -34,7 +34,7 @@
     <% end %>
   </tbody>
 </table>
-<h5 style="float: left;">Total Milk: <%= @detail_milks.pluck(:milk).sum - @detail_milks.pluck(:weight).sum rescue 0%></h5>
+<h5 style="float: left;">Total Milk: <%= @for_total.pluck(:milk).sum - @for_total.pluck(:weight).sum rescue 0%></h5>
 <p><h5 style="float: right;">Total amount: Rs. <%= @today_sale rescue 0%></h5></p><br>
 <h4 style="margin-top: 70px;" > Advances</h4>
 <table class="table table-bordered" >
@@ -48,11 +48,11 @@
   </thead>
 
   <tbody>
-    <% @advances&.order("created_at DESC")&.each do |advance| %>
+    <% @advances&.keys&.each do |key| %>
       <tr>
-        <td><%= advance.amount %></td>
-        <td><%= advance.account.name %></td>
-        <td><%= advance.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %d/%m/%Y") %></td>
+        <td><%= @advances[key].pluck(:amount).sum %></td>
+        <td><%= @advances[key].first.account.name %></td>
+        <td><%= key.in_time_zone("Islamabad").strftime("%I:%M%p %d/%m/%Y") %></td>
       </tr>
     <% end %>
   </tbody>

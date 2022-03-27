@@ -19,7 +19,7 @@
   </thead>
 
   <tbody>
-    <% @detail_milks&.keys.uniq.each do |key| %>
+    <% @detail_milks&.keys&.uniq&.each do |key| %>
       <tr>
         <td><%= @detail_milks[key].pluck(:milk).sum %></td>
         <td><%= @detail_milks[key].pluck(:weight).sum %></td>
@@ -48,7 +48,7 @@
   </thead>
 
   <tbody>
-    <% @advances&.keys&.uniq.each do |key| %>
+    <% @advances&.keys&.uniq&.each do |key| %>
       <tr>
         <td><%= @advances[key].pluck(:amount).sum %></td>
         <td><%= @advances[key].first.account.name %></td>

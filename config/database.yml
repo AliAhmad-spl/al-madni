@@ -80,4 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: one-way_development
+  database: one-way_production
+  username: root
+  password: <%= ENV['ONE-WAY_DATABASE_PASSWORD'] %>

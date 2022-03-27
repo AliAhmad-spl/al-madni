@@ -57,10 +57,10 @@ class AccountsController < ApplicationController
       @till = (Date.strptime(params[:daterange].split("-").last.strip,'%m/%d/%y') + 2.year)
       @for_total = DetailMilk.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day) if params[:daterange].present?
       @detail_milks = DetailMilk.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day) if params[:daterange].present?
-      @detail_milks = @detail_milks.sort_by(&:created_at).group_by{|x| x.created_at}
+      @detail_milks = @detail_milks.sort_by(&:created_at).group_by{|x| x.created_at.to_date }
       @for_ad_total = Advance.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day) if params[:daterange].present?
       @advances = Advance.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day) if params[:daterange].present?
-      @advances = @advances.sort_by(&:created_at).group_by{|x| x.created_at}
+      @advances = @advances.sort_by(&:created_at).group_by{|x| x.created_at.to_date }
       @deposits = Deposit.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day)
     end
     @today_sale =  @for_total&.pluck(:total)&.reject(&:blank?)&.sum rescue 0

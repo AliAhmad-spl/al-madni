@@ -13,19 +13,22 @@
       <th>Real weight</th>
       <th>Rate</th>
       <th>Total</th>
+      <th>Advance</th>
+      <th>Amount</th>
       <th>Date</th>
-
     </tr>
   </thead>
 
   <tbody>
     <% @detail_milks&.keys&.uniq&.each do |key| %>
       <tr>
-        <td><%= @detail_milks[key].pluck(:milk).sum %></td>
-        <td><%= @detail_milks[key].pluck(:weight).sum %></td>
-        <td><%= @detail_milks[key].pluck(:milk).sum - @detail_milks[key].pluck(:weight).sum %></td>
-        <td><%= @detail_milks[key].pluck(:rate).sum %></td>
-        <td><%= @detail_milks[key].pluck(:total).sum %></td>
+        <td><%= @detail_milks[key]&.pluck(:milk).sum %></td>
+        <td><%= @detail_milks[key]&.pluck(:weight).sum %></td>
+        <td><%= @detail_milks[key]&.pluck(:milk).sum - @detail_milks[key]&.pluck(:weight)&.sum %></td>
+        <td><%= @detail_milks[key]&.pluck(:rate).first %></td>
+        <td><%= @detail_milks[key]&.pluck(:total)&.sum %></td>
+        <td><%= @advances[key]&.pluck(:amount)&.sum %></td>
+        <td><%= @detail_milks[key]&.pluck(:total)&.sum - @advances[key]&.pluck(:amount)&.sum rescue @detail_milks[key]&.pluck(:total)&.sum %></td>
         <td><%= key.in_time_zone("Islamabad").strftime("%d/%m/%Y") %></td>
         <%if current_user.admin?%>
 
@@ -34,31 +37,8 @@
     <% end %>
   </tbody>
 </table>
-<h5 style="float: left;">Total Milk: <%= @for_total.pluck(:milk).sum - @for_total.pluck(:weight).sum rescue 0%></h5>
+<h5 style="float: left;">Total Milk: <%= @for_total.pluck(:milk).sum - @for_total.pluck(:weight).sum rescue 0 %></h5>
 <p><h5 style="float: right;">Total amount: Rs. <%= @today_sale rescue 0%></h5></p><br>
-<h4 style="margin-top: 70px;" > Advances</h4>
-<table class="table table-bordered" >
-  <thead>
-    <tr>
-      <th>Amount</th>
-      <th>Account</th>
-      <th>Date</th>
-
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @advances&.keys&.uniq&.each do |key| %>
-      <tr>
-        <td><%= @advances[key].pluck(:amount).sum %></td>
-        <td><%= @advances[key].first.account.name %></td>
-        <td><%= key.in_time_zone("Islamabad").strftime("%d/%m/%Y") %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table> 
-<h5 style="float: right;">Total Advance: Rs. <%= @advance rescue 0%></h5><br>
-  <h4>Total Calculation</h4>
   <table class="table table-bordered">
   <thead>
     <tr>

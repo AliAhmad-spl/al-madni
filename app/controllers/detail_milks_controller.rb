@@ -12,7 +12,7 @@ class DetailMilksController < ApplicationController
     @advances = Account.find_by(id: @account_id)&.advances&.where(:created_at => @date&.beginning_of_day..@date&.end_of_day, meat: false)
     @advance =  @advances&.pluck(:amount)&.reject(&:blank?)&.sum
     @total_orders   = @detail_milks&.size
-    @milk_total = @detail_milks&.pluck(:total)&.reject(&:blank?)&.sum / Account.find_by(id: @account_id).rate
+    @milk_total = @detail_milks&.pluck(:milk).sum - @detail_milks&.pluck(:weight).sum
     @current_orders = @detail_milks&.count
   end
 

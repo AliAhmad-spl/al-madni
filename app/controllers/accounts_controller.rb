@@ -53,7 +53,6 @@ class AccountsController < ApplicationController
 
   def report
     if params[:daterange].present?
-      byebug
       @from = (Date.strptime(params[:daterange].split("-").first.strip,'%m/%d/%y') + 3.year)
       @till = (Date.strptime(params[:daterange].split("-").last.strip,'%m/%d/%y') + 3.year)
       @for_total = DetailMilk.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day) if params[:daterange].present?

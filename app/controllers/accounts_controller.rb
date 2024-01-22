@@ -53,8 +53,8 @@ class AccountsController < ApplicationController
 
   def report
     if params[:daterange].present?
-      @from = (Date.strptime(params[:daterange].split("-").first.strip,'%m/%d/%y') + 3.year)
-      @till = (Date.strptime(params[:daterange].split("-").last.strip,'%m/%d/%y') + 3.year)
+      @from = (Date.strptime(params[:daterange].split("-").first.strip,'%m/%d/%y') + 4.year)
+      @till = (Date.strptime(params[:daterange].split("-").last.strip,'%m/%d/%y') + 4.year)
       @for_total = DetailMilk.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day) if params[:daterange].present?
       @detail_milks = DetailMilk.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day) if params[:daterange].present?
       @detail_milks = @detail_milks.sort_by(&:created_at).group_by{|x| x.created_at.to_date }
@@ -70,8 +70,8 @@ class AccountsController < ApplicationController
 
   def meat_report
     if params[:daterange].present?
-      @from = (Date.strptime(params[:daterange].split("-").first.strip,'%m/%d/%y') + 3.year)
-      @till = (Date.strptime(params[:daterange].split("-").last.strip,'%m/%d/%y') + 3.year)
+      @from = (Date.strptime(params[:daterange].split("-").first.strip,'%m/%d/%y') + 4.year)
+      @till = (Date.strptime(params[:daterange].split("-").last.strip,'%m/%d/%y') + 4.year)
       @meats = Meat.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day) if params[:daterange].present?
       @advances = Advance.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day) if params[:daterange].present?
       @deposits = Deposit.where('account_id = ? AND created_at BETWEEN ? AND ?',@account.id, @from.beginning_of_day, @till.end_of_day)
